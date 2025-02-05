@@ -4,4 +4,4 @@
 format: jb-book
 root: intro
 chapters:
-- file: Introducción a modelos lineales
+- file: modelos_lineales_1.md

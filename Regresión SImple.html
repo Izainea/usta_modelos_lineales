@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Regresión Lineal Simple</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+    h1, h2, h3 {
+      color: #2C3E50;
+    }
+    pre, code {
+      background-color: #ECF0F1;
+      padding: 5px 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    pre {
+      padding: 10px;
+    }
+    ul, ol {
+      margin-left: 20px;
+    }
+    .seccion {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Regresión Lineal Simple</h1>
+  
+  <div class="seccion">
+    <h2>6.1 El Modelo</h2>
+    <p>
+      La regresión lineal simple es un método estadístico para modelar la relación entre dos variables: una variable dependiente <code>y</code> y una variable independiente <code>x</code>. El modelo se expresa mediante:
+    </p>
+    <pre>
+yᵢ = β₀ + β₁ xᵢ + εᵢ,   i = 1, 2, …, n
+    </pre>
+    <p>
+      Donde:
+    </p>
+    <ul>
+      <li><strong>yᵢ</strong>: valor observado de la variable dependiente.</li>
+      <li><strong>xᵢ</strong>: valor de la variable independiente (predictora).</li>
+      <li><strong>β₀</strong>: intercepto (o término constante).</li>
+      <li><strong>β₁</strong>: pendiente, que indica el cambio en <code>y</code> ante un cambio unitario en <code>x</code>.</li>
+      <li><strong>εᵢ</strong>: error aleatorio o perturbación.</li>
+    </ul>
+    <p>
+      Se denomina "simple" porque solo se utiliza una variable predictora y "lineal" porque el modelo es lineal en los parámetros β₀ y β₁ (incluso modelos con <code>x²</code> pueden ser lineales en los parámetros). Además, se hacen las siguientes suposiciones:
+    </p>
+    <ol>
+      <li><em>Esperanza del error cero:</em> <code>E(εᵢ) = 0</code> para todo <code>i</code>, lo que implica <code>E(yᵢ) = β₀ + β₁ xᵢ</code>.</li>
+      <li><em>Varianza constante (homocedasticidad):</em> <code>var(εᵢ) = σ²</code> para todo <code>i</code>.</li>
+      <li><em>No correlación entre errores:</em> <code>cov(εᵢ, εⱼ) = 0</code> para <code>i ≠ j</code>.</li>
+    </ol>
+    <p>
+      En este modelo se asume que los <code>yᵢ</code> y los errores <code>εᵢ</code> son variables aleatorias, mientras que los <code>xᵢ</code> son valores fijos y conocidos.
+    </p>
+  </div>
+  
+  <div class="seccion">
+    <h2>6.2 Estimación de β₀, β₁ y σ²</h2>
+    <p>
+      A partir de una muestra de <code>n</code> observaciones <code>y₁, y₂, …, yₙ</code> y sus correspondientes valores fijos <code>x₁, x₂, …, xₙ</code>, se estima el modelo usando el <strong>método de los mínimos cuadrados</strong>. Este método busca minimizar la suma de los cuadrados de las diferencias entre los valores observados y los predichos:
+    </p>
+    <pre>
+SSE = ∑ (yᵢ – ŷᵢ)² = ∑ (yᵢ – (β̂₀ + β̂₁ xᵢ))²,   i = 1, 2, …, n
+    </pre>
+    <p>
+      Al diferenciar SSE respecto a β₀ y β₁ y resolver el sistema de ecuaciones (ecuaciones normales), se obtiene:
+    </p>
+    <pre>
+β̂₁ = [∑ (xᵢ – x̄)(yᵢ – ȳ)] / [∑ (xᵢ – x̄)²]
+β̂₀ = ȳ – β̂₁ x̄
+    </pre>
+    <p>
+      Donde <code>x̄</code> y <code>ȳ</code> son las medias muestrales de <code>x</code> y <code>y</code>, respectivamente.
+    </p>
+    <p>
+      La varianza del error σ² se estima por:
+    </p>
+    <pre>
+s² = SSE / (n – 2) = ∑ (yᵢ – ŷᵢ)² / (n – 2)
+    </pre>
+    <p>
+      Se utiliza <code>n – 2</code> en el denominador porque se han estimado dos parámetros (β₀ y β₁).
+    </p>
+  </div>
+  
+  <div class="seccion">
+    <h2>6.3 Prueba de Hipótesis e Intervalo de Confianza para β₁</h2>
+    <p>
+      Generalmente se desea determinar si existe una relación lineal significativa entre <code>y</code> y <code>x</code>. Para ello se prueba la hipótesis nula:
+    </p>
+    <pre>
+H₀: β₁ = 0
+    </pre>
+    <p>
+      Bajo el supuesto de normalidad de los errores (<code>εᵢ ~ N(0, σ²)</code>), el estimador β̂₁ es una variable aleatoria con distribución normal y varianza <code>σ² / ∑ (xᵢ – x̄)²</code>. Se define el estadístico t:
+    </p>
+    <pre>
+t = β̂₁ / [s / √(∑ (xᵢ – x̄)²)]
+    </pre>
+    <p>
+      Este estadístico sigue una distribución t con <code>n – 2</code> grados de libertad bajo H₀. Se rechaza H₀ si |t| es mayor que el valor crítico <code>t(α/2, n – 2)</code> o, de forma equivalente, si el valor p es menor que el nivel de significación α.
+    </p>
+    <p>
+      Asimismo, un intervalo de confianza al 100(1 – α)% para β₁ es:
+    </p>
+    <pre>
+β̂₁ ± t(α/2, n – 2) · [s / √(∑ (xᵢ – x̄)²)]
+    </pre>
+  </div>
+  
+  <div class="seccion">
+    <h2>6.4 Coeficiente de Determinación</h2>
+    <p>
+      El <strong>coeficiente de determinación</strong> (r²) mide la proporción de la variación total de <code>y</code> que es explicada por la regresión sobre <code>x</code>. Se define como:
+    </p>
+    <pre>
+r² = SSR / SST = ∑ (ŷᵢ – ȳ)² / ∑ (yᵢ – ȳ)²
+    </pre>
+    <p>
+      Donde:
+    </p>
+    <ul>
+      <li><strong>SSR</strong> es la suma de cuadrados de la regresión (variación explicada).</li>
+      <li><strong>SST</strong> es la suma total de cuadrados (variación total de <code>y</code>).</li>
+    </ul>
+    <p>
+      Además, r² es igual al cuadrado del coeficiente de correlación muestral <code>r</code> entre <code>x</code> y <code>y</code>, donde:
+    </p>
+    <pre>
+r = [∑ (xᵢ – x̄)(yᵢ – ȳ)] / √[∑ (xᵢ – x̄)² · ∑ (yᵢ – ȳ)²]
+    </pre>
+    <p>
+      Un valor de r² cercano a 1 indica que el modelo explica la mayor parte de la variación de <code>y</code>, mientras que un valor cercano a 0 indica un mal ajuste.
+    </p>
+  </div>
+  
+  <div class="seccion">
+    <h2>Ejemplos Ilustrativos</h2>
+    <p>
+      <strong>Ejemplo 6.2:</strong> Se analiza la relación entre las notas de examen (<code>y</code>) y el puntaje promedio de tareas (<code>x</code>) para 18 estudiantes. Aplicando las fórmulas de mínimos cuadrados se obtiene la ecuación de regresión:
+    </p>
+    <pre>
+ŷ = 10.73 + 0.8726x
+    </pre>
+    <p>
+      Aquí, 0.8726 representa el cambio esperado en el puntaje del examen por cada unidad de aumento en el puntaje de tareas, mientras que 10.73 es el valor estimado de <code>y</code> cuando <code>x = 0</code>.
+    </p>
+    <p>
+      <strong>Ejemplo 6.3:</strong> Para los mismos datos se prueba la hipótesis <code>H₀: β₁ = 0</code>. Se calcula el estadístico t:
+    </p>
+    <pre>
+t =  β̂₁ / [s / √(∑ (xᵢ – x̄)²)] ≈ 8.80
+    </pre>
+    <p>
+      Como este valor es mucho mayor que el valor crítico (por ejemplo, t₀.₀₂₅,₁₆ ≈ 2.12), se rechaza H₀ y se concluye que existe una relación lineal significativa entre las variables.
+    </p>
+    <p>
+      <strong>Ejemplo 6.4:</strong> Se calcula el coeficiente de determinación:
+    </p>
+    <pre>
+r² = SSR / SST ≈ 0.8288
+    </pre>
+    <p>
+      Esto indica que aproximadamente el 82.88% de la variación en las notas del examen se explica por el puntaje de tareas.
+    </p>
+  </div>
+  
+  <div class="seccion">
+    <h2>Conclusión</h2>
+    <p>
+      La regresión lineal simple es una herramienta fundamental para modelar y analizar la relación lineal entre dos variables. Con la estimación de parámetros mediante el método de los mínimos cuadrados, la realización de pruebas de hipótesis y la evaluación del ajuste a través del coeficiente de determinación, se pueden obtener importantes inferencias y predicciones en contextos diversos.
+    </p>
+  </div>
+  
+</body>
+</html>
