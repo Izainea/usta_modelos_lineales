@@ -1,70 +1,109 @@
-# 📘 Modelos Lineales con Python
+# 📘 Modelos Lineales: De los Datos a las Decisiones
 
 ## 🎯 Objetivo
 
-Este repositorio tiene como propósito proporcionar una guía completa sobre **Modelos Lineales** en el contexto de la estadística aplicada. Se abordarán desde los fundamentos teóricos hasta implementaciones prácticas utilizando **Python** y bibliotecas especializadas como `statsmodels` y `scikit-learn`. 
+Este curso proporciona una comprensión profunda de los **Modelos Lineales**, desde sus fundamentos teóricos hasta aplicaciones prácticas, utilizando **Python** como herramienta principal. El enfoque es transformar datos en conocimiento para tomar decisiones estratégicas.
 
-```{tableofcontents}
+## 📚 Contenido del Curso
+
+### 1. El Poder de los Datos
+- Importancia de los datos en la era actual
+- Aplicaciones en diversos campos
+- Papel de los modelos lineales en la interpretación de datos
+- Herramientas y conceptos fundamentales
+
+### 2. Regresión Lineal Simple
+- Conceptos fundamentales
+  - Variable dependiente e independiente
+  - Estimación de parámetros (β₀, β₁)
+  - Interpretación geométrica
+- Implementación en Python
+```python
+import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+
+# Ejemplo básico
+X = sm.add_constant(X)  # Añadir intercepto
+model = sm.OLS(y, X)
+results = model.fit()
 ```
+- Visualización de relaciones
+- Interpretación de resultados
 
-El repositorio está estructurado en cuadernos interactivos utilizando **Jupyter**, lo que permitirá una experiencia de aprendizaje práctica e intuitiva.
+### 3. Regresión Múltiple
+- Extensión a múltiples variables
+- Selección de variables predictoras
+- Interpretación de coeficientes
+- Casos prácticos
+- Diagnóstico del modelo
 
-## 📂 Estructura del repositorio
+### 4. Validación y Diagnóstico
+- Análisis de residuales
+- Detección de outliers
+- Pruebas de supuestos
+  - Normalidad
+  - Homocedasticidad
+  - Independencia
+- Técnicas de validación cruzada
 
-El contenido del repositorio está dividido en las siguientes secciones:
+### 5. Inferencia Bayesiana
+- Fundamentos de estadística bayesiana
+- Incorporación de información previa
+- Actualización de modelos
+- Ventajas en situaciones de incertidumbre
+- Implementación con PyMC3
 
-1. **Fundamentos de Modelos Lineales**
-   - Introducción a la regresión lineal.
-   - Supuestos del modelo.
-   - Exploración de datos y formulación del modelo.
-
-2. **Ajuste y Evaluación de Modelos**
-   - Métodos de estimación de parámetros.
-   - Diagnóstico del modelo.
-   - Evaluación de la calidad del ajuste.
-
-3. **Técnicas Avanzadas en Modelos Lineales**
-   - Mínimos cuadrados ponderados y generalizados.
-   - Regresión robusta.
-   - Comparación de modelos y selección de variables.
-
-4. **Modelos de Regresión Logística**
-   - Fundamentos y aplicación.
-   - Evaluación del rendimiento con métricas avanzadas.
-   - Interpretación de resultados y aplicaciones en predicción.
+### 6. Análisis de Varianza (ANOVA)
+- Descomposición de la variabilidad
+- ANOVA de una vía
+- ANOVA factorial
+- Interpretación y diagnóstico
+- Aplicaciones prácticas
 
 ## 🛠️ Herramientas y Tecnologías
 
-Para la implementación de los modelos, usaremos:
-
-- `numpy`, `pandas` y `matplotlib` para manipulación y visualización de datos.
-- `seaborn` para exploración visual avanzada.
-- `statsmodels` y `sklearn` para ajuste de modelos.
-
-## 🎓 Público Objetivo
-
-Este repositorio está dirigido a estudiantes, investigadores y profesionales interesados en:
-
-- Aprender a construir y evaluar modelos lineales.
-- Aplicar técnicas estadísticas en problemas reales.
-- Profundizar en modelado estadístico con herramientas de código abierto.
-
-## 🚀 Cómo Usar Este repositorio
-
-Cada capítulo contiene:
-
-- Explicaciones teóricas detalladas.
-- Ejemplos prácticos con código ejecutable.
-- Casos de estudio aplicados.
-- Tareas y ejercicios recomendados.
-
-```{note}
-Para sacar el máximo provecho de este repositorio, se recomienda tener conocimientos básicos de estadística y programación en Python.
+### Bibliotecas Principales
+```python
+import numpy as np              # Computación numérica
+import pandas as pd            # Manipulación de datos
+import matplotlib.pyplot as plt # Visualización
+import seaborn as sns          # Visualización estadística
+import statsmodels.api as sm   # Modelado estadístico
+import scipy.stats as stats    # Pruebas estadísticas
 ```
+
+## 👥 Público Objetivo
+
+Este curso está diseñado para:
+- Estudiantes de estadística y ciencia de datos
+- Profesionales que requieren análisis cuantitativos
+- Investigadores que necesitan herramientas de modelado
+- Analistas de datos buscando profundizar en modelos lineales
+
+## 📊 Metodología
+
+- Aprendizaje basado en problemas
+- Ejemplos prácticos con datos reales
+- Implementaciones en Python
+- Ejercicios guiados y proyectos
+
+## ✅ Requisitos Previos
+
+Se recomienda tener conocimientos básicos de:
+- Estadística descriptiva
+- Probabilidad básica
+- Python fundamental
+- Álgebra lineal básica
+
+## 📞 Contacto
+
+Para consultas y más información:
+- **Profesor**: Carlos Isaac Zainea
+- **Email**: carloszainea@usta.edu.co
 
 ---
 
-A continuación, comenzaremos con la **Introducción a los Modelos Lineales**, donde exploraremos su importancia y aplicaciones.
-
-
-
+```{note}
+Este curso combina teoría estadística con implementaciones prácticas, permitiendo una comprensión profunda de los modelos lineales y su aplicación en problemas reales.
+```
