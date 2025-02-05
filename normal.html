@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clase: Distribución Normal y Normal Multivariada</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MathJax para renderizar fórmulas matemáticas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      color: #343a40;
+    }
+    p, li {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #495057;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .formula {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: #343a40;
+      color: #fff;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Clase: Distribución Normal y Normal Multivariada</h1>
+
+    <!-- Sección 1: Distribución Normal Univariada -->
+    <div class="section" id="normal-univariada">
+      <h2>1. Distribución Normal Univariada</h2>
+      <p>
+        La <strong>distribución normal</strong> (o <em>gaussiana</em>) es fundamental en la estadística. Una variable aleatoria continua \(X\) se dice que sigue una distribución normal con parámetros \(\mu\) (media) y \(\sigma^2\) (varianza) si su función de densidad es:
+      </p>
+      <p class="formula">
+        $$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) $$
+      </p>
+      <p>
+        Donde:
+      </p>
+      <ul>
+        <li>\(\mu\) representa la tendencia central.</li>
+        <li>\(\sigma^2\) cuantifica la dispersión de \(X\) alrededor de \(\mu\).</li>
+      </ul>
+      <p>
+        <strong>Propiedades Importantes:</strong>
+      </p>
+      <ul>
+        <li>
+          <strong>Simetría:</strong> La función es simétrica respecto a \(\mu\):
+          $$ f(\mu + d) = f(\mu - d) \quad \forall\, d \in \mathbb{R}. $$
+        </li>
+        <li>
+          <strong>Función Generadora de Momentos (MGF):</strong>
+          $$ M_X(t) = E\left[e^{tX}\right] = \exp\!\left(\mu t + \frac{1}{2}\sigma^2 t^2\right). $$
+        </li>
+        <li>
+          <strong>Estandarización:</strong> La transformación
+          $$ Z = \frac{X - \mu}{\sigma} $$
+          convierte \(X \sim \mathcal{N}(\mu, \sigma^2)\) en \(Z \sim \mathcal{N}(0, 1)\).
+        </li>
+      </ul>
+      <p>
+        La normalidad es clave por el <em>teorema central del límite</em>, que establece que la suma de variables aleatorias independientes, bajo ciertas condiciones, se aproxima a una distribución normal.
+      </p>
+    </div>
+
+    <!-- Sección 2: Distribución Normal Multivariada -->
+    <div class="section" id="normal-multivariada">
+      <h2>2. Distribución Normal Multivariada</h2>
+      <p>
+        La <strong>distribución normal multivariada</strong> es la extensión a múltiples dimensiones. Una variable aleatoria vectorial \(\mathbf{X} \in \mathbb{R}^n\) tiene una distribución normal multivariada con vector de medias \(\boldsymbol{\mu}\) y matriz de covarianza \(\Sigma\) (simétrica y definida positiva) si su función de densidad es:
+      </p>
+      <p class="formula">
+        $$ f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^n |\Sigma|}} \exp\!\left(-\frac{1}{2} (\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu})\right) $$
+      </p>
+      <p>
+        Donde:
+      </p>
+      <ul>
+        <li>\(\boldsymbol{\mu} = (\mu_1, \mu_2, \ldots, \mu_n)^T\) es el vector de medias.</li>
+        <li>\(\Sigma\) es la matriz de covarianza, con \(\sigma_{ij} = \mathrm{Cov}(X_i, X_j)\).</li>
+        <li>\(|\Sigma|\) es el determinante de \(\Sigma\).</li>
+      </ul>
+      <p>
+        <strong>Propiedades Relevantes:</strong>
+      </p>
+      <ul>
+        <li><strong>Marginalidad:</strong> Cualquier subvector de \(\mathbf{X}\) es también normal.</li>
+        <li><strong>Linealidad:</strong> Para cualquier matriz \(A\) y vector \(\mathbf{b}\), la transformación \( \mathbf{Y} = A\mathbf{X} + \mathbf{b} \) es normal.</li>
+        <li>
+          <strong>Función Característica:</strong>
+          $$ \phi_{\mathbf{X}}(\mathbf{t}) = \exp\!\left(i\mathbf{t}^T \boldsymbol{\mu} - \frac{1}{2}\mathbf{t}^T \Sigma \mathbf{t}\right). $$
+        </li>
+        <li>
+          <strong>MGF:</strong>
+          $$ M_{\mathbf{X}}(\mathbf{t}) = \exp\!\left(\mathbf{t}^T \boldsymbol{\mu} + \frac{1}{2}\mathbf{t}^T \Sigma \mathbf{t}\right). $$
+        </li>
+      </ul>
+      <p>
+        Esta distribución es esencial en el análisis de datos multidimensionales y en técnicas como la regresión y reducción de dimensionalidad.
+      </p>
+    </div>
+
+    <!-- Sección 3: Detalles Matemáticos y Derivaciones -->
+    <div class="section" id="detalles-matematicos">
+      <h2>3. Detalles Matemáticos y Derivaciones</h2>
+      
+      <h3>3.1. MGF para la Normal Univariada</h3>
+      <p>
+        Para \(X \sim \mathcal{N}(\mu, \sigma^2)\), la función generadora de momentos es:
+      </p>
+      <p class="formula">
+        $$ M_X(t) = E\left[e^{tX}\right] = \int_{-\infty}^{\infty} e^{tx} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) dx. $$
+      </p>
+      <p>
+        Aplicando la técnica de completar el cuadrado, se obtiene:
+      </p>
+      <p class="formula">
+        $$ M_X(t) = \exp\!\left(\mu t + \frac{1}{2}\sigma^2 t^2\right). $$
+      </p>
+      
+      <h3>3.2. MGF para la Normal Multivariada</h3>
+      <p>
+        Sea \(\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \Sigma)\). Para \(\mathbf{t} \in \mathbb{R}^n\), se tiene:
+      </p>
+      <p class="formula">
+        $$ M_{\mathbf{X}}(\mathbf{t}) = E\!\left[e^{\mathbf{t}^T \mathbf{X}}\right] = \exp\!\left(\mathbf{t}^T \boldsymbol{\mu} + \frac{1}{2} \mathbf{t}^T \Sigma \mathbf{t}\right). $$
+      </p>
+      <p>
+        Esto implica que cualquier combinación lineal de las componentes de \(\mathbf{X}\) es normal.
+      </p>
+      
+      <h3>3.3. Transformaciones Lineales</h3>
+      <p>
+        Si \(\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \Sigma)\) y se define
+      </p>
+      <p class="formula">
+        $$ \mathbf{Y} = A\mathbf{X} + \mathbf{b}, $$
+      </p>
+      <p>
+        donde \(A\) es una matriz de dimensión \(m \times n\) y \(\mathbf{b} \in \mathbb{R}^m\), entonces:
+      </p>
+      <p class="formula">
+        $$ \mathbf{Y} \sim \mathcal{N}(A\boldsymbol{\mu} + \mathbf{b},\, A\Sigma A^T). $$
+      </p>
+      <p>
+        Además, la matriz de covarianza \(\Sigma\) es simétrica (\(\Sigma = \Sigma^T\)) y definida positiva, es decir, para todo \(\mathbf{z} \neq \mathbf{0}\),
+      </p>
+      <p class="formula">
+        $$ \mathbf{z}^T \Sigma \mathbf{z} > 0. $$
+      </p>
+    </div>
+
+    <!-- Sección 4: Conclusión -->
+    <div class="section" id="conclusion">
+      <h2>4. Conclusión</h2>
+      <p>
+        Tanto la distribución normal univariada como la multivariada son pilares fundamentales en la teoría y práctica del análisis estadístico. Dominar estas distribuciones te permitirá aplicar técnicas avanzadas de inferencia y análisis de datos, siendo una base indispensable para métodos más complejos en estadística y aprendizaje automático.
+      </p>
+    </div>
+
+    <!-- Sección 5: Ejemplos y Ejercicios -->
+    <div class="section" id="ejemplos-ejercicios">
+      <h2>5. Ejemplos y Ejercicios</h2>
+      
+      <!-- Ejemplo 1: Normal Univariada -->
+      <h3>Ejemplo 1: Distribución Normal Univariada</h3>
+      <p>
+        Considera la variable aleatoria \(X \sim \mathcal{N}(10, 4)\), es decir, con media \(\mu = 10\) y varianza \(\sigma^2 = 4\). Se desea calcular la probabilidad
+        $$ P(8 < X < 12). $$
+      </p>
+      <p><strong>Solución:</strong></p>
+      <ol>
+        <li>
+          <em>Estandarización:</em> Sea \(Z = \frac{X-10}{2}\). Así,
+          $$ P(8 < X < 12) = P\!\left(\frac{8-10}{2} < Z < \frac{12-10}{2}\right) = P(-1 < Z < 1). $$
+        </li>
+        <li>
+          Consultando la tabla de la normal estándar, se tiene:
+          $$ P(-1 < Z < 1) \approx 0.6826. $$
+        </li>
+      </ol>
+      <p>
+        Por lo tanto, \(P(8 < X < 12) \approx 68.26\%\).
+      </p>
+
+      <!-- Ejercicio 1: Normal Univariada -->
+      <h3>Ejercicio 1: Probabilidad en la Normal Univariada</h3>
+      <p>
+        Sea \(X \sim \mathcal{N}(10, 4)\). Calcular la probabilidad
+        $$ P(7 < X < 13). $$
+      </p>
+      <p><strong>Solución:</strong></p>
+      <ol>
+        <li>
+          Estandarizamos: \(Z = \frac{X-10}{2}\).
+        </li>
+        <li>
+          Los límites se transforman a:
+          $$ P(7 < X < 13) = P\!\left(\frac{7-10}{2} < Z < \frac{13-10}{2}\right) = P(-1.5 < Z < 1.5). $$
+        </li>
+        <li>
+          Con la tabla, se obtiene:
+          $$ P(Z < 1.5) \approx 0.9332 \quad \text{y} \quad P(Z < -1.5) \approx 0.0668, $$
+          de modo que:
+          $$ P(-1.5 < Z < 1.5) \approx 0.9332 - 0.0668 = 0.8664. $$
+        </li>
+      </ol>
+      <p>
+        Por lo tanto, \(P(7 < X < 13) \approx 86.64\%\).
+      </p>
+
+      <!-- Ejemplo 2: Normal Multivariada -->
+      <h3>Ejemplo 2: Distribución Normal Multivariada</h3>
+      <p>
+        Sea \(\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \Sigma)\) con
+        $$ \boldsymbol{\mu} = \begin{pmatrix} 1 \\ 2 \end{pmatrix}, \quad \Sigma = \begin{pmatrix} 4 & 1 \\ 1 & 2 \end{pmatrix}. $$
+        Calcular la densidad en el punto
+        $$ \mathbf{x} = \begin{pmatrix} 3 \\ 4 \end{pmatrix}. $$
+      </p>
+      <p><strong>Solución:</strong></p>
+      <ol>
+        <li>
+          La función de densidad es:
+          $$ f(\mathbf{x}) = \frac{1}{2\pi \sqrt{|\Sigma|}} \exp\!\left(-\frac{1}{2} (\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu})\right). $$
+        </li>
+        <li>
+          Calculamos el determinante:
+          $$ |\Sigma| = (4)(2) - (1)(1) = 8 - 1 = 7. $$
+        </li>
+        <li>
+          La inversa de \(\Sigma\) es:
+          $$ \Sigma^{-1} = \frac{1}{7}\begin{pmatrix} 2 & -1 \\ -1 & 4 \end{pmatrix}. $$
+        </li>
+        <li>
+          Se tiene:
+          $$ \mathbf{x} - \boldsymbol{\mu} = \begin{pmatrix} 3-1 \\ 4-2 \end{pmatrix} = \begin{pmatrix} 2 \\ 2 \end{pmatrix}. $$
+        </li>
+        <li>
+          Calculamos el producto cuadrático:
+          $$ (\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu}) 
+          = \frac{1}{7} \begin{pmatrix} 2 & 2 \end{pmatrix} \begin{pmatrix} 2 & -1 \\ -1 & 4 \end{pmatrix} \begin{pmatrix} 2 \\ 2 \end{pmatrix}. $$
+          Primero:
+          $$ \begin{pmatrix} 2 & -1 \\ -1 & 4 \end{pmatrix} \begin{pmatrix} 2 \\ 2 \end{pmatrix} 
+          = \begin{pmatrix} 4-2 \\ -2+8 \end{pmatrix} = \begin{pmatrix} 2 \\ 6 \end{pmatrix}. $$
+          Luego:
+          $$ \begin{pmatrix} 2 & 2 \end{pmatrix} \begin{pmatrix} 2 \\ 6 \end{pmatrix} = 4 + 12 = 16, $$
+          de modo que:
+          $$ (\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu}) = \frac{16}{7}. $$
+        </li>
+        <li>
+          Por lo tanto, la densidad es:
+          $$ f(\mathbf{x}) = \frac{1}{2\pi \sqrt{7}} \exp\!\left(-\frac{1}{2}\cdot\frac{16}{7}\right)
+          = \frac{1}{2\pi \sqrt{7}} \exp\!\left(-\frac{8}{7}\right). $$
+        </li>
+      </ol>
+      
+      <!-- Ejercicio 2: Combinaciones Lineales en la Normal Multivariada -->
+      <h3>Ejercicio 2: Propiedades de Combinaciones Lineales</h3>
+      <p>
+        Sea \(\mathbf{X} \sim \mathcal{N}(\boldsymbol{0}, \Sigma)\) con
+        $$ \Sigma = \begin{pmatrix} 3 & 1 \\ 1 & 2 \end{pmatrix}. $$
+        Demuestra que para cualquier \(a, b \in \mathbb{R}\), la combinación lineal
+        $$ Y = aX_1 + bX_2 $$
+        es una variable normal, y encuentra su media y varianza.
+      </p>
+      <p><strong>Solución:</strong></p>
+      <ol>
+        <li>
+          Dado que \(\mathbf{X}\) es normal multivariada, cualquier combinación lineal de sus componentes es normal.
+        </li>
+        <li>
+          La media de \(Y\) es:
+          $$ E(Y) = aE(X_1) + bE(X_2) = a\cdot0 + b\cdot0 = 0. $$
+        </li>
+        <li>
+          La varianza de \(Y\) se calcula como:
+          $$ \mathrm{Var}(Y) = a^2 \mathrm{Var}(X_1) + b^2 \mathrm{Var}(X_2) + 2ab\, \mathrm{Cov}(X_1, X_2). $$
+          Dado que \(\mathrm{Var}(X_1) = 3\), \(\mathrm{Var}(X_2) = 2\) y \(\mathrm{Cov}(X_1, X_2) = 1\), se tiene:
+          $$ \mathrm{Var}(Y) = 3a^2 + 2b^2 + 2ab. $$
+        </li>
+      </ol>
+      <p>
+        Así, cualquier combinación lineal \(Y = aX_1 + bX_2\) es normal con media \(0\) y varianza \(3a^2 + 2b^2 + 2ab\).
+      </p>
+    </div>
+
+  </div> <!-- Fin del container principal -->
+
+  <div class="footer">
+    <p>&copy; 2025 Curso de Modelos Lineales. Todos los derechos reservados.</p>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

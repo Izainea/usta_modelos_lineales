@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modelos Lineales</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      scroll-behavior: smooth;
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      line-height: 1.6;
+    }
+    .section {
+      padding: 60px 20px;
+    }
+    .section:nth-of-type(even) {
+      background-color: #ffffff;
+    }
+    .section:nth-of-type(odd) {
+      background-color: #e9ecef;
+    }
+    .section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #343a40;
+    }
+    .section p, .section li {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.1rem;
+      color: #495057;
+    }
+    .btn-nav {
+      margin: 10px;
+    }
+    .navigation-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .navbar-brand {
+      font-weight: bold;
+    }
+    .footer {
+      padding: 20px;
+      text-align: center;
+      background: #343a40;
+      color: #fff;
+    }
+    /* Estilo para los canvas (gráficos) */
+    .chart-container {
+      max-width: 800px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navegación fija -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Modelos Lineales</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegación">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#slide1">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide2">El Poder de los Datos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide3">Regresión Lineal Simple</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide4">Regresión Múltiple</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide5">Validación y Diagnóstico</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide6">Inferencia Bayesiana</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide7">Análisis de Varianza</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide8">Conclusión</a></li>
+          <li class="nav-item"><a class="nav-link" href="#slide9">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Slide 1: Inicio -->
+  <section id="slide1" class="section">
+    <div class="container">
+      <h2>Bienvenidos a Modelos Lineales</h2>
+      <p>
+        Hola, hoy iniciaremos un viaje por el mundo de los modelos lineales, una herramienta esencial en la estadística que nos permite transformar datos en conocimiento para tomar decisiones estratégicas.
+      </p>
+      <img src="https://picsum.photos/1200/400?random=1" alt="Imagen representativa" class="img-fluid rounded d-block mx-auto my-4">
+      <p class="text-center">
+        Imagina que cada dato es una palabra; los modelos lineales son la narrativa que te ayuda a entender la historia completa.
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide2" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 2: El Poder de los Datos -->
+  <section id="slide2" class="section">
+    <div class="container">
+      <h2>El Poder de los Datos</h2>
+      <p>
+        En la era actual, los datos se han convertido en el recurso más valioso. Desde la salud hasta la economía, la habilidad para interpretar grandes volúmenes de información es crucial. Los modelos lineales nos permiten desentrañar patrones ocultos y extraer conclusiones significativas.
+      </p>
+      <p>
+        Esta charla te ayudará a comprender por qué es fundamental dominar estas técnicas y cómo cada tema del curso se articula para dotarte de habilidades que trascienden el análisis numérico.
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide1" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide3" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 3: Regresión Lineal Simple (con gráfico interactivo) -->
+  <section id="slide3" class="section">
+    <div class="container">
+      <h2>Regresión Lineal Simple: La Base del Análisis</h2>
+      <p>
+        Comenzamos con la regresión lineal simple, que nos permite entender la relación entre dos variables. Aquí aprenderás a modelar cómo una variable afecta a otra, calcular la pendiente (b<sub>1</sub>) y el intercepto (b<sub>0</sub>), y evaluar la calidad del modelo mediante el coeficiente de determinación (R<sup>2</sup>).
+      </p>
+      <p>
+        Observa el siguiente gráfico interactivo que ilustra, de forma simplificada, la relación entre una variable independiente y una dependiente:
+      </p>
+      <div class="chart-container my-4">
+        <canvas id="regresionChart"></canvas>
+      </div>
+      <p>
+        Con este gráfico, podemos visualizar cómo se ajusta una línea de regresión a los datos, lo que es esencial para interpretar la relación y la eficacia del modelo.
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide2" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide4" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 4: Regresión Múltiple (con gráfico interactivo) -->
+  <section id="slide4" class="section">
+    <div class="container">
+      <h2>Regresión Múltiple: Cuando Una Variable No es Suficiente</h2>
+      <p>
+        En el mundo real, los fenómenos rara vez dependen de una sola variable. La regresión múltiple amplía el análisis incluyendo múltiples variables independientes, lo que nos ofrece una visión más completa de los procesos subyacentes.
+      </p>
+      <p>
+        En este segmento, observa el siguiente gráfico que muestra un ejemplo simplificado de los coeficientes estimados para tres variables (X1, X2 y X3). Este gráfico de barras te ayuda a visualizar la importancia relativa de cada variable en el modelo:
+      </p>
+      <div class="chart-container my-4">
+        <canvas id="multiplesChart"></canvas>
+      </div>
+      <p>
+        Al interpretar estos coeficientes, podrás identificar cuáles son las variables que más influyen en el fenómeno que estudias.
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide3" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide5" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: Validación y Diagnóstico (con gráfico interactivo) -->
+  <section id="slide5" class="section">
+    <div class="container">
+      <h2>Validación y Diagnóstico: Asegurando la Calidad del Modelo</h2>
+      <p>
+        No basta con ajustar un modelo, es esencial validarlo. Analizar los residuales nos ayuda a detectar errores, identificar outliers y garantizar la confiabilidad del modelo.
+      </p>
+      <p>
+        A continuación, observa este gráfico interactivo que muestra los residuales para un conjunto de observaciones. Un buen diagnóstico permite ajustar y mejorar el modelo para obtener predicciones más precisas.
+      </p>
+      <div class="chart-container my-4">
+        <canvas id="diagnosticoChart"></canvas>
+      </div>
+      <div class="navigation-buttons">
+        <a href="#slide4" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide6" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 6: Inferencia Bayesiana -->
+  <section id="slide6" class="section">
+    <div class="container">
+      <h2>La Magia de la Inferencia Bayesiana</h2>
+      <p>
+        La inferencia bayesiana nos permite incorporar información previa y actualizar nuestras conclusiones conforme se disponen de nuevos datos. Es especialmente útil cuando trabajamos con modelos complejos o en situaciones de alta incertidumbre.
+      </p>
+      <p>
+        Aquí descubrirás cómo este enfoque complementa la regresión múltiple y mejora la precisión de los estimadores, dotándote de una herramienta poderosa para el análisis estadístico.
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide5" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide7" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 7: Análisis de Varianza -->
+  <section id="slide7" class="section">
+    <div class="container">
+      <h2>Análisis de Varianza: Descomponiendo la Fuente de la Variabilidad</h2>
+      <p>
+        El análisis de varianza (ANOVA) permite descomponer la variabilidad total en componentes explicados por el modelo y error. Esto es vital para comparar modelos y evaluar el impacto de cada variable.
+      </p>
+      <p>
+        Este enfoque complementa lo visto en regresión y diagnóstico, ayudándote a comprender de forma integral cómo y por qué cada factor influye en los resultados.
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide6" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide8" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 8: Conclusión -->
+  <section id="slide8" class="section">
+    <div class="container">
+      <h2>Conclusión: La Secuencia y su Relevancia</h2>
+      <p>
+        Hemos recorrido desde los conceptos básicos de la regresión lineal simple hasta técnicas avanzadas como la inferencia bayesiana y el análisis de varianza. Cada tema se ha seleccionado para dotarte de una base sólida y herramientas aplicables a problemas reales.
+      </p>
+      <p>
+        Al dominar estos conceptos, transformarás datos en información estratégica y tomarás decisiones fundamentadas. ¡Ese es el verdadero poder de los modelos lineales!
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide7" class="btn btn-secondary btn-nav">Anterior</a>
+        <a href="#slide9" class="btn btn-primary btn-nav">Siguiente</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 9: Contacto -->
+  <section id="slide9" class="section">
+    <div class="container">
+      <h2>Contacto</h2>
+      <p>
+        Si deseas profundizar en alguno de estos temas o tienes alguna duda, no dudes en contactarme.
+      </p>
+      <p>
+        <strong>Carlos Isaac Zainea</strong><br>
+        <a href="mailto:carloszainea@usta.edu.co">carloszainea@usta.edu.co</a>
+      </p>
+      <div class="navigation-buttons">
+        <a href="#slide8" class="btn btn-secondary btn-nav">Anterior</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pie de página -->
+  <footer class="footer">
+    <p>&copy; 2025 Curso de Modelos Lineales. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Scripts para gráficos interactivos con Chart.js -->
+  <script>
+    // Slide 3: Gráfico de Regresión Lineal Simple (Scatter + Línea de Regresión)
+    const ctxRegresion = document.getElementById('regresionChart').getContext('2d');
+    const regresionChart = new Chart(ctxRegresion, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Datos Observados',
+            data: [
+              {x: 1, y: 2}, 
+              {x: 2, y: 2.5}, 
+              {x: 3, y: 3.5}, 
+              {x: 4, y: 4}, 
+              {x: 5, y: 5}
+            ],
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            pointRadius: 5
+          },
+          {
+            label: 'Línea de Regresión',
+            data: [{x: 1, y: 1.8}, {x: 5, y: 5.2}],
+            type: 'line',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2,
+            fill: false,
+            pointRadius: 0
+          }
+        ]
+      },
+      options: {
+        scales: {
+          x: {
+            title: { display: true, text: 'Variable Independiente (X)' }
+          },
+          y: {
+            title: { display: true, text: 'Variable Dependiente (Y)' }
+          }
+        }
+      }
+    });
+
+    // Slide 4: Gráfico de Regresión Múltiple (Barra de Coeficientes)
+    const ctxMultiples = document.getElementById('multiplesChart').getContext('2d');
+    const multiplesChart = new Chart(ctxMultiples, {
+      type: 'bar',
+      data: {
+        labels: ['X1', 'X2', 'X3'],
+        datasets: [{
+          label: 'Coeficientes Estimados',
+          data: [0.5, 1.2, -0.8],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 205, 86, 0.7)',
+            'rgba(255, 99, 132, 0.7)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 205, 86, 1)',
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Valor del Coeficiente' }
+          }
+        }
+      }
+    });
+
+    // Slide 5: Gráfico de Diagnóstico (Residuales)
+    const ctxDiagnostico = document.getElementById('diagnosticoChart').getContext('2d');
+    const diagnosticoChart = new Chart(ctxDiagnostico, {
+      type: 'line',
+      data: {
+        labels: ['Obs 1', 'Obs 2', 'Obs 3', 'Obs 4', 'Obs 5'],
+        datasets: [{
+          label: 'Residuales',
+          data: [0.2, -0.1, 0.15, -0.05, 0.1],
+          backgroundColor: 'rgba(153, 102, 255, 0.5)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          fill: false,
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: { display: true, text: 'Valor Residual' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
