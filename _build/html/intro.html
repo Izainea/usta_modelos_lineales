@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>📘 Modelos Lineales con Python &#8212; Modelos Lineales</title>
+    <title>📘 Modelos Lineales: De los Datos a las Decisiones &#8212; Modelos Lineales</title>
   
   
   
@@ -167,12 +167,19 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    📘 Modelos Lineales con Python
+                    📘 Modelos Lineales: De los Datos a las Decisiones
                 </a>
             </li>
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html">Regresión Lineal Simple: Teoría y Práctica</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="practica.html">Modelos Lineales: Fundamentos, Estimación y Evaluación</a></li>
+
+
+
+
 
 
 </ul>
@@ -357,7 +364,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>📘 Modelos Lineales con Python</h1>
+    <h1>📘 Modelos Lineales: De los Datos a las Decisiones</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -368,10 +375,23 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">🎯 Objetivo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-del-repositorio">📂 Estructura del repositorio</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramientas-y-tecnologias">🛠️ Herramientas y Tecnologías</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#publico-objetivo">🎓 Público Objetivo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-usar-este-repositorio">🚀 Cómo Usar Este repositorio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido-del-curso">📚 Contenido del Curso</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-poder-de-los-datos">1. El Poder de los Datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-lineal-simple">2. Regresión Lineal Simple</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-multiple">3. Regresión Múltiple</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validacion-y-diagnostico">4. Validación y Diagnóstico</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inferencia-bayesiana">5. Inferencia Bayesiana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-varianza-anova">6. Análisis de Varianza (ANOVA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramientas-y-tecnologias">🛠️ Herramientas y Tecnologías</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-principales">Bibliotecas Principales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#publico-objetivo">👥 Público Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">📊 Metodología</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos-previos">✅ Requisitos Previos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contacto">📞 Contacto</a></li>
 </ul>
             </nav>
         </div>
@@ -383,88 +403,154 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="modelos-lineales-con-python">
-<h1>📘 Modelos Lineales con Python<a class="headerlink" href="#modelos-lineales-con-python" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="modelos-lineales-de-los-datos-a-las-decisiones">
+<h1>📘 Modelos Lineales: De los Datos a las Decisiones<a class="headerlink" href="#modelos-lineales-de-los-datos-a-las-decisiones" title="Link to this heading">#</a></h1>
 <section id="objetivo">
 <h2>🎯 Objetivo<a class="headerlink" href="#objetivo" title="Link to this heading">#</a></h2>
-<p>Este repositorio tiene como propósito proporcionar una guía completa sobre <strong>Modelos Lineales</strong> en el contexto de la estadística aplicada. Se abordarán desde los fundamentos teóricos hasta implementaciones prácticas utilizando <strong>Python</strong> y bibliotecas especializadas como <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> y <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html">Regresión Lineal Simple: Teoría y Práctica</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html#estimacion-de-parametros">2. Estimación de Parámetros</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html#bondad-de-ajuste-en-regresion-lineal">5. Bondad de Ajuste en Regresión Lineal</a></li>
-</ul>
-</div>
-<p>El repositorio está estructurado en cuadernos interactivos utilizando <strong>Jupyter</strong>, lo que permitirá una experiencia de aprendizaje práctica e intuitiva.</p>
+<p>Este curso proporciona una comprensión profunda de los <strong>Modelos Lineales</strong>, desde sus fundamentos teóricos hasta aplicaciones prácticas, utilizando <strong>Python</strong> como herramienta principal. El enfoque es transformar datos en conocimiento para tomar decisiones estratégicas.</p>
 </section>
-<section id="estructura-del-repositorio">
-<h2>📂 Estructura del repositorio<a class="headerlink" href="#estructura-del-repositorio" title="Link to this heading">#</a></h2>
-<p>El contenido del repositorio está dividido en las siguientes secciones:</p>
-<ol class="arabic simple">
-<li><p><strong>Fundamentos de Modelos Lineales</strong></p>
+<section id="contenido-del-curso">
+<h2>📚 Contenido del Curso<a class="headerlink" href="#contenido-del-curso" title="Link to this heading">#</a></h2>
+<section id="el-poder-de-los-datos">
+<h3>1. El Poder de los Datos<a class="headerlink" href="#el-poder-de-los-datos" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Introducción a la regresión lineal.</p></li>
-<li><p>Supuestos del modelo.</p></li>
-<li><p>Exploración de datos y formulación del modelo.</p></li>
+<li><p>Importancia de los datos en la era actual</p></li>
+<li><p>Aplicaciones en diversos campos</p></li>
+<li><p>Papel de los modelos lineales en la interpretación de datos</p></li>
+<li><p>Herramientas y conceptos fundamentales</p></li>
+</ul>
+</section>
+<section id="regresion-lineal-simple">
+<h3>2. Regresión Lineal Simple<a class="headerlink" href="#regresion-lineal-simple" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Conceptos fundamentales</p>
+<ul>
+<li><p>Variable dependiente e independiente</p></li>
+<li><p>Estimación de parámetros (β₀, β₁)</p></li>
+<li><p>Interpretación geométrica</p></li>
 </ul>
 </li>
-<li><p><strong>Ajuste y Evaluación de Modelos</strong></p>
+<li><p>Implementación en Python</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Ejemplo básico</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># Añadir intercepto</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
 <ul class="simple">
-<li><p>Métodos de estimación de parámetros.</p></li>
-<li><p>Diagnóstico del modelo.</p></li>
-<li><p>Evaluación de la calidad del ajuste.</p></li>
+<li><p>Visualización de relaciones</p></li>
+<li><p>Interpretación de resultados</p></li>
+</ul>
+</section>
+<section id="regresion-multiple">
+<h3>3. Regresión Múltiple<a class="headerlink" href="#regresion-multiple" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Extensión a múltiples variables</p></li>
+<li><p>Selección de variables predictoras</p></li>
+<li><p>Interpretación de coeficientes</p></li>
+<li><p>Casos prácticos</p></li>
+<li><p>Diagnóstico del modelo</p></li>
+</ul>
+</section>
+<section id="validacion-y-diagnostico">
+<h3>4. Validación y Diagnóstico<a class="headerlink" href="#validacion-y-diagnostico" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Análisis de residuales</p></li>
+<li><p>Detección de outliers</p></li>
+<li><p>Pruebas de supuestos</p>
+<ul>
+<li><p>Normalidad</p></li>
+<li><p>Homocedasticidad</p></li>
+<li><p>Independencia</p></li>
 </ul>
 </li>
-<li><p><strong>Técnicas Avanzadas en Modelos Lineales</strong></p>
-<ul class="simple">
-<li><p>Mínimos cuadrados ponderados y generalizados.</p></li>
-<li><p>Regresión robusta.</p></li>
-<li><p>Comparación de modelos y selección de variables.</p></li>
+<li><p>Técnicas de validación cruzada</p></li>
 </ul>
-</li>
-<li><p><strong>Modelos de Regresión Logística</strong></p>
+</section>
+<section id="inferencia-bayesiana">
+<h3>5. Inferencia Bayesiana<a class="headerlink" href="#inferencia-bayesiana" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Fundamentos y aplicación.</p></li>
-<li><p>Evaluación del rendimiento con métricas avanzadas.</p></li>
-<li><p>Interpretación de resultados y aplicaciones en predicción.</p></li>
+<li><p>Fundamentos de estadística bayesiana</p></li>
+<li><p>Incorporación de información previa</p></li>
+<li><p>Actualización de modelos</p></li>
+<li><p>Ventajas en situaciones de incertidumbre</p></li>
+<li><p>Implementación con PyMC3</p></li>
 </ul>
-</li>
-</ol>
+</section>
+<section id="analisis-de-varianza-anova">
+<h3>6. Análisis de Varianza (ANOVA)<a class="headerlink" href="#analisis-de-varianza-anova" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Descomposición de la variabilidad</p></li>
+<li><p>ANOVA de una vía</p></li>
+<li><p>ANOVA factorial</p></li>
+<li><p>Interpretación y diagnóstico</p></li>
+<li><p>Aplicaciones prácticas</p></li>
+</ul>
+</section>
 </section>
 <section id="herramientas-y-tecnologias">
 <h2>🛠️ Herramientas y Tecnologías<a class="headerlink" href="#herramientas-y-tecnologias" title="Link to this heading">#</a></h2>
-<p>Para la implementación de los modelos, usaremos:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> y <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> para manipulación y visualización de datos.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code> para exploración visual avanzada.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> y <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> para ajuste de modelos.</p></li>
-</ul>
+<section id="bibliotecas-principales">
+<h3>Bibliotecas Principales<a class="headerlink" href="#bibliotecas-principales" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>              <span class="c1"># Computación numérica</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>            <span class="c1"># Manipulación de datos</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span> <span class="c1"># Visualización</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>          <span class="c1"># Visualización estadística</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>   <span class="c1"># Modelado estadístico</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>    <span class="c1"># Pruebas estadísticas</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="publico-objetivo">
-<h2>🎓 Público Objetivo<a class="headerlink" href="#publico-objetivo" title="Link to this heading">#</a></h2>
-<p>Este repositorio está dirigido a estudiantes, investigadores y profesionales interesados en:</p>
+<h2>👥 Público Objetivo<a class="headerlink" href="#publico-objetivo" title="Link to this heading">#</a></h2>
+<p>Este curso está diseñado para:</p>
 <ul class="simple">
-<li><p>Aprender a construir y evaluar modelos lineales.</p></li>
-<li><p>Aplicar técnicas estadísticas en problemas reales.</p></li>
-<li><p>Profundizar en modelado estadístico con herramientas de código abierto.</p></li>
+<li><p>Estudiantes de estadística y ciencia de datos</p></li>
+<li><p>Profesionales que requieren análisis cuantitativos</p></li>
+<li><p>Investigadores que necesitan herramientas de modelado</p></li>
+<li><p>Analistas de datos buscando profundizar en modelos lineales</p></li>
 </ul>
 </section>
-<section id="como-usar-este-repositorio">
-<h2>🚀 Cómo Usar Este repositorio<a class="headerlink" href="#como-usar-este-repositorio" title="Link to this heading">#</a></h2>
-<p>Cada capítulo contiene:</p>
+<section id="metodologia">
+<h2>📊 Metodología<a class="headerlink" href="#metodologia" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Explicaciones teóricas detalladas.</p></li>
-<li><p>Ejemplos prácticos con código ejecutable.</p></li>
-<li><p>Casos de estudio aplicados.</p></li>
-<li><p>Tareas y ejercicios recomendados.</p></li>
+<li><p>Aprendizaje basado en problemas</p></li>
+<li><p>Ejemplos prácticos con datos reales</p></li>
+<li><p>Implementaciones en Python</p></li>
+<li><p>Ejercicios guiados y proyectos</p></li>
 </ul>
+</section>
+<section id="requisitos-previos">
+<h2>✅ Requisitos Previos<a class="headerlink" href="#requisitos-previos" title="Link to this heading">#</a></h2>
+<p>Se recomienda tener conocimientos básicos de:</p>
+<ul class="simple">
+<li><p>Estadística descriptiva</p></li>
+<li><p>Probabilidad básica</p></li>
+<li><p>Python fundamental</p></li>
+<li><p>Álgebra lineal básica</p></li>
+</ul>
+</section>
+<section id="contacto">
+<h2>📞 Contacto<a class="headerlink" href="#contacto" title="Link to this heading">#</a></h2>
+<p>Para consultas y más información:</p>
+<ul class="simple">
+<li><p><strong>Profesor</strong>: Carlos Isaac Zainea</p></li>
+<li><p><strong>Email</strong>: <a class="reference external" href="mailto:carloszainea&#37;&#52;&#48;usta&#46;edu&#46;co">carloszainea<span>&#64;</span>usta<span>&#46;</span>edu<span>&#46;</span>co</a></p></li>
+</ul>
+<hr class="docutils" />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Para sacar el máximo provecho de este repositorio, se recomienda tener conocimientos básicos de estadística y programación en Python.</p>
+<p>Este curso combina teoría estadística con implementaciones prácticas, permitiendo una comprensión profunda de los modelos lineales y su aplicación en problemas reales.</p>
 </div>
-<hr class="docutils" />
-<p>A continuación, comenzaremos con la <strong>Introducción a los Modelos Lineales</strong>, donde exploraremos su importancia y aplicaciones.</p>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -524,10 +610,23 @@
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo">🎯 Objetivo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-del-repositorio">📂 Estructura del repositorio</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramientas-y-tecnologias">🛠️ Herramientas y Tecnologías</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#publico-objetivo">🎓 Público Objetivo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-usar-este-repositorio">🚀 Cómo Usar Este repositorio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido-del-curso">📚 Contenido del Curso</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-poder-de-los-datos">1. El Poder de los Datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-lineal-simple">2. Regresión Lineal Simple</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-multiple">3. Regresión Múltiple</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validacion-y-diagnostico">4. Validación y Diagnóstico</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inferencia-bayesiana">5. Inferencia Bayesiana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-varianza-anova">6. Análisis de Varianza (ANOVA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramientas-y-tecnologias">🛠️ Herramientas y Tecnologías</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-principales">Bibliotecas Principales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#publico-objetivo">👥 Público Objetivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">📊 Metodología</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos-previos">✅ Requisitos Previos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contacto">📞 Contacto</a></li>
 </ul>
   </nav></div>
 

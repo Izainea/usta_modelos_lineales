@@ -94,7 +94,7 @@ plt.show()
 
 # 2. Estimación de Parámetros
 
-### 2.1 Método de Mínimos Cuadrados
+## 2.1 Método de Mínimos Cuadrados
 
 ```{admonition} Principio de Mínimos Cuadrados
 El método busca los valores de $\beta_0$ y $\beta_1$ que minimizan la suma de cuadrados de los residuos:
@@ -103,7 +103,6 @@ $\sum_{i=1}^n (y_i - \hat{y}i)^2 = \sum{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta
 ```
 
 
-## 2.1 Planteamiento del Problema
 
 ```{admonition} Objetivo
 :class: important

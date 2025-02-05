@@ -5,3 +5,4 @@ format: jb-book
 root: intro
 chapters:
 - file: modelos_lineales_1.md
+- file: practica.ipynb
