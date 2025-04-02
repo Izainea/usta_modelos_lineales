@@ -1,0 +1,2105 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos &#8212; Modelos Lineales</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Taller_2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Taller 3: Multicolinealidad en Modelos Lineales" href="Taller_3.html" />
+    <link rel="prev" title="Taller 1: Modelo Normal - Supuestos e Inferencia" href="Taller_1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Modelos Lineales - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Modelos Lineales - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    📘 Modelos Lineales: De los Datos a las Decisiones
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html">Regresión Lineal Simple: Teoría y Práctica</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="practica.html">Modelos Lineales: Fundamentos, Estimación y Evaluación</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Taller_1.html">Taller 1: Modelo Normal - Supuestos e Inferencia</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_3.html">Taller 3: Multicolinealidad en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_4.html">Taller 4: Soluciones a la Multicolinealidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_5.html">Taller 5: Métodos Computacionales en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_6.html">Taller 6: Selección de Variables en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_7.html">Taller 7: Análisis de Residuos en Modelos Lineales</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Izainea/usta_modelos_lineales" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Izainea/usta_modelos_lineales/issues/new?title=Issue%20on%20page%20%2FTaller_2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Taller_2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion">Descripción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-de-aprendizaje">Objetivos de Aprendizaje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerrequisitos">Prerrequisitos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamentos-teoricos-de-la-inferencia-en-regresion-multiple">1. Fundamentos Teóricos de la Inferencia en Regresión Múltiple</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recordatorio-del-modelo-lineal">1.1 Recordatorio del Modelo Lineal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inferencia-sobre-coeficientes-individuales-el-estadistico-t">1.2 Inferencia sobre Coeficientes Individuales: El Estadístico t</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-del-p-valor">Interpretación del p-valor</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intervalos-de-confianza-para-coeficientes">1.3 Intervalos de Confianza para Coeficientes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-pruebas-de-hipotesis">Relación con Pruebas de Hipótesis</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pruebas-de-hipotesis-conjuntas-el-estadistico-f">1.4 Pruebas de Hipótesis Conjuntas: El Estadístico F</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#casos-particulares-de-pruebas-f">Casos Particulares de Pruebas F</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-de-determinacion-y-prueba-f">1.5 Coeficiente de Determinación y Prueba F</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-el-estadistico-f">Relación con el Estadístico F</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2-ajustado"><span class="math notranslate nohighlight">\(R^2\)</span> Ajustado</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-computacional">2. Implementación Computacional</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-del-modelo-de-regresion-lineal">2.1 Implementación del Modelo de Regresión Lineal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicios-practicos">4. Ejercicios Prácticos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-regresion-simple">Ejercicio 1: Regresión Simple</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-regresion-multiple-con-datos-simulados">Ejercicio 2: Regresión Múltiple con Datos Simulados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-analisis-de-datos-reales">Ejercicio 3: Análisis de Datos Reales</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4-analisis-de-hipotesis-y-potencia-estadistica">Ejercicio 4: Análisis de Hipótesis y Potencia Estadística</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5-desafio-de-programacion">Ejercicio 5: Desafío de Programación</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-y-conclusiones">6. Resumen y Conclusiones</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anexo-derivacion-matematica-de-la-distribucion-de-los-estimadores">Anexo: Derivación Matemática de la Distribución de los Estimadores</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-del-estimador-ols">Distribución del Estimador OLS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-del-estadistico-t">Distribución del Estadístico t</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-del-estadistico-f">Distribución del Estadístico F</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="taller-2-regresion-multiple-pruebas-de-hipotesis-e-intervalos">
+<h1>Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos<a class="headerlink" href="#taller-2-regresion-multiple-pruebas-de-hipotesis-e-intervalos" title="Link to this heading">#</a></h1>
+<section id="descripcion">
+<h2>Descripción<a class="headerlink" href="#descripcion" title="Link to this heading">#</a></h2>
+<p>En este taller exploraremos cómo realizar inferencia estadística en modelos de regresión múltiple, enfocándonos en la construcción de pruebas de hipótesis e intervalos de confianza para los coeficientes del modelo. Aprenderemos a implementar desde cero los estadísticos t y F, y a interpretar sus resultados en diferentes escenarios prácticos.</p>
+</section>
+<section id="objetivos-de-aprendizaje">
+<h2>Objetivos de Aprendizaje<a class="headerlink" href="#objetivos-de-aprendizaje" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Formular pruebas de hipótesis sobre coeficientes individuales y conjuntos de coeficientes</p></li>
+<li><p>Calcular e interpretar intervalos de confianza para los parámetros del modelo</p></li>
+<li><p>Aplicar t-test y F-test en el contexto de regresión múltiple</p></li>
+<li><p>Implementar computacionalmente las metodologías de inferencia estadística</p></li>
+</ul>
+</section>
+<section id="prerrequisitos">
+<h2>Prerrequisitos<a class="headerlink" href="#prerrequisitos" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Haber completado el Taller 0 (Modelo Centrado) y el Taller 1 (Modelo Normal)</p></li>
+<li><p>Conocimientos básicos de álgebra lineal y estadística inferencial</p></li>
+<li><p>Familiaridad con Python y bibliotecas científicas (NumPy, SciPy, Matplotlib)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importación de bibliotecas necesarias</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linalg</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
+
+<span class="c1"># Configuraciones de visualización</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+
+<span class="c1"># Para reproducibilidad</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="c1"># Ignorar advertencias</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bibliotecas importadas correctamente&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bibliotecas importadas correctamente
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fundamentos-teoricos-de-la-inferencia-en-regresion-multiple">
+<h2>1. Fundamentos Teóricos de la Inferencia en Regresión Múltiple<a class="headerlink" href="#fundamentos-teoricos-de-la-inferencia-en-regresion-multiple" title="Link to this heading">#</a></h2>
+<p>En los talleres anteriores, introdujimos el modelo de regresión lineal múltiple y exploramos los estimadores de mínimos cuadrados ordinarios (OLS) y máxima verosimilitud (MLE) bajo el supuesto de normalidad. Ahora, daremos un paso más y nos centraremos en cómo realizar inferencia estadística sobre los parámetros estimados.</p>
+<section id="recordatorio-del-modelo-lineal">
+<h3>1.1 Recordatorio del Modelo Lineal<a class="headerlink" href="#recordatorio-del-modelo-lineal" title="Link to this heading">#</a></h3>
+<p>Recordemos brevemente el modelo de regresión lineal múltiple:</p>
+<div class="math notranslate nohighlight">
+\[y = X\beta + \varepsilon\]</div>
+<p>donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y\)</span> es un vector de <span class="math notranslate nohighlight">\(n\)</span> observaciones de la variable dependiente</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span> es una matriz de diseño de <span class="math notranslate nohighlight">\(n \times (p+1)\)</span> (incluyendo una columna de unos para el intercepto)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span> es un vector de <span class="math notranslate nohighlight">\((p+1)\)</span> coeficientes a estimar</p></li>
+<li><p><span class="math notranslate nohighlight">\(\varepsilon\)</span> es un vector de <span class="math notranslate nohighlight">\(n\)</span> términos de error aleatorios</p></li>
+</ul>
+<p>Bajo los supuestos clásicos:</p>
+<ol class="arabic simple">
+<li><p>Linealidad: <span class="math notranslate nohighlight">\(E[y|X] = X\beta\)</span></p></li>
+<li><p>Independencia: los errores <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> son independientes entre sí</p></li>
+<li><p>Homocedasticidad: <span class="math notranslate nohighlight">\(Var(\varepsilon_i) = \sigma^2\)</span> para todo <span class="math notranslate nohighlight">\(i\)</span></p></li>
+<li><p>Normalidad: <span class="math notranslate nohighlight">\(\varepsilon \sim N(0, \sigma^2 I_n)\)</span></p></li>
+</ol>
+<p>El estimador de mínimos cuadrados ordinarios es:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta} = (X'X)^{-1}X'y\]</div>
+<p>Y su matriz de covarianza:</p>
+<div class="math notranslate nohighlight">
+\[Var(\hat{\beta}) = \sigma^2 (X'X)^{-1}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(\sigma^2\)</span> es la varianza del error, que podemos estimar como:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\sigma}^2 = \frac{RSS}{n-p-1} = \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n-p-1}\]</div>
+<p>Aquí, <span class="math notranslate nohighlight">\(RSS\)</span> representa la suma de cuadrados de los residuos y <span class="math notranslate nohighlight">\((n-p-1)\)</span> son los grados de libertad del modelo.</p>
+</section>
+<section id="inferencia-sobre-coeficientes-individuales-el-estadistico-t">
+<h3>1.2 Inferencia sobre Coeficientes Individuales: El Estadístico t<a class="headerlink" href="#inferencia-sobre-coeficientes-individuales-el-estadistico-t" title="Link to this heading">#</a></h3>
+<p>Una vez que hemos estimado los coeficientes <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>, nos interesa evaluar si estos son estadísticamente significativos. Para un coeficiente individual <span class="math notranslate nohighlight">\(\beta_j\)</span>, la hipótesis nula típica es:</p>
+<div class="math notranslate nohighlight">
+\[H_0: \beta_j = 0\]</div>
+<p>versus la alternativa:</p>
+<div class="math notranslate nohighlight">
+\[H_1: \beta_j \neq 0\]</div>
+<p>Bajo los supuestos del modelo lineal clásico, el estadístico t para probar esta hipótesis es:</p>
+<div class="math notranslate nohighlight">
+\[t_j = \frac{\hat{\beta}_j - 0}{SE(\hat{\beta}_j)} = \frac{\hat{\beta}_j}{\sqrt{\hat{\sigma}^2 \cdot [( X'X)^{-1}]_{jj}}}\]</div>
+<p>donde <span class="math notranslate nohighlight">\([( X'X)^{-1}]_{jj}\)</span> es el elemento diagonal <span class="math notranslate nohighlight">\(j\)</span>-ésimo de la matriz <span class="math notranslate nohighlight">\((X'X)^{-1}\)</span>.</p>
+<p>Bajo <span class="math notranslate nohighlight">\(H_0\)</span>, este estadístico sigue una distribución t de Student con <span class="math notranslate nohighlight">\((n-p-1)\)</span> grados de libertad. Para un nivel de significación <span class="math notranslate nohighlight">\(\alpha\)</span>, rechazamos <span class="math notranslate nohighlight">\(H_0\)</span> si:</p>
+<div class="math notranslate nohighlight">
+\[|t_j| &gt; t_{n-p-1, \alpha/2}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(t_{n-p-1, \alpha/2}\)</span> es el valor crítico de la distribución t con <span class="math notranslate nohighlight">\((n-p-1)\)</span> grados de libertad.</p>
+<section id="interpretacion-del-p-valor">
+<h4>Interpretación del p-valor<a class="headerlink" href="#interpretacion-del-p-valor" title="Link to this heading">#</a></h4>
+<p>El p-valor asociado a un estadístico t observado nos indica la probabilidad de obtener un valor tan extremo (o más) si la hipótesis nula fuera cierta. Matemáticamente:</p>
+<div class="math notranslate nohighlight">
+\[p\text{-valor} = 2 \cdot P(T_{n-p-1} &gt; |t_j|)\]</div>
+<p>donde <span class="math notranslate nohighlight">\(T_{n-p-1}\)</span> es una variable aleatoria con distribución t de Student con <span class="math notranslate nohighlight">\((n-p-1)\)</span> grados de libertad.</p>
+<p>Típicamente:</p>
+<ul class="simple">
+<li><p>Si <span class="math notranslate nohighlight">\(p\text{-valor} \leq \alpha\)</span>, rechazamos <span class="math notranslate nohighlight">\(H_0\)</span></p></li>
+<li><p>Si <span class="math notranslate nohighlight">\(p\text{-valor} &gt; \alpha\)</span>, no rechazamos <span class="math notranslate nohighlight">\(H_0\)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="intervalos-de-confianza-para-coeficientes">
+<h3>1.3 Intervalos de Confianza para Coeficientes<a class="headerlink" href="#intervalos-de-confianza-para-coeficientes" title="Link to this heading">#</a></h3>
+<p>Un intervalo de confianza del <span class="math notranslate nohighlight">\((1-\alpha)\cdot 100\%\)</span> para un coeficiente <span class="math notranslate nohighlight">\(\beta_j\)</span> viene dado por:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_j \pm t_{n-p-1, \alpha/2} \cdot SE(\hat{\beta}_j)\]</div>
+<p>Este intervalo tiene la siguiente interpretación: si repitiéramos el muestreo y la estimación muchas veces, el <span class="math notranslate nohighlight">\((1-\alpha)\cdot 100\%\)</span> de los intervalos calculados contendría el verdadero valor del parámetro <span class="math notranslate nohighlight">\(\beta_j\)</span>.</p>
+<section id="relacion-con-pruebas-de-hipotesis">
+<h4>Relación con Pruebas de Hipótesis<a class="headerlink" href="#relacion-con-pruebas-de-hipotesis" title="Link to this heading">#</a></h4>
+<p>Existe una relación directa entre intervalos de confianza y pruebas de hipótesis. En particular, para la hipótesis <span class="math notranslate nohighlight">\(H_0: \beta_j = 0\)</span>:</p>
+<ul class="simple">
+<li><p>Si el intervalo de confianza de <span class="math notranslate nohighlight">\(\beta_j\)</span> no contiene el cero, rechazamos <span class="math notranslate nohighlight">\(H_0\)</span></p></li>
+<li><p>Si el intervalo de confianza de <span class="math notranslate nohighlight">\(\beta_j\)</span> contiene el cero, no rechazamos <span class="math notranslate nohighlight">\(H_0\)</span></p></li>
+</ul>
+<p>Esta correspondencia hace que los intervalos de confianza sean una herramienta visual muy útil para evaluar la significancia estadística.</p>
+</section>
+</section>
+<section id="pruebas-de-hipotesis-conjuntas-el-estadistico-f">
+<h3>1.4 Pruebas de Hipótesis Conjuntas: El Estadístico F<a class="headerlink" href="#pruebas-de-hipotesis-conjuntas-el-estadistico-f" title="Link to this heading">#</a></h3>
+<p>A menudo nos interesa probar hipótesis sobre múltiples coeficientes simultáneamente. Por ejemplo, podríamos querer evaluar si un subconjunto de variables independientes tiene algún efecto en la variable dependiente.</p>
+<p>Una hipótesis conjunta típica puede escribirse como:</p>
+<div class="math notranslate nohighlight">
+\[H_0: \beta_{j_1} = \beta_{j_2} = \ldots = \beta_{j_q} = 0\]</div>
+<p>o de forma matricial:</p>
+<div class="math notranslate nohighlight">
+\[H_0: R\beta = 0\]</div>
+<p>donde <span class="math notranslate nohighlight">\(R\)</span> es una matriz de <span class="math notranslate nohighlight">\(q \times (p+1)\)</span> que especifica las restricciones lineales.</p>
+<p>Para probar esta hipótesis utilizamos el estadístico F:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{(RSS_R - RSS_{UR}) / q}{RSS_{UR} / (n-p-1)}\]</div>
+<p>donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(RSS_R\)</span> es la suma de cuadrados de residuos del modelo restringido (bajo <span class="math notranslate nohighlight">\(H_0\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(RSS_{UR}\)</span> es la suma de cuadrados de residuos del modelo no restringido</p></li>
+<li><p><span class="math notranslate nohighlight">\(q\)</span> es el número de restricciones (coeficientes probados conjuntamente)</p></li>
+<li><p><span class="math notranslate nohighlight">\((n-p-1)\)</span> son los grados de libertad del modelo no restringido</p></li>
+</ul>
+<p>Bajo <span class="math notranslate nohighlight">\(H_0\)</span>, este estadístico sigue una distribución F con <span class="math notranslate nohighlight">\(q\)</span> y <span class="math notranslate nohighlight">\((n-p-1)\)</span> grados de libertad. Rechazamos <span class="math notranslate nohighlight">\(H_0\)</span> si:</p>
+<div class="math notranslate nohighlight">
+\[F &gt; F_{q, n-p-1, \alpha}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(F_{q, n-p-1, \alpha}\)</span> es el valor crítico de la distribución F.</p>
+<section id="casos-particulares-de-pruebas-f">
+<h4>Casos Particulares de Pruebas F<a class="headerlink" href="#casos-particulares-de-pruebas-f" title="Link to this heading">#</a></h4>
+<ol class="arabic">
+<li><p><strong>Significancia global del modelo</strong>: Probar si todas las variables independientes (excluyendo el intercepto) son conjuntamente significativas:
+$<span class="math notranslate nohighlight">\(H_0: \beta_1 = \beta_2 = \ldots = \beta_p = 0\)</span>$</p>
+<p>En este caso, el estadístico F se puede calcular como:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{ESS/p}{RSS/(n-p-1)}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(ESS\)</span> (Error Sum of Squares) es la suma de cuadrados explicada.</p>
+</li>
+<li><p><strong>Comparación de modelos anidados</strong>: Probar si un conjunto de variables adicionales mejora significativamente el modelo.</p></li>
+</ol>
+</section>
+</section>
+<section id="coeficiente-de-determinacion-y-prueba-f">
+<h3>1.5 Coeficiente de Determinación y Prueba F<a class="headerlink" href="#coeficiente-de-determinacion-y-prueba-f" title="Link to this heading">#</a></h3>
+<p>El coeficiente de determinación <span class="math notranslate nohighlight">\(R^2\)</span> mide la proporción de la varianza total de la variable dependiente que es explicada por el modelo de regresión. Se calcula como:</p>
+<div class="math notranslate nohighlight">
+\[R^2 = 1 - \frac{RSS}{TSS} = \frac{ESS}{TSS}\]</div>
+<p>donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(RSS\)</span> es la suma de cuadrados de los residuos: <span class="math notranslate nohighlight">\(\sum_{i=1}^n (y_i - \hat{y}_i)^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(TSS\)</span> es la suma total de cuadrados: <span class="math notranslate nohighlight">\(\sum_{i=1}^n (y_i - \bar{y})^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(ESS\)</span> es la suma de cuadrados explicada: <span class="math notranslate nohighlight">\(\sum_{i=1}^n (\hat{y}_i - \bar{y})^2\)</span></p></li>
+</ul>
+<section id="relacion-con-el-estadistico-f">
+<h4>Relación con el Estadístico F<a class="headerlink" href="#relacion-con-el-estadistico-f" title="Link to this heading">#</a></h4>
+<p>Existe una relación directa entre el <span class="math notranslate nohighlight">\(R^2\)</span> y el estadístico F para la prueba de significancia global del modelo:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{R^2/p}{(1-R^2)/(n-p-1)}\]</div>
+<p>Esta fórmula muestra que ambas medidas están intrínsecamente relacionadas.</p>
+</section>
+<section id="r-2-ajustado">
+<h4><span class="math notranslate nohighlight">\(R^2\)</span> Ajustado<a class="headerlink" href="#r-2-ajustado" title="Link to this heading">#</a></h4>
+<p>Una limitación del <span class="math notranslate nohighlight">\(R^2\)</span> es que siempre aumenta al añadir más variables al modelo, incluso si estas no son significativas. El <span class="math notranslate nohighlight">\(R^2\)</span> ajustado corrige este problema penalizando por la cantidad de parámetros:</p>
+<div class="math notranslate nohighlight">
+\[R^2_{adj} = 1 - \frac{RSS/(n-p-1)}{TSS/(n-1)} = 1 - \frac{n-1}{n-p-1}(1-R^2)\]</div>
+<p>El <span class="math notranslate nohighlight">\(R^2_{adj}\)</span> solo aumenta si la adición de una nueva variable reduce suficientemente la RSS en relación con la pérdida de un grado de libertad.</p>
+</section>
+</section>
+</section>
+<section id="implementacion-computacional">
+<h2>2. Implementación Computacional<a class="headerlink" href="#implementacion-computacional" title="Link to this heading">#</a></h2>
+<p>A continuación, implementaremos las funciones necesarias para realizar inferencia estadística en modelos de regresión lineal múltiple.</p>
+<section id="implementacion-del-modelo-de-regresion-lineal">
+<h3>2.1 Implementación del Modelo de Regresión Lineal<a class="headerlink" href="#implementacion-del-modelo-de-regresion-lineal" title="Link to this heading">#</a></h3>
+<p>Primero, crearemos una función para ajustar un modelo de regresión lineal utilizando OLS:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">ajustar_ols</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ajusta un modelo de regresión lineal usando mínimos cuadrados ordinarios (OLS).</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    X : array-like</span>
+<span class="sd">        Matriz de diseño con n observaciones y p+1 variables (incluyendo intercepto).</span>
+<span class="sd">    y : array-like</span>
+<span class="sd">        Vector de variable dependiente con n observaciones.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Diccionario con los resultados del modelo:</span>
+<span class="sd">        - betas: vector de coeficientes estimados</span>
+<span class="sd">        - residuos: vector de residuos</span>
+<span class="sd">        - sigma2: estimación de la varianza del error</span>
+<span class="sd">        - var_betas: matriz de covarianza de los coeficientes</span>
+<span class="sd">        - se_betas: errores estándar de los coeficientes</span>
+<span class="sd">        - X: matriz de diseño (para uso posterior)</span>
+<span class="sd">        - y: vector de variable dependiente</span>
+<span class="sd">        - n: número de observaciones</span>
+<span class="sd">        - p: número de predictores (sin contar intercepto)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># n: número de observaciones, k: número de predictores + intercepto</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span>       <span class="c1"># número de predictores (sin contar intercepto)</span>
+
+    <span class="c1"># Calcular coeficientes (β̂ = (X&#39;X)^-1 X&#39;y)</span>
+    <span class="n">XtX</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span>
+    <span class="n">Xty</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span>
+    <span class="n">betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">XtX</span><span class="p">,</span> <span class="n">Xty</span><span class="p">)</span>
+
+    <span class="c1"># Calcular valores ajustados y residuos</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">betas</span>
+    <span class="n">residuos</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span>
+
+    <span class="c1"># Estimar la varianza del error (σ²)</span>
+    <span class="n">RSS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuos</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">sigma2</span> <span class="o">=</span> <span class="n">RSS</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="c1"># Calcular matriz de covarianza de los coeficientes</span>
+    <span class="n">var_betas</span> <span class="o">=</span> <span class="n">sigma2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XtX</span><span class="p">)</span>
+
+    <span class="c1"># Calcular errores estándar de los coeficientes</span>
+    <span class="n">se_betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">var_betas</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Calcular suma total de cuadrados (TSS)</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">TSS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Calcular suma de cuadrados explicada (ESS)</span>
+    <span class="n">ESS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Coeficiente de determinación (R²)</span>
+    <span class="n">R2</span> <span class="o">=</span> <span class="n">ESS</span> <span class="o">/</span> <span class="n">TSS</span>
+
+    <span class="c1"># R² ajustado</span>
+    <span class="n">R2_adj</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">R2</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;betas&#39;</span><span class="p">:</span> <span class="n">betas</span><span class="p">,</span>
+        <span class="s1">&#39;y_pred&#39;</span><span class="p">:</span> <span class="n">y_pred</span><span class="p">,</span>
+        <span class="s1">&#39;residuos&#39;</span><span class="p">:</span> <span class="n">residuos</span><span class="p">,</span>
+        <span class="s1">&#39;sigma2&#39;</span><span class="p">:</span> <span class="n">sigma2</span><span class="p">,</span>
+        <span class="s1">&#39;var_betas&#39;</span><span class="p">:</span> <span class="n">var_betas</span><span class="p">,</span>
+        <span class="s1">&#39;se_betas&#39;</span><span class="p">:</span> <span class="n">se_betas</span><span class="p">,</span>
+        <span class="s1">&#39;RSS&#39;</span><span class="p">:</span> <span class="n">RSS</span><span class="p">,</span>
+        <span class="s1">&#39;TSS&#39;</span><span class="p">:</span> <span class="n">TSS</span><span class="p">,</span>
+        <span class="s1">&#39;ESS&#39;</span><span class="p">:</span> <span class="n">ESS</span><span class="p">,</span>
+        <span class="s1">&#39;R2&#39;</span><span class="p">:</span> <span class="n">R2</span><span class="p">,</span>
+        <span class="s1">&#39;R2_adj&#39;</span><span class="p">:</span> <span class="n">R2_adj</span><span class="p">,</span>
+        <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span>
+        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+        <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span>
+        <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="n">p</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 2.2 Implementación de Pruebas de Hipótesis e Intervalos</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prueba_t</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">valor_nulo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Realiza una prueba t para un coeficiente individual.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    modelo : dict</span>
+<span class="sd">        Resultados del modelo de regresión.</span>
+<span class="sd">    idx : int</span>
+<span class="sd">        Índice del coeficiente a probar (0 para intercepto).</span>
+<span class="sd">    valor_nulo : float, opcional</span>
+<span class="sd">        Valor nulo para la hipótesis (por defecto es 0).</span>
+<span class="sd">    alpha : float, opcional</span>
+<span class="sd">        Nivel de significación (por defecto es 0.05).</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Diccionario con resultados de la prueba t:</span>
+<span class="sd">        - t_stat: valor del estadístico t</span>
+<span class="sd">        - p_value: p-valor de la prueba</span>
+<span class="sd">        - ci_lower: límite inferior del intervalo de confianza</span>
+<span class="sd">        - ci_upper: límite superior del intervalo de confianza</span>
+<span class="sd">        - rechazar_h0: booleano que indica si se rechaza la hipótesis nula</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extraer información necesaria del modelo</span>
+    <span class="n">betas</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">]</span>
+    <span class="n">se_betas</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;se_betas&#39;</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span>
+    <span class="n">gl</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># grados de libertad</span>
+
+    <span class="c1"># Calcular estadístico t</span>
+    <span class="n">t_stat</span> <span class="o">=</span> <span class="p">(</span><span class="n">betas</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">valor_nulo</span><span class="p">)</span> <span class="o">/</span> <span class="n">se_betas</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="c1"># Calcular p-valor (dos colas)</span>
+    <span class="n">p_value</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">t_stat</span><span class="p">),</span> <span class="n">gl</span><span class="p">))</span>
+
+    <span class="c1"># Calcular valor crítico para el nivel alpha</span>
+    <span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">gl</span><span class="p">)</span>
+
+    <span class="c1"># Calcular intervalo de confianza</span>
+    <span class="n">ci_lower</span> <span class="o">=</span> <span class="n">betas</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se_betas</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">ci_upper</span> <span class="o">=</span> <span class="n">betas</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se_betas</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="c1"># Determinar si se rechaza la hipótesis nula</span>
+    <span class="n">rechazar_h0</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t_stat</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t_crit</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;t_stat&#39;</span><span class="p">:</span> <span class="n">t_stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;p_value&#39;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;ci_lower&#39;</span><span class="p">:</span> <span class="n">ci_lower</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;ci_upper&#39;</span><span class="p">:</span> <span class="n">ci_upper</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;rechazar_h0&#39;</span><span class="p">:</span> <span class="n">rechazar_h0</span>
+    <span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prueba_f_global</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Realiza una prueba F para la significancia global del modelo.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    modelo : dict</span>
+<span class="sd">        Resultados del modelo de regresión.</span>
+<span class="sd">    alpha : float, opcional</span>
+<span class="sd">        Nivel de significación (por defecto es 0.05).</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Diccionario con resultados de la prueba F:</span>
+<span class="sd">        - f_stat: valor del estadístico F</span>
+<span class="sd">        - p_value: p-valor de la prueba</span>
+<span class="sd">        - rechazar_h0: booleano que indica si se rechaza la hipótesis nula</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extraer información necesaria del modelo</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span>
+    <span class="n">R2</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Calcular estadístico F</span>
+    <span class="n">f_stat</span> <span class="o">=</span> <span class="p">(</span><span class="n">R2</span> <span class="o">/</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">R2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># Calcular p-valor</span>
+    <span class="n">p_value</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">f_stat</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Calcular valor crítico para el nivel alpha</span>
+    <span class="n">f_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Determinar si se rechaza la hipótesis nula</span>
+    <span class="n">rechazar_h0</span> <span class="o">=</span> <span class="n">f_stat</span> <span class="o">&gt;</span> <span class="n">f_crit</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;f_stat&#39;</span><span class="p">:</span> <span class="n">f_stat</span><span class="p">,</span>
+        <span class="s1">&#39;p_value&#39;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">,</span>
+        <span class="s1">&#39;rechazar_h0&#39;</span><span class="p">:</span> <span class="n">rechazar_h0</span>
+    <span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prueba_f_restricciones</span><span class="p">(</span><span class="n">modelo_completo</span><span class="p">,</span> <span class="n">modelo_restringido</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Realiza una prueba F para comparar modelos anidados.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    modelo_completo : dict</span>
+<span class="sd">        Resultados del modelo completo (no restringido).</span>
+<span class="sd">    modelo_restringido : dict</span>
+<span class="sd">        Resultados del modelo restringido.</span>
+<span class="sd">    q : int</span>
+<span class="sd">        Número de restricciones (diferencia en número de parámetros).</span>
+<span class="sd">    alpha : float, opcional</span>
+<span class="sd">        Nivel de significación (por defecto es 0.05).</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Diccionario con resultados de la prueba F:</span>
+<span class="sd">        - f_stat: valor del estadístico F</span>
+<span class="sd">        - p_value: p-valor de la prueba</span>
+<span class="sd">        - rechazar_h0: booleano que indica si se rechaza la hipótesis nula</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extraer información necesaria</span>
+    <span class="n">RSS_R</span> <span class="o">=</span> <span class="n">modelo_restringido</span><span class="p">[</span><span class="s1">&#39;RSS&#39;</span><span class="p">]</span>
+    <span class="n">RSS_UR</span> <span class="o">=</span> <span class="n">modelo_completo</span><span class="p">[</span><span class="s1">&#39;RSS&#39;</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">modelo_completo</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">modelo_completo</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Calcular estadístico F</span>
+    <span class="n">f_stat</span> <span class="o">=</span> <span class="p">((</span><span class="n">RSS_R</span> <span class="o">-</span> <span class="n">RSS_UR</span><span class="p">)</span> <span class="o">/</span> <span class="n">q</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">RSS_UR</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># Calcular p-valor</span>
+    <span class="n">p_value</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">f_stat</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Calcular valor crítico para el nivel alpha</span>
+    <span class="n">f_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Determinar si se rechaza la hipótesis nula</span>
+    <span class="n">rechazar_h0</span> <span class="o">=</span> <span class="n">f_stat</span> <span class="o">&gt;</span> <span class="n">f_crit</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;f_stat&#39;</span><span class="p">:</span> <span class="n">f_stat</span><span class="p">,</span>
+        <span class="s1">&#39;p_value&#39;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">,</span>
+        <span class="s1">&#39;rechazar_h0&#39;</span><span class="p">:</span> <span class="n">rechazar_h0</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tabla_resultados</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">nombres_variables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera una tabla de resultados de regresión con coeficientes, errores estándar,</span>
+<span class="sd">    estadísticos t, p-valores e intervalos de confianza.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    modelo : dict</span>
+<span class="sd">        Resultados del modelo de regresión.</span>
+<span class="sd">    nombres_variables : list, opcional</span>
+<span class="sd">        Lista con nombres de variables. Si no se proporciona, se generan automáticamente.</span>
+<span class="sd">    alpha : float, opcional</span>
+<span class="sd">        Nivel de significación para los intervalos de confianza.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">        Tabla de resultados de la regresión.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extraer información necesaria</span>
+    <span class="n">betas</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">]</span>
+    <span class="n">se_betas</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;se_betas&#39;</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Generar nombres de variables si no se proporcionan</span>
+    <span class="k">if</span> <span class="n">nombres_variables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nombres_variables</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;X</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+    <span class="c1"># Crear lista para almacenar resultados</span>
+    <span class="n">resultados</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Calcular estadísticas para cada coeficiente</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">betas</span><span class="p">)):</span>
+        <span class="n">prueba</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">resultados</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">nombres_variables</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;Coeficiente&#39;</span><span class="p">:</span> <span class="n">betas</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s1">&#39;Error Estándar&#39;</span><span class="p">:</span> <span class="n">se_betas</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s1">&#39;Estadístico t&#39;</span><span class="p">:</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;t_stat&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;p_value&#39;</span><span class="p">],</span>
+            <span class="sa">f</span><span class="s1">&#39;IC </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">% Inferior&#39;</span><span class="p">:</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">],</span>
+            <span class="sa">f</span><span class="s1">&#39;IC </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s1">% Superior&#39;</span><span class="p">:</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Significativo&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span> <span class="k">if</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;rechazar_h0&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">})</span>
+
+    <span class="c1"># Crear DataFrame con los resultados</span>
+    <span class="n">tabla</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados</span><span class="p">)</span>
+
+    <span class="c1"># Calcular estadísticas del modelo</span>
+    <span class="n">f_global</span> <span class="o">=</span> <span class="n">prueba_f_global</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+
+    <span class="c1"># Mostrar información adicional</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R²: </span><span class="si">{</span><span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² ajustado: </span><span class="si">{</span><span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;R2_adj&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estadístico F: </span><span class="si">{</span><span class="n">f_global</span><span class="p">[</span><span class="s1">&#39;f_stat&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (p-valor: </span><span class="si">{</span><span class="n">f_global</span><span class="p">[</span><span class="s1">&#39;p_value&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Observaciones: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Grados de libertad: </span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tabla</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 3. Ejemplos y Aplicaciones</span>
+
+<span class="c1">### 3.1 Ejemplo 1: Regresión Simple con Datos Sintéticos</span>
+
+
+<span class="c1"># Generar datos sintéticos con relación lineal</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># número de observaciones</span>
+
+<span class="c1"># Variable independiente</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Variable dependiente (y = 2 + 3*X1 + error)</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># intercepto</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># pendiente</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># término de error</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">X1</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Crear matriz de diseño con columna de unos para el intercepto</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">X1</span><span class="p">))</span>
+
+<span class="c1"># Ajustar modelo</span>
+<span class="n">modelo_simple</span> <span class="o">=</span> <span class="n">ajustar_ols</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Mostrar resultados</span>
+<span class="n">nombres_variables</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">]</span>
+<span class="n">tabla_simple</span> <span class="o">=</span> <span class="n">tabla_resultados</span><span class="p">(</span><span class="n">modelo_simple</span><span class="p">,</span> <span class="n">nombres_variables</span><span class="p">)</span>
+<span class="n">tabla_simple</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R²: 0.7189
+R² ajustado: 0.7130
+Estadístico F: 122.7318 (p-valor: 7.994e-15)
+Observaciones: 50
+Grados de libertad: 48
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable</th>
+      <th>Coeficiente</th>
+      <th>Error Estándar</th>
+      <th>Estadístico t</th>
+      <th>p-valor</th>
+      <th>IC 95.0% Inferior</th>
+      <th>IC 95.0% Superior</th>
+      <th>Significativo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Intercepto</td>
+      <td>2.083915</td>
+      <td>0.305804</td>
+      <td>6.814540</td>
+      <td>1.415447e-08</td>
+      <td>1.469055</td>
+      <td>2.698776</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>X1</td>
+      <td>2.847645</td>
+      <td>0.257044</td>
+      <td>11.078439</td>
+      <td>7.993606e-15</td>
+      <td>2.330823</td>
+      <td>3.364466</td>
+      <td>*</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualizar regresión simple</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Datos observados&#39;</span><span class="p">)</span>
+
+<span class="c1"># Valores predichos para la línea de regresión</span>
+<span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X1</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X1</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">x_range</span><span class="p">))</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Recta de regresión&#39;</span><span class="p">)</span>
+
+<span class="c1"># Intervalos de confianza para la línea de regresión</span>
+<span class="n">sigma2</span> <span class="o">=</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;sigma2&#39;</span><span class="p">]</span>
+<span class="n">se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;var_betas&#39;</span><span class="p">]</span> <span class="o">@</span> <span class="n">X_pred</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">x_range</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">+</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Intervalo de confianza 95% (línea)&#39;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Regresión Lineal Simple con Intervalos de Confianza&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Visualizar el intervalo de confianza para beta1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">prueba</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo_simple</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">beta1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Verdadero valor (β₁=3)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">],</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">modelo_simple</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimación (β̂₁)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">([</span><span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">],</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]],</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">prueba</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Intervalo de Confianza 95% para β₁&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2d608a1805641c4fb7bcdbc8e0835c777217a3f729e7cd8ba765d46e27063d62.png" src="_images/2d608a1805641c4fb7bcdbc8e0835c777217a3f729e7cd8ba765d46e27063d62.png" />
+<img alt="_images/3a70de7817b99518b1ecdf19a99e9a6d9b9396e9a2fc02dd43c47eecf9107aae.png" src="_images/3a70de7817b99518b1ecdf19a99e9a6d9b9396e9a2fc02dd43c47eecf9107aae.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 3.2 Ejemplo 2: Regresión Múltiple con Datos Sintéticos</span>
+
+
+<span class="c1"># Generar datos sintéticos para regresión múltiple</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">456</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># número de observaciones</span>
+
+<span class="c1"># Variables independientes</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">X4</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">X1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># X4 correlacionada con X1</span>
+
+<span class="c1"># Variable dependiente (y = 1 + 2*X1 - 1.5*X2 + 0*X3 + 3*X4 + error)</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c1"># intercepto</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mi">2</span>    <span class="c1"># efecto de X1</span>
+<span class="n">beta2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.5</span> <span class="c1"># efecto de X2</span>
+<span class="n">beta3</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># efecto nulo de X3</span>
+<span class="n">beta4</span> <span class="o">=</span> <span class="mi">3</span>    <span class="c1"># efecto de X4</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># término de error</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">X1</span> <span class="o">+</span> <span class="n">beta2</span> <span class="o">*</span> <span class="n">X2</span> <span class="o">+</span> <span class="n">beta3</span> <span class="o">*</span> <span class="n">X3</span> <span class="o">+</span> <span class="n">beta4</span> <span class="o">*</span> <span class="n">X4</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Crear matriz de diseño con columna de unos para el intercepto</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="n">X4</span><span class="p">))</span>
+
+<span class="c1"># Ajustar modelo</span>
+<span class="n">modelo_multiple</span> <span class="o">=</span> <span class="n">ajustar_ols</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Mostrar resultados</span>
+<span class="n">nombres_variables</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;X3&#39;</span><span class="p">,</span> <span class="s1">&#39;X4&#39;</span><span class="p">]</span>
+<span class="n">tabla_multiple</span> <span class="o">=</span> <span class="n">tabla_resultados</span><span class="p">(</span><span class="n">modelo_multiple</span><span class="p">,</span> <span class="n">nombres_variables</span><span class="p">)</span>
+<span class="n">tabla_multiple</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R²: 0.7938
+R² ajustado: 0.7851
+Estadístico F: 91.4214 (p-valor: 1.11e-16)
+Observaciones: 100
+Grados de libertad: 95
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable</th>
+      <th>Coeficiente</th>
+      <th>Error Estándar</th>
+      <th>Estadístico t</th>
+      <th>p-valor</th>
+      <th>IC 95.0% Inferior</th>
+      <th>IC 95.0% Superior</th>
+      <th>Significativo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Intercepto</td>
+      <td>1.197349</td>
+      <td>0.210137</td>
+      <td>5.697935</td>
+      <td>1.355904e-07</td>
+      <td>0.780173</td>
+      <td>1.614524</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>X1</td>
+      <td>1.934422</td>
+      <td>0.302948</td>
+      <td>6.385321</td>
+      <td>6.260566e-09</td>
+      <td>1.332994</td>
+      <td>2.535851</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>X2</td>
+      <td>-1.588765</td>
+      <td>0.186021</td>
+      <td>-8.540762</td>
+      <td>2.158274e-13</td>
+      <td>-1.958065</td>
+      <td>-1.219466</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>X3</td>
+      <td>0.208275</td>
+      <td>0.206377</td>
+      <td>1.009197</td>
+      <td>3.154437e-01</td>
+      <td>-0.201435</td>
+      <td>0.617984</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>X4</td>
+      <td>2.667416</td>
+      <td>0.387687</td>
+      <td>6.880330</td>
+      <td>6.330123e-10</td>
+      <td>1.897759</td>
+      <td>3.437072</td>
+      <td>*</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualizar coeficientes estimados con intervalos de confianza</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Valores reales de los coeficientes</span>
+<span class="n">betas_reales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">beta0</span><span class="p">,</span> <span class="n">beta1</span><span class="p">,</span> <span class="n">beta2</span><span class="p">,</span> <span class="n">beta3</span><span class="p">,</span> <span class="n">beta4</span><span class="p">])</span>
+
+<span class="c1"># Extraer información del modelo</span>
+<span class="n">betas_est</span> <span class="o">=</span> <span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">se_betas</span> <span class="o">=</span> <span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;se_betas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span>
+<span class="n">gl</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="n">gl</span><span class="p">)</span>
+
+<span class="c1"># Calcular intervalos de confianza</span>
+<span class="n">ci_lower</span> <span class="o">=</span> <span class="n">betas_est</span> <span class="o">-</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se_betas</span>
+<span class="n">ci_upper</span> <span class="o">=</span> <span class="n">betas_est</span> <span class="o">+</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se_betas</span>
+
+<span class="c1"># Graficar</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">betas_est</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">betas_est</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">t_crit</span><span class="o">*</span><span class="n">se_betas</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> 
+                 <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">elinewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimación con IC 95%&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">betas_reales</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Valor real&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">nombres_variables</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Valor del coeficiente&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coeficientes Estimados vs. Reales con Intervalos de Confianza&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Observemos el p-valor y determinemos si X3 es significativa</span>
+<span class="n">prueba_x3</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo_multiple</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prueba t para X3:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coeficiente: </span><span class="si">{</span><span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error estándar: </span><span class="si">{</span><span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;se_betas&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estadístico t: </span><span class="si">{</span><span class="n">prueba_x3</span><span class="p">[</span><span class="s1">&#39;t_stat&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p-valor: </span><span class="si">{</span><span class="n">prueba_x3</span><span class="p">[</span><span class="s1">&#39;p_value&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Intervalo de confianza 95%: [</span><span class="si">{</span><span class="n">prueba_x3</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">prueba_x3</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rechazar H0 (α=0.05): </span><span class="si">{</span><span class="n">prueba_x3</span><span class="p">[</span><span class="s1">&#39;rechazar_h0&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Notar que el intervalo de confianza para X3 contiene al cero, lo que concuerda con el verdadero valor</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fb4db2636da0abc8c68933f6146b5b7bb268371188026b441a36ebca997e085e.png" src="_images/fb4db2636da0abc8c68933f6146b5b7bb268371188026b441a36ebca997e085e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prueba t para X3:
+Coeficiente: 0.2083
+Error estándar: 0.2064
+Estadístico t: 1.0092
+p-valor: 0.3154
+Intervalo de confianza 95%: [-0.2014, 0.6180]
+Rechazar H0 (α=0.05): [False]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### 3.3 Prueba de Hipótesis Conjunta</span>
+
+<span class="c1"># Especificar y ajustar el modelo restringido (sin X3 y X4)</span>
+<span class="n">X_restringido</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">))</span>
+<span class="n">modelo_restringido</span> <span class="o">=</span> <span class="n">ajustar_ols</span><span class="p">(</span><span class="n">X_restringido</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Calcular la prueba F para comparar los modelos</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># número de restricciones (eliminamos X3 y X4)</span>
+<span class="n">prueba_f</span> <span class="o">=</span> <span class="n">prueba_f_restricciones</span><span class="p">(</span><span class="n">modelo_multiple</span><span class="p">,</span> <span class="n">modelo_restringido</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prueba F para restricción conjunta (X3 = X4 = 0):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estadístico F: </span><span class="si">{</span><span class="n">prueba_f</span><span class="p">[</span><span class="s1">&#39;f_stat&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p-valor: </span><span class="si">{</span><span class="n">prueba_f</span><span class="p">[</span><span class="s1">&#39;p_value&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rechazar H0 (α=0.05): </span><span class="si">{</span><span class="n">prueba_f</span><span class="p">[</span><span class="s1">&#39;rechazar_h0&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mostrar comparación de R² y R² ajustado</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Comparación de modelos:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Modelo completo - R²: </span><span class="si">{</span><span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, R² ajustado: </span><span class="si">{</span><span class="n">modelo_multiple</span><span class="p">[</span><span class="s1">&#39;R2_adj&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Modelo restringido - R²: </span><span class="si">{</span><span class="n">modelo_restringido</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, R² ajustado: </span><span class="si">{</span><span class="n">modelo_restringido</span><span class="p">[</span><span class="s1">&#39;R2_adj&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Claramente rechazamos la hipótesis nula, lo que significa que X3 y X4 son conjuntamente significativas.</span>
+<span class="c1"># Esto se debe principalmente al efecto significativo de X4, a pesar de que X3 no es significativa individualmente.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prueba F para restricción conjunta (X3 = X4 = 0):
+Estadístico F: 23.9620
+p-valor: 3.753e-09
+Rechazar H0 (α=0.05): True
+
+Comparación de modelos:
+Modelo completo - R²: 0.7938, R² ajustado: 0.7851
+Modelo restringido - R²: 0.6898, R² ajustado: 0.6834
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Cargar datos de California Housing directamente</span>
+<span class="n">housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">feature_names</span>
+
+<span class="c1"># Información del dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conjunto de datos de California Housing cargado.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Número de observaciones: </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Número de predictores: </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variables predictoras: </span><span class="si">{</span><span class="n">feature_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Descripción de las variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Descripción de las variables:&quot;</span><span class="p">)</span>
+<span class="n">variables_descripcion</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;MedInc&quot;</span><span class="p">:</span> <span class="s2">&quot;Ingreso mediano de los hogares del bloque&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HouseAge&quot;</span><span class="p">:</span> <span class="s2">&quot;Edad mediana de las viviendas del bloque&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AveRooms&quot;</span><span class="p">:</span> <span class="s2">&quot;Número promedio de habitaciones por hogar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AveBedrms&quot;</span><span class="p">:</span> <span class="s2">&quot;Número promedio de dormitorios por hogar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Population&quot;</span><span class="p">:</span> <span class="s2">&quot;Población del bloque&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AveOccup&quot;</span><span class="p">:</span> <span class="s2">&quot;Número promedio de ocupantes por hogar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Latitude&quot;</span><span class="p">:</span> <span class="s2">&quot;Latitud del bloque&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Longitude&quot;</span><span class="p">:</span> <span class="s2">&quot;Longitud del bloque&quot;</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">variables_descripcion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">desc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Limitar análisis a un subconjunto de datos para mayor claridad</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+
+<span class="c1"># Agregar columna de unos para el intercepto</span>
+<span class="n">X_con_intercepto</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">X</span><span class="p">))</span>
+
+<span class="c1"># Ajustar modelo</span>
+<span class="n">modelo</span> <span class="o">=</span> <span class="n">ajustar_ols</span><span class="p">(</span><span class="n">X_con_intercepto</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Definir nombres de variables para la salida</span>
+<span class="n">nombres_variables</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)</span>
+
+<span class="c1"># Mostrar resultados</span>
+<span class="n">tabla</span> <span class="o">=</span> <span class="n">tabla_resultados</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">nombres_variables</span><span class="p">)</span>
+<span class="n">tabla</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Conjunto de datos de California Housing cargado.
+Número de observaciones: 20640
+Número de predictores: 8
+Variables predictoras: [&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;, &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;]
+
+Descripción de las variables:
+MedInc: Ingreso mediano de los hogares del bloque
+HouseAge: Edad mediana de las viviendas del bloque
+AveRooms: Número promedio de habitaciones por hogar
+AveBedrms: Número promedio de dormitorios por hogar
+Population: Población del bloque
+AveOccup: Número promedio de ocupantes por hogar
+Latitude: Latitud del bloque
+Longitude: Longitud del bloque
+R²: 0.6924
+R² ajustado: 0.6874
+Estadístico F: 138.1432 (p-valor: 1.11e-16)
+Observaciones: 500
+Grados de libertad: 491
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable</th>
+      <th>Coeficiente</th>
+      <th>Error Estándar</th>
+      <th>Estadístico t</th>
+      <th>p-valor</th>
+      <th>IC 95.0% Inferior</th>
+      <th>IC 95.0% Superior</th>
+      <th>Significativo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Intercepto</td>
+      <td>-37.480658</td>
+      <td>3.761840</td>
+      <td>-9.963385</td>
+      <td>0.000000</td>
+      <td>-44.871949</td>
+      <td>-30.089368</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>MedInc</td>
+      <td>0.372200</td>
+      <td>0.023036</td>
+      <td>16.157330</td>
+      <td>0.000000</td>
+      <td>0.326939</td>
+      <td>0.417461</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>HouseAge</td>
+      <td>0.010385</td>
+      <td>0.002711</td>
+      <td>3.831100</td>
+      <td>0.000144</td>
+      <td>0.005059</td>
+      <td>0.015711</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AveRooms</td>
+      <td>-0.052616</td>
+      <td>0.035763</td>
+      <td>-1.471228</td>
+      <td>0.141870</td>
+      <td>-0.122884</td>
+      <td>0.017652</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AveBedrms</td>
+      <td>0.775811</td>
+      <td>0.233978</td>
+      <td>3.315740</td>
+      <td>0.000982</td>
+      <td>0.316089</td>
+      <td>1.235533</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Population</td>
+      <td>0.000070</td>
+      <td>0.000031</td>
+      <td>2.246856</td>
+      <td>0.025093</td>
+      <td>0.000009</td>
+      <td>0.000132</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>AveOccup</td>
+      <td>-0.421594</td>
+      <td>0.042581</td>
+      <td>-9.901043</td>
+      <td>0.000000</td>
+      <td>-0.505257</td>
+      <td>-0.337931</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Latitude</td>
+      <td>-0.444628</td>
+      <td>0.040310</td>
+      <td>-11.030144</td>
+      <td>0.000000</td>
+      <td>-0.523830</td>
+      <td>-0.365426</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Longitude</td>
+      <td>-0.453540</td>
+      <td>0.042362</td>
+      <td>-10.706293</td>
+      <td>0.000000</td>
+      <td>-0.536773</td>
+      <td>-0.370307</td>
+      <td>*</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># &lt;userStyle&gt;Normal&lt;/userStyle&gt;</span>
+
+<span class="c1"># Identificar variables significativas</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">variables_info</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Extraer información del modelo</span>
+<span class="n">betas_est</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">se_betas</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;se_betas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">modelo</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span>
+<span class="n">gl</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="n">gl</span><span class="p">)</span>
+
+<span class="c1"># Calcular intervalos de confianza</span>
+<span class="n">ci_lower</span> <span class="o">=</span> <span class="n">betas_est</span> <span class="o">-</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se_betas</span>
+<span class="n">ci_upper</span> <span class="o">=</span> <span class="n">betas_est</span> <span class="o">+</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se_betas</span>
+
+<span class="c1"># Calcular significancia para todas las variables de una vez</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nombres_variables</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Intercepto</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">i</span><span class="p">)[</span><span class="s1">&#39;p_value&#39;</span><span class="p">]</span>
+        <span class="n">es_significativa</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">i</span><span class="p">)[</span><span class="s1">&#39;rechazar_h0&#39;</span><span class="p">]</span>
+        <span class="n">variables_info</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="n">nombres_variables</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;indice&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s1">&#39;p_valor&#39;</span><span class="p">:</span> <span class="n">p_val</span><span class="p">,</span>
+            <span class="s1">&#39;significativa&#39;</span><span class="p">:</span> <span class="n">es_significativa</span><span class="p">,</span>
+            <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="n">betas_est</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;ci_lower&#39;</span><span class="p">:</span> <span class="n">ci_lower</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;ci_upper&#39;</span><span class="p">:</span> <span class="n">ci_upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">i</span><span class="p">)[</span><span class="s1">&#39;p_value&#39;</span><span class="p">]</span>
+        <span class="n">es_significativa</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">i</span><span class="p">)[</span><span class="s1">&#39;rechazar_h0&#39;</span><span class="p">]</span>
+        <span class="n">variables_info</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="n">nombres_variables</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;indice&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s1">&#39;p_valor&#39;</span><span class="p">:</span> <span class="n">p_val</span><span class="p">,</span>
+            <span class="s1">&#39;significativa&#39;</span><span class="p">:</span> <span class="n">es_significativa</span><span class="p">,</span>
+            <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="n">betas_est</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;ci_lower&#39;</span><span class="p">:</span> <span class="n">ci_lower</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="s1">&#39;ci_upper&#39;</span><span class="p">:</span> <span class="n">ci_upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">})</span>
+
+<span class="c1"># Separar variables significativas y no significativas</span>
+<span class="n">variables_significativas</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables_info</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;significativa&#39;</span><span class="p">]]</span>
+<span class="n">variables_no_significativas</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables_info</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;significativa&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Ordenar por p-valor</span>
+<span class="n">variables_significativas</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;p_valor&#39;</span><span class="p">])</span>
+<span class="n">variables_no_significativas</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;p_valor&#39;</span><span class="p">])</span>
+
+<span class="c1"># Imprimir resultados</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variables significativas (α=</span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_significativas</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: p-valor = </span><span class="si">{</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;p_valor&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variables no significativas (α=</span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_no_significativas</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: p-valor = </span><span class="si">{</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;p_valor&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualizar coeficientes y sus intervalos de confianza</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Graficar todas las variables</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_info</span><span class="p">:</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span> <span class="k">if</span> <span class="n">var</span><span class="p">[</span><span class="s1">&#39;significativa&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;gray&#39;</span>
+    <span class="n">alpha_val</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">var</span><span class="p">[</span><span class="s1">&#39;significativa&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mf">0.5</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+        <span class="n">var</span><span class="p">[</span><span class="s1">&#39;indice&#39;</span><span class="p">],</span> 
+        <span class="n">var</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">],</span> 
+        <span class="n">yerr</span><span class="o">=</span><span class="p">[[</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">var</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]],</span> <span class="p">[</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">var</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]]],</span> 
+        <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> 
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> 
+        <span class="n">ecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> 
+        <span class="n">elinewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+        <span class="n">capsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> 
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha_val</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nombres_variables</span><span class="p">)),</span> <span class="n">nombres_variables</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Valor del coeficiente&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coeficientes Estimados con Intervalos de Confianza&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Añadir leyenda para mejorar interpretación</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.lines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2D</span>
+<span class="n">legend_elements</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Significativa&#39;</span><span class="p">),</span>
+    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;No significativa&#39;</span><span class="p">),</span>
+    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Línea de cero&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_elements</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Imprimir guía de interpretación del gráfico</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== GUÍA DE INTERPRETACIÓN DEL GRÁFICO ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Puntos AZULES: Variables estadísticamente significativas (p &lt; 0.05)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Puntos GRISES: Variables no significativas (p ≥ 0.05)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. Línea ROJA PUNTEADA: Referencia de valor cero&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4. Barras de error: Intervalos de confianza al 95%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Si el intervalo cruza la línea de cero → No hay efecto significativo&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Si el intervalo está completamente por encima/debajo de cero → Efecto significativo&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">5. Interpretación de coeficientes:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Valor positivo: Por cada unidad que aumenta esta variable, el precio aumenta&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Valor negativo: Por cada unidad que aumenta esta variable, el precio disminuye&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Magnitud: Cuanto más lejos de cero, mayor es el efecto de la variable&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">6. Las variables con intervalos más estrechos tienen estimaciones más precisas&quot;</span><span class="p">)</span>
+
+<span class="c1"># Añadir análisis específico de los resultados</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== ANÁLISIS DE RESULTADOS ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variables con mayor impacto positivo:&quot;</span><span class="p">)</span>
+<span class="n">var_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables_significativas</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">var_pos</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: Coeficiente = </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variables con mayor impacto negativo:&quot;</span><span class="p">)</span>
+<span class="n">var_neg</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables_significativas</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">var_neg</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: Coeficiente = </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables significativas (α=0.05):
+- Intercepto: p-valor = 0
+- MedInc: p-valor = 0
+- AveOccup: p-valor = 0
+- Latitude: p-valor = 0
+- Longitude: p-valor = 0
+- HouseAge: p-valor = 0.0001441
+- AveBedrms: p-valor = 0.0009817
+- Population: p-valor = 0.02509
+
+Variables no significativas (α=0.05):
+- AveRooms: p-valor = 0.1419
+</pre></div>
+</div>
+<img alt="_images/918eee8b75caf457f1bde43ed67b61d825cf60b6770c11d671b940d8ff9c8f20.png" src="_images/918eee8b75caf457f1bde43ed67b61d825cf60b6770c11d671b940d8ff9c8f20.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== GUÍA DE INTERPRETACIÓN DEL GRÁFICO ===
+1. Puntos AZULES: Variables estadísticamente significativas (p &lt; 0.05)
+2. Puntos GRISES: Variables no significativas (p ≥ 0.05)
+3. Línea ROJA PUNTEADA: Referencia de valor cero
+4. Barras de error: Intervalos de confianza al 95%
+   - Si el intervalo cruza la línea de cero → No hay efecto significativo
+   - Si el intervalo está completamente por encima/debajo de cero → Efecto significativo
+
+5. Interpretación de coeficientes:
+   - Valor positivo: Por cada unidad que aumenta esta variable, el precio aumenta
+   - Valor negativo: Por cada unidad que aumenta esta variable, el precio disminuye
+   - Magnitud: Cuanto más lejos de cero, mayor es el efecto de la variable
+
+6. Las variables con intervalos más estrechos tienen estimaciones más precisas
+
+=== ANÁLISIS DE RESULTADOS ===
+Variables con mayor impacto positivo:
+- AveBedrms: Coeficiente = 0.7758
+- MedInc: Coeficiente = 0.3722
+- HouseAge: Coeficiente = 0.0104
+
+Variables con mayor impacto negativo:
+- Intercepto: Coeficiente = -37.4807
+- Longitude: Coeficiente = -0.4535
+- Latitude: Coeficiente = -0.4446
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="ejercicios-practicos">
+<h2>4. Ejercicios Prácticos<a class="headerlink" href="#ejercicios-practicos" title="Link to this heading">#</a></h2>
+<section id="ejercicio-1-regresion-simple">
+<h3>Ejercicio 1: Regresión Simple<a class="headerlink" href="#ejercicio-1-regresion-simple" title="Link to this heading">#</a></h3>
+<p>Considere un conjunto de datos con las siguientes observaciones:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>a) Ajuste un modelo de regresión simple <span class="math notranslate nohighlight">\(Y = \beta_0 + \beta_1 X + \varepsilon\)</span>.
+b) Calcule e interprete los intervalos de confianza para <span class="math notranslate nohighlight">\(\beta_0\)</span> y <span class="math notranslate nohighlight">\(\beta_1\)</span>.
+c) Realice una prueba de hipótesis para determinar si <span class="math notranslate nohighlight">\(\beta_1 = 1\)</span> vs <span class="math notranslate nohighlight">\(\beta_1 \neq 1\)</span>.
+d) Visualice la recta de regresión estimada junto con los intervalos de confianza.</p>
+</section>
+<section id="ejercicio-2-regresion-multiple-con-datos-simulados">
+<h3>Ejercicio 2: Regresión Múltiple con Datos Simulados<a class="headerlink" href="#ejercicio-2-regresion-multiple-con-datos-simulados" title="Link to this heading">#</a></h3>
+<p>Genere un conjunto de datos con <span class="math notranslate nohighlight">\(n=100\)</span> observaciones y <span class="math notranslate nohighlight">\(p=4\)</span> predictores, donde solo dos de ellos tienen un efecto real sobre la variable dependiente.</p>
+<p>a) Ajuste un modelo de regresión múltiple que incluya todos los predictores.
+b) Identifique qué predictores son estadísticamente significativos.
+c) Realice una prueba F para determinar si los predictores no significativos pueden excluirse del modelo.
+d) Compare el modelo completo con el modelo reducido en términos de <span class="math notranslate nohighlight">\(R^2\)</span> y <span class="math notranslate nohighlight">\(R^2\)</span> ajustado.</p>
+</section>
+<section id="ejercicio-3-analisis-de-datos-reales">
+<h3>Ejercicio 3: Análisis de Datos Reales<a class="headerlink" href="#ejercicio-3-analisis-de-datos-reales" title="Link to this heading">#</a></h3>
+<p>Utilice el conjunto de datos iris (disponible en scikit-learn) para construir un modelo de regresión que prediga la longitud del pétalo a partir de las demás características.</p>
+<p>a) Ajuste un modelo de regresión múltiple.
+b) Interprete los coeficientes y su significancia estadística.
+c) ¿Qué características son más importantes para predecir la longitud del pétalo?
+d) Realice pruebas de hipótesis conjuntas para subconjuntos relevantes de predictores.</p>
+</section>
+<section id="ejercicio-4-analisis-de-hipotesis-y-potencia-estadistica">
+<h3>Ejercicio 4: Análisis de Hipótesis y Potencia Estadística<a class="headerlink" href="#ejercicio-4-analisis-de-hipotesis-y-potencia-estadistica" title="Link to this heading">#</a></h3>
+<p>Considere un escenario donde tiene estimaciones con un error estándar relativamente grande.</p>
+<p>a) ¿Cómo afecta esto a la probabilidad de cometer errores de Tipo I y Tipo II?
+b) Si desea detectar un efecto de tamaño <span class="math notranslate nohighlight">\(\delta\)</span>, ¿cómo puede calcular el tamaño muestral necesario para alcanzar una potencia estadística de 0.8?
+c) Implemente una función para calcular la potencia estadística de una prueba t para un tamaño de efecto dado.</p>
+</section>
+<section id="ejercicio-5-desafio-de-programacion">
+<h3>Ejercicio 5: Desafío de Programación<a class="headerlink" href="#ejercicio-5-desafio-de-programacion" title="Link to this heading">#</a></h3>
+<p>Implemente una función que permita realizar pruebas de hipótesis sobre combinaciones lineales de coeficientes. Por ejemplo, para probar hipótesis como <span class="math notranslate nohighlight">\(H_0: \beta_1 = 2\beta_2\)</span> o <span class="math notranslate nohighlight">\(H_0: \beta_1 + \beta_2 + \beta_3 = 0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 5. Soluciones a Ejercicios</span>
+
+<span class="c1">### Solución al Ejercicio 1: Regresión Simple</span>
+
+<span class="c1"># Datos proporcionados</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+
+<span class="c1"># a) Ajustar modelo de regresión simple</span>
+<span class="n">X_design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)),</span> <span class="n">X</span><span class="p">))</span>
+<span class="n">modelo_ej1</span> <span class="o">=</span> <span class="n">ajustar_ols</span><span class="p">(</span><span class="n">X_design</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Mostrar resultados</span>
+<span class="n">nombres_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">]</span>
+<span class="n">tabla_ej1</span> <span class="o">=</span> <span class="n">tabla_resultados</span><span class="p">(</span><span class="n">modelo_ej1</span><span class="p">,</span> <span class="n">nombres_vars</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabla_ej1</span><span class="p">)</span>
+
+<span class="c1"># b) Interpretar intervalos de confianza</span>
+<span class="n">prueba_beta0</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo_ej1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">prueba_beta1</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo_ej1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Intervalo de confianza 95% para β₀:&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">prueba_beta0</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">prueba_beta0</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interpretación: Con 95</span><span class="si">% d</span><span class="s2">e confianza, el valor esperado de Y cuando X=0 está entre &quot;</span> <span class="o">+</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prueba_beta0</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">prueba_beta0</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Intervalo de confianza 95% para β₁:&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">prueba_beta1</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">prueba_beta1</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interpretación: Con 95</span><span class="si">% d</span><span class="s2">e confianza, el cambio esperado en Y por cada unidad de aumento &quot;</span> <span class="o">+</span>
+      <span class="sa">f</span><span class="s2">&quot;en X está entre </span><span class="si">{</span><span class="n">prueba_beta1</span><span class="p">[</span><span class="s1">&#39;ci_lower&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">prueba_beta1</span><span class="p">[</span><span class="s1">&#39;ci_upper&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+<span class="c1"># c) Prueba de hipótesis para β₁ = 1</span>
+<span class="n">prueba_beta1_1</span> <span class="o">=</span> <span class="n">prueba_t</span><span class="p">(</span><span class="n">modelo_ej1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">valor_nulo</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Prueba de hipótesis H₀: β₁ = 1 vs H₁: β₁ ≠ 1&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estadístico t: </span><span class="si">{</span><span class="n">prueba_beta1_1</span><span class="p">[</span><span class="s1">&#39;t_stat&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p-valor: </span><span class="si">{</span><span class="n">prueba_beta1_1</span><span class="p">[</span><span class="s1">&#39;p_value&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decisión (α=0.05): </span><span class="si">{</span><span class="s1">&#39;Rechazar H₀&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">prueba_beta1_1</span><span class="p">[</span><span class="s1">&#39;rechazar_h0&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No rechazar H₀&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># d) Visualizar regresión con intervalos de confianza</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Datos observados&#39;</span><span class="p">)</span>
+
+<span class="c1"># Valores predichos para la línea de regresión</span>
+<span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">x_range</span><span class="p">))</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Recta de regresión&#39;</span><span class="p">)</span>
+
+<span class="c1"># Intervalos de confianza para la línea de regresión</span>
+<span class="n">sigma2</span> <span class="o">=</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;sigma2&#39;</span><span class="p">]</span>
+<span class="n">se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;var_betas&#39;</span><span class="p">]</span> <span class="o">@</span> <span class="n">X_pred</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">x_range</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">X_pred</span> <span class="o">@</span> <span class="n">modelo_ej1</span><span class="p">[</span><span class="s1">&#39;betas&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">+</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">se</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Intervalo de confianza 95% (línea)&#39;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Regresión Lineal Simple con Intervalos de Confianza&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R²: 0.9478
+R² ajustado: 0.9413
+Estadístico F: 145.2261 (p-valor: 2.076e-06)
+Observaciones: 10
+Grados de libertad: 8
+     Variable  Coeficiente  Error Estándar  Estadístico t   p-valor  \
+0  Intercepto     0.933333        0.530485       1.759397  0.116554   
+1           X     1.030303        0.085495      12.050980  0.000002   
+
+   IC 95.0% Inferior  IC 95.0% Superior Significativo  
+0          -0.289967           2.156634                
+1           0.833150           1.227456             *  
+
+Intervalo de confianza 95% para β₀: [-0.2900, 2.1566]
+Interpretación: Con 95% de confianza, el valor esperado de Y cuando X=0 está entre -0.2900 y 2.1566.
+
+Intervalo de confianza 95% para β₁: [0.8332, 1.2275]
+Interpretación: Con 95% de confianza, el cambio esperado en Y por cada unidad de aumento en X está entre 0.8332 y 1.2275.
+
+Prueba de hipótesis H₀: β₁ = 1 vs H₁: β₁ ≠ 1
+Estadístico t: 0.3544
+p-valor: 0.7322
+Decisión (α=0.05): No rechazar H₀
+</pre></div>
+</div>
+<img alt="_images/f2ea33c70d3145fbc5c48f960d117ef7bf684eb56bda9883a13d8d2bc735c3f5.png" src="_images/f2ea33c70d3145fbc5c48f960d117ef7bf684eb56bda9883a13d8d2bc735c3f5.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="resumen-y-conclusiones">
+<h2>6. Resumen y Conclusiones<a class="headerlink" href="#resumen-y-conclusiones" title="Link to this heading">#</a></h2>
+<p>En este taller hemos explorado los principios fundamentales de la inferencia estadística en modelos de regresión lineal. Los puntos clave que hemos abordado son:</p>
+<ol class="arabic simple">
+<li><p><strong>Pruebas de hipótesis para coeficientes individuales</strong>: Hemos implementado y aplicado el estadístico t para evaluar la significancia de coeficientes específicos, permitiéndonos determinar qué variables tienen un efecto estadísticamente significativo sobre la variable dependiente.</p></li>
+<li><p><strong>Intervalos de confianza</strong>: Hemos construido intervalos de confianza para los coeficientes, proporcionando una medida de la incertidumbre asociada a nuestras estimaciones y ofreciendo una forma intuitiva de evaluar la significancia estadística.</p></li>
+<li><p><strong>Pruebas de hipótesis conjuntas</strong>: Hemos implementado el estadístico F para evaluar si un conjunto de variables es conjuntamente significativo, lo cual es especialmente útil cuando se comparan modelos anidados o se evalúa la significancia global del modelo.</p></li>
+<li><p><strong>Coeficiente de determinación</strong>: Hemos estudiado el R² y R² ajustado como medidas de la bondad de ajuste del modelo, entendiendo sus limitaciones y su relación con el estadístico F.</p></li>
+</ol>
+<p>Estas herramientas de inferencia estadística son fundamentales en el análisis de regresión, ya que nos permiten:</p>
+<ul class="simple">
+<li><p>Identificar qué variables tienen un efecto real sobre la variable dependiente y cuáles no</p></li>
+<li><p>Cuantificar la incertidumbre en nuestras estimaciones</p></li>
+<li><p>Comparar modelos alternativos de forma objetiva</p></li>
+<li><p>Realizar predicciones con niveles de confianza específicos</p></li>
+</ul>
+<p>En los próximos talleres, abordaremos problemas más avanzados como la multicolinealidad, los diagnósticos de residuos y las extensiones del modelo lineal básico.</p>
+<section id="referencias">
+<h3>Referencias<a class="headerlink" href="#referencias" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Greene, W. H. (2018). <em>Econometric Analysis</em>. Pearson.</p></li>
+<li><p>Wooldridge, J. M. (2019). <em>Introductory Econometrics: A Modern Approach</em>. Cengage Learning.</p></li>
+<li><p>Fox, J. (2015). <em>Applied Regression Analysis and Generalized Linear Models</em>. Sage Publications.</p></li>
+</ul>
+</section>
+</section>
+<section id="anexo-derivacion-matematica-de-la-distribucion-de-los-estimadores">
+<h2>Anexo: Derivación Matemática de la Distribución de los Estimadores<a class="headerlink" href="#anexo-derivacion-matematica-de-la-distribucion-de-los-estimadores" title="Link to this heading">#</a></h2>
+<p>En este anexo, proporcionamos una derivación más detallada de la distribución teórica de los estimadores OLS bajo los supuestos del modelo lineal clásico.</p>
+<section id="distribucion-del-estimador-ols">
+<h3>Distribución del Estimador OLS<a class="headerlink" href="#distribucion-del-estimador-ols" title="Link to this heading">#</a></h3>
+<p>Recordemos que el estimador OLS es:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta} = (X'X)^{-1}X'y\]</div>
+<p>Bajo el modelo <span class="math notranslate nohighlight">\(y = X\beta + \varepsilon\)</span> con <span class="math notranslate nohighlight">\(\varepsilon \sim N(0, \sigma^2 I_n)\)</span>, podemos derivar la distribución de <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta} = (X'X)^{-1}X'(X\beta + \varepsilon) = \beta + (X'X)^{-1}X'\varepsilon\]</div>
+<p>Como <span class="math notranslate nohighlight">\(\varepsilon \sim N(0, \sigma^2 I_n)\)</span>, y <span class="math notranslate nohighlight">\((X'X)^{-1}X'\)</span> es una matriz de constantes (condicional en <span class="math notranslate nohighlight">\(X\)</span>), tenemos que <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> sigue una distribución normal multivariante:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta} \sim N(\beta, \sigma^2(X'X)^{-1})\]</div>
+</section>
+<section id="distribucion-del-estadistico-t">
+<h3>Distribución del Estadístico t<a class="headerlink" href="#distribucion-del-estadistico-t" title="Link to this heading">#</a></h3>
+<p>Para un coeficiente individual <span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>, podemos estandarizar:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} \sim N(0, 1)\]</div>
+<p>Sin embargo, dado que utilizamos <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> como estimador de <span class="math notranslate nohighlight">\(\sigma^2\)</span>, la distribución cambia a una t de Student. Esto se debe a que:</p>
+<div class="math notranslate nohighlight">
+\[\frac{(n-p-1)\hat{\sigma}^2}{\sigma^2} \sim \chi^2_{n-p-1}\]</div>
+<p>y es independiente de <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>. Por lo tanto:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} = \frac{\hat{\beta}_j - \beta_j}{\hat{\sigma}\sqrt{[(X'X)^{-1}]_{jj}}} \sim t_{n-p-1}\]</div>
+</section>
+<section id="distribucion-del-estadistico-f">
+<h3>Distribución del Estadístico F<a class="headerlink" href="#distribucion-del-estadistico-f" title="Link to this heading">#</a></h3>
+<p>Para una hipótesis de la forma <span class="math notranslate nohighlight">\(H_0: R\beta = r\)</span>, el estadístico F se deriva como:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{(R\hat{\beta} - r)'[R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q}{\hat{\sigma}^2} \sim F_{q, n-p-1}\]</div>
+<p>Cuando <span class="math notranslate nohighlight">\(r = 0\)</span> y <span class="math notranslate nohighlight">\(R\)</span> es una matriz que selecciona un subconjunto de coeficientes, esto se reduce a la prueba F que hemos implementado para comparar modelos anidados.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Taller_1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Taller 1: Modelo Normal - Supuestos e Inferencia</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Taller_3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Taller 3: Multicolinealidad en Modelos Lineales</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion">Descripción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-de-aprendizaje">Objetivos de Aprendizaje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerrequisitos">Prerrequisitos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamentos-teoricos-de-la-inferencia-en-regresion-multiple">1. Fundamentos Teóricos de la Inferencia en Regresión Múltiple</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recordatorio-del-modelo-lineal">1.1 Recordatorio del Modelo Lineal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inferencia-sobre-coeficientes-individuales-el-estadistico-t">1.2 Inferencia sobre Coeficientes Individuales: El Estadístico t</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-del-p-valor">Interpretación del p-valor</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intervalos-de-confianza-para-coeficientes">1.3 Intervalos de Confianza para Coeficientes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-pruebas-de-hipotesis">Relación con Pruebas de Hipótesis</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pruebas-de-hipotesis-conjuntas-el-estadistico-f">1.4 Pruebas de Hipótesis Conjuntas: El Estadístico F</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#casos-particulares-de-pruebas-f">Casos Particulares de Pruebas F</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-de-determinacion-y-prueba-f">1.5 Coeficiente de Determinación y Prueba F</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-el-estadistico-f">Relación con el Estadístico F</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2-ajustado"><span class="math notranslate nohighlight">\(R^2\)</span> Ajustado</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-computacional">2. Implementación Computacional</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-del-modelo-de-regresion-lineal">2.1 Implementación del Modelo de Regresión Lineal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicios-practicos">4. Ejercicios Prácticos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-regresion-simple">Ejercicio 1: Regresión Simple</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-regresion-multiple-con-datos-simulados">Ejercicio 2: Regresión Múltiple con Datos Simulados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-analisis-de-datos-reales">Ejercicio 3: Análisis de Datos Reales</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4-analisis-de-hipotesis-y-potencia-estadistica">Ejercicio 4: Análisis de Hipótesis y Potencia Estadística</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5-desafio-de-programacion">Ejercicio 5: Desafío de Programación</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-y-conclusiones">6. Resumen y Conclusiones</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anexo-derivacion-matematica-de-la-distribucion-de-los-estimadores">Anexo: Derivación Matemática de la Distribución de los Estimadores</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-del-estimador-ols">Distribución del Estimador OLS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-del-estadistico-t">Distribución del Estadístico t</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-del-estadistico-f">Distribución del Estadístico F</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Isaac Zainea [izainea]
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

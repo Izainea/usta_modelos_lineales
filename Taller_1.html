@@ -1,0 +1,1899 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Taller 1: Modelo Normal - Supuestos e Inferencia &#8212; Modelos Lineales</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Taller_1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos" href="Taller_2.html" />
+    <link rel="prev" title="Modelos Lineales: Fundamentos, Estimación y Evaluación" href="practica.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Modelos Lineales - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Modelos Lineales - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    📘 Modelos Lineales: De los Datos a las Decisiones
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html">Regresión Lineal Simple: Teoría y Práctica</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="practica.html">Modelos Lineales: Fundamentos, Estimación y Evaluación</a></li>
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Taller 1: Modelo Normal - Supuestos e Inferencia</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Taller_2.html">Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_3.html">Taller 3: Multicolinealidad en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_4.html">Taller 4: Soluciones a la Multicolinealidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_5.html">Taller 5: Métodos Computacionales en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_6.html">Taller 6: Selección de Variables en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_7.html">Taller 7: Análisis de Residuos en Modelos Lineales</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Izainea/usta_modelos_lineales" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Izainea/usta_modelos_lineales/issues/new?title=Issue%20on%20page%20%2FTaller_1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Taller_1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Taller 1: Modelo Normal - Supuestos e Inferencia</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Taller 1: Modelo Normal - Supuestos e Inferencia</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion">Descripción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-de-aprendizaje">Objetivos de Aprendizaje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">Contenido</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#teoria-del-modelo-lineal-normal">1. Teoría del Modelo Lineal Normal</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-del-modelo-lineal">1.1 Definición del Modelo Lineal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supuestos-del-modelo-lineal-normal">1.2 Supuestos del Modelo Lineal Normal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicaciones-de-los-supuestos">1.3 Implicaciones de los Supuestos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#estimacion-por-maxima-verosimilitud">2. Estimación por Máxima Verosimilitud</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funcion-de-verosimilitud">2.1 Función de Verosimilitud</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivacion-de-los-estimadores-de-maxima-verosimilitud">2.2 Derivación de los Estimadores de Máxima Verosimilitud</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion-simbolica">2.3 Demostración Simbólica</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-de-los-estimadores">3. Propiedades de los Estimadores</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-estimador-de-boldsymbol-beta">3.1 Propiedades del Estimador de <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-estimador-de-sigma-2">3.2 Propiedades del Estimador de <span class="math notranslate nohighlight">\(\sigma^2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-blue-best-linear-unbiased-estimator">3.3 Propiedades BLUE (Best Linear Unbiased Estimator)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eficiencia-y-consistencia">3.4 Eficiencia y Consistencia</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-gauss-markov">3.5 Teorema de Gauss-Markov</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enunciado-del-teorema">3.5.1 Enunciado del Teorema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#condiciones-de-gauss-markov">3.5.2 Condiciones de Gauss-Markov</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicaciones-del-teorema">3.5.3 Implicaciones del Teorema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion-del-teorema-esbozo">3.5.4 Demostración del Teorema (Esbozo)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-de-determinacion">4. Coeficiente de Determinación</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-y-calculo">4.1 Definición y Cálculo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion">4.2 Interpretación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitaciones-del-r-2">4.3 Limitaciones del <span class="math notranslate nohighlight">\(R^2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-el-coeficiente-de-correlacion">4.4 Relación con el Coeficiente de Correlación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-geometrica">4.5 Interpretación Geométrica</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minimos-cuadrados-generalizados-gls">5. Mínimos Cuadrados Generalizados (GLS)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivacion">5.1 Motivación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulacion-del-modelo-gls">5.2 Formulación del Modelo GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimador-gls">5.3 Estimador GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-estimador-gls">5.4 Propiedades del Estimador GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacion-del-modelo">5.5 Transformación del Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimos-cuadrados-ponderados-wls">5.6 Mínimos Cuadrados Ponderados (WLS)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimacion-factible-de-gls-fgls">5.7 Estimación Factible de GLS (FGLS)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-computacional">6. Implementación Computacional</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-de-minimos-cuadrados-ordinarios-ols">6.1 Implementación de Mínimos Cuadrados Ordinarios (OLS)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostico-de-residuos">7.2 Diagnóstico de Residuos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-q-q-quantile-quantile">7.2.1 Gráficos Q-Q (Quantile-Quantile)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-usamos-graficos-q-q">¿Por qué usamos gráficos Q-Q?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-graficos-q-q">Interpretación de gráficos Q-Q:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prueba-de-breusch-pagan">7.2.2 Prueba de Breusch-Pagan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-usamos-la-prueba-de-breusch-pagan">¿Por qué usamos la prueba de Breusch-Pagan?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedimiento-de-la-prueba-de-breusch-pagan">Procedimiento de la prueba de Breusch-Pagan:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-la-prueba-de-breusch-pagan">Interpretación de la prueba de Breusch-Pagan:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplos-practicos">7. Ejemplos Prácticos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-simulados-modelo-lineal-normal">7.1 Datos Simulados: Modelo Lineal Normal</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicios">8. Ejercicios</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-propiedades-del-estimador-ols">Ejercicio 1: Propiedades del Estimador OLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-estimacion-por-maxima-verosimilitud">Ejercicio 2: Estimación por Máxima Verosimilitud</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-homocedasticidad-y-gls">Ejercicio 3: Homocedasticidad y GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4-coeficiente-de-determinacion">Ejercicio 4: Coeficiente de Determinación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5-teorema-de-gauss-markov">Ejercicio 5: Teorema de Gauss-Markov</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-6-diagnostico-de-residuos">Ejercicio 6: Diagnóstico de Residuos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias-bibliograficas">Referencias Bibliográficas</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#libros">Libros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#articulos">Artículos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursos-en-linea">Recursos en línea</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="taller-1-modelo-normal-supuestos-e-inferencia">
+<h1>Taller 1: Modelo Normal - Supuestos e Inferencia<a class="headerlink" href="#taller-1-modelo-normal-supuestos-e-inferencia" title="Link to this heading">#</a></h1>
+<section id="descripcion">
+<h2>Descripción<a class="headerlink" href="#descripcion" title="Link to this heading">#</a></h2>
+<p>Este taller aborda los supuestos del modelo lineal clásico bajo normalidad, la derivación de estimadores de máxima verosimilitud, las propiedades de estos estimadores, el teorema de Gauss-Markov, el coeficiente de determinación y la aplicación del método de Mínimos Cuadrados Generalizados (GLS).</p>
+</section>
+<section id="objetivos-de-aprendizaje">
+<h2>Objetivos de Aprendizaje<a class="headerlink" href="#objetivos-de-aprendizaje" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Comprender los supuestos del modelo lineal clásico bajo normalidad</p></li>
+<li><p>Derivar los estimadores de máxima verosimilitud para los parámetros del modelo</p></li>
+<li><p>Analizar las propiedades de los estimadores bajo normalidad</p></li>
+<li><p>Comprender el teorema de Gauss-Markov y sus condiciones</p></li>
+<li><p>Introducir el coeficiente de determinación</p></li>
+<li><p>Aprender técnicas de diagnóstico para verificar los supuestos del modelo</p></li>
+<li><p>Comprender y aplicar el método de Mínimos Cuadrados Generalizados (GLS)</p></li>
+</ul>
+</section>
+<section id="contenido">
+<h2>Contenido<a class="headerlink" href="#contenido" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Teoría del modelo lineal normal</p></li>
+<li><p>Estimación por máxima verosimilitud</p></li>
+<li><p>Propiedades de los estimadores</p></li>
+<li><p>Teorema de Gauss-Markov</p></li>
+<li><p>Coeficiente de determinación</p></li>
+<li><p>Mínimos Cuadrados Generalizados (GLS)</p></li>
+<li><p>Implementación computacional</p></li>
+<li><p>Diagnóstico de residuos</p></li>
+<li><p>Ejemplos prácticos</p></li>
+<li><p>Ejercicios</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importación de librerías necesarias</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">het_breuschpagan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">det</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">simplify</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">Eq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># Configuración de visualización</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Configuración para reproducibilidad</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">het_breuschpagan</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2</span>
+<span class="ne">---&gt; </span><span class="mi">11</span> <span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">det</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">simplify</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">Eq</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sympy&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="teoria-del-modelo-lineal-normal">
+<h1>1. Teoría del Modelo Lineal Normal<a class="headerlink" href="#teoria-del-modelo-lineal-normal" title="Link to this heading">#</a></h1>
+<section id="definicion-del-modelo-lineal">
+<h2>1.1 Definición del Modelo Lineal<a class="headerlink" href="#definicion-del-modelo-lineal" title="Link to this heading">#</a></h2>
+<p>El modelo lineal se puede expresar como:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\]</div>
+<p>Donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{y}\)</span> es un vector de <span class="math notranslate nohighlight">\(n\)</span> observaciones de la variable dependiente</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span> es una matriz de diseño de dimensión <span class="math notranslate nohighlight">\(n \times p\)</span> que contiene las variables independientes</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> es un vector de <span class="math notranslate nohighlight">\(p\)</span> parámetros desconocidos</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\varepsilon}\)</span> es un vector de <span class="math notranslate nohighlight">\(n\)</span> términos de error aleatorio</p></li>
+</ul>
+</section>
+<section id="supuestos-del-modelo-lineal-normal">
+<h2>1.2 Supuestos del Modelo Lineal Normal<a class="headerlink" href="#supuestos-del-modelo-lineal-normal" title="Link to this heading">#</a></h2>
+<p>El modelo lineal normal clásico se basa en los siguientes supuestos:</p>
+<ol class="arabic simple">
+<li><p><strong>Linealidad</strong>: La relación entre las variables independientes y la variable dependiente es lineal.
+$<span class="math notranslate nohighlight">\(E(\mathbf{y}|\mathbf{X}) = \mathbf{X}\boldsymbol{\beta}\)</span>$</p></li>
+<li><p><strong>Exogeneidad estricta</strong>: Los errores tienen esperanza cero condicionada a las variables explicativas.
+$<span class="math notranslate nohighlight">\(E(\boldsymbol{\varepsilon}|\mathbf{X}) = \mathbf{0}\)</span>$</p></li>
+<li><p><strong>Homocedasticidad y no autocorrelación</strong>: La matriz de varianzas-covarianzas de los errores es esférica.
+$<span class="math notranslate nohighlight">\(Var(\boldsymbol{\varepsilon}|\mathbf{X}) = \sigma^2 \mathbf{I}_n\)</span>$</p>
+<ul class="simple">
+<li><p>Homocedasticidad: <span class="math notranslate nohighlight">\(Var(\varepsilon_i|\mathbf{X}) = \sigma^2\)</span> para todo <span class="math notranslate nohighlight">\(i\)</span></p></li>
+<li><p>No autocorrelación: <span class="math notranslate nohighlight">\(Cov(\varepsilon_i, \varepsilon_j|\mathbf{X}) = 0\)</span> para todo <span class="math notranslate nohighlight">\(i \neq j\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Rango completo</strong>: La matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> tiene rango completo, es decir, <span class="math notranslate nohighlight">\(rank(\mathbf{X}) = p &lt; n\)</span>.
+Esto implica que no hay multicolinealidad perfecta entre las variables independientes.</p></li>
+<li><p><strong>Normalidad</strong>: El vector de errores sigue una distribución normal multivariante.
+$<span class="math notranslate nohighlight">\(\boldsymbol{\varepsilon}|\mathbf{X} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I}_n)\)</span>$</p></li>
+</ol>
+<p>Como consecuencia, la distribución de <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> condicionada a <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> es:
+$<span class="math notranslate nohighlight">\(\mathbf{y}|\mathbf{X} \sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_n)\)</span>$</p>
+</section>
+<section id="implicaciones-de-los-supuestos">
+<h2>1.3 Implicaciones de los Supuestos<a class="headerlink" href="#implicaciones-de-los-supuestos" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>La <strong>linealidad</strong> implica que el efecto marginal de cada variable explicativa es constante.</p></li>
+<li><p>La <strong>exogeneidad estricta</strong> garantiza que los estimadores sean insesgados.</p></li>
+<li><p>La <strong>homocedasticidad</strong> y <strong>no autocorrelación</strong> garantizan que los estimadores de mínimos cuadrados ordinarios (OLS) sean los más eficientes dentro de la clase de estimadores lineales insesgados (propiedad BLUE, del teorema de Gauss-Markov).</p></li>
+<li><p>El supuesto de <strong>rango completo</strong> evita la multicolinealidad perfecta, asegurando que existe una única solución para los estimadores.</p></li>
+<li><p>La <strong>normalidad</strong> permite realizar inferencia estadística exacta en muestras finitas, como pruebas t y F.</p></li>
+</ul>
+<p>Si los supuestos 1-4 se cumplen pero el supuesto 5 (normalidad) no, los estimadores OLS siguen siendo BLUE, pero la inferencia estadística se basa en resultados asintóticos (para grandes muestras).</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="estimacion-por-maxima-verosimilitud">
+<h1>2. Estimación por Máxima Verosimilitud<a class="headerlink" href="#estimacion-por-maxima-verosimilitud" title="Link to this heading">#</a></h1>
+<section id="funcion-de-verosimilitud">
+<h2>2.1 Función de Verosimilitud<a class="headerlink" href="#funcion-de-verosimilitud" title="Link to this heading">#</a></h2>
+<p>Bajo el supuesto de normalidad, la función de densidad de probabilidad conjunta de las observaciones <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> condicionada a <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{y}|\mathbf{X}, \boldsymbol{\beta}, \sigma^2) = \frac{1}{(2\pi\sigma^2)^{n/2}} \exp\left(-\frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\right)\]</div>
+<p>La función de verosimilitud es esta misma expresión, pero vista como función de los parámetros <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> y <span class="math notranslate nohighlight">\(\sigma^2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[L(\boldsymbol{\beta}, \sigma^2|\mathbf{y}, \mathbf{X}) = f(\mathbf{y}|\mathbf{X}, \boldsymbol{\beta}, \sigma^2)\]</div>
+<p>Es más conveniente trabajar con el logaritmo de la verosimilitud:</p>
+<div class="math notranslate nohighlight">
+\[\ell(\boldsymbol{\beta}, \sigma^2|\mathbf{y}, \mathbf{X}) = -\frac{n}{2}\ln(2\pi) - \frac{n}{2}\ln(\sigma^2) - \frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\]</div>
+</section>
+<section id="derivacion-de-los-estimadores-de-maxima-verosimilitud">
+<h2>2.2 Derivación de los Estimadores de Máxima Verosimilitud<a class="headerlink" href="#derivacion-de-los-estimadores-de-maxima-verosimilitud" title="Link to this heading">#</a></h2>
+<p>Para encontrar los estimadores de máxima verosimilitud, calculamos las derivadas parciales de la log-verosimilitud con respecto a <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> y <span class="math notranslate nohighlight">\(\sigma^2\)</span>, igualamos a cero y resolvemos.</p>
+<p>Para <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>:
+$<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \boldsymbol{\beta}} = \frac{1}{\sigma^2}\mathbf{X}^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{0}\)</span>$</p>
+<p>Resolviendo para <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>:
+$<span class="math notranslate nohighlight">\(\mathbf{X}^T\mathbf{X}\boldsymbol{\hat{\beta}} = \mathbf{X}^T\mathbf{y}\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>$</p>
+<p>Este es el estimador de máxima verosimilitud para <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>, que coincide con el estimador de mínimos cuadrados ordinarios.</p>
+<p>Para <span class="math notranslate nohighlight">\(\sigma^2\)</span>:
+$<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = 0\)</span>$</p>
+<p>Resolviendo para <span class="math notranslate nohighlight">\(\sigma^2\)</span>:
+$<span class="math notranslate nohighlight">\(\hat{\sigma}^2 = \frac{1}{n}(\mathbf{y} - \mathbf{X}\boldsymbol{\hat{\beta}})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\hat{\beta}}) = \frac{1}{n}\sum_{i=1}^n \hat{\varepsilon}_i^2\)</span>$</p>
+<p>Este es el estimador de máxima verosimilitud para <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Cabe notar que este estimador es sesgado, a diferencia del estimador insesgado <span class="math notranslate nohighlight">\(s^2 = \frac{1}{n-p}\sum_{i=1}^n \hat{\varepsilon}_i^2\)</span>.</p>
+</section>
+<section id="demostracion-simbolica">
+<h2>2.3 Demostración Simbólica<a class="headerlink" href="#demostracion-simbolica" title="Link to this heading">#</a></h2>
+<p>A continuación, utilizaremos el módulo sympy para derivar los estimadores de máxima verosimilitud de manera simbólica.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Derivación simbólica de los estimadores MLE</span>
+
+<span class="c1"># Definir símbolos</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">commutative</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sigma_sq</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;sigma_sq&#39;</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;n p&#39;</span><span class="p">,</span> <span class="n">integer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Definir matrices simbólicas</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">MatrixSymbol</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">MatrixSymbol</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">beta_vec</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">MatrixSymbol</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">I</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Identity</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Función de log-verosimilitud</span>
+<span class="n">residual</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">X</span> <span class="o">*</span> <span class="n">beta_vec</span>
+<span class="n">log_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sp</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">-</span> <span class="n">n</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sigma_sq</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_sq</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">residual</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">residual</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Derivada respecto a beta</span>
+<span class="n">beta_derivative</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">,</span> <span class="n">beta_vec</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Derivada respecto a $\beta$:&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">beta_derivative</span><span class="p">)</span>
+
+<span class="c1"># Derivada respecto a sigma^2</span>
+<span class="n">sigma_derivative</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">,</span> <span class="n">sigma_sq</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Derivada respecto a $\sigma^2$:&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sigma_derivative</span><span class="p">)</span>
+
+<span class="c1"># Solución para beta (simbólica)</span>
+<span class="c1">#beta_solution = sp.solve(sp.Eq(X.T * X * beta_vec, X.T * y), beta_vec)</span>
+<span class="c1">#display(Latex(r&quot;Solución para $\beta$:&quot;))</span>
+<span class="c1">#display(beta_solution)</span>
+
+<span class="c1"># Solución para sigma^2 (simbólica)</span>
+<span class="c1">#residual_hat = y - X * beta_solution[0]</span>
+<span class="c1">#sigma_sq_hat = (residual_hat.T * residual_hat)[0, 0] / n</span>
+<span class="c1">#display(Latex(r&quot;Solución para $\sigma^2$:&quot;))</span>
+<span class="c1">#display(sigma_sq_hat)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[Derivada respecto a $\beta$:\]</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle 0\]</div>
+<div class="output text_latex math notranslate nohighlight">
+\[Derivada respecto a $\sigma^2$:\]</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle - \frac{n}{2 \sigma_{sq}} + \frac{\sum_{i_{1}=0}^{n - 1} \left({y}_{i_{1},0} - \sum_{i_{2}=0}^{p - 1} {X}_{i_{1},i_{2}} {\beta}_{i_{2},0}\right) \left({y}_{i_{1},0} - \sum_{i_{3}=0}^{p - 1} {X}_{i_{1},i_{3}} {\beta}_{i_{3},0}\right)}{2 \sigma_{sq}^{2}}\]</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="propiedades-de-los-estimadores">
+<h1>3. Propiedades de los Estimadores<a class="headerlink" href="#propiedades-de-los-estimadores" title="Link to this heading">#</a></h1>
+<section id="propiedades-del-estimador-de-boldsymbol-beta">
+<h2>3.1 Propiedades del Estimador de <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span><a class="headerlink" href="#propiedades-del-estimador-de-boldsymbol-beta" title="Link to this heading">#</a></h2>
+<p>El estimador <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span> tiene las siguientes propiedades:</p>
+<ol class="arabic">
+<li><p><strong>Insesgadez</strong>:
+$<span class="math notranslate nohighlight">\(E(\boldsymbol{\hat{\beta}}|\mathbf{X}) = \boldsymbol{\beta}\)</span>$</p>
+<p>Demostración:
+$<span class="math notranslate nohighlight">\(E(\boldsymbol{\hat{\beta}}|\mathbf{X}) = E[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X}] = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^TE[\mathbf{y}|\mathbf{X}] = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \boldsymbol{\beta}\)</span>$</p>
+</li>
+<li><p><strong>Matriz de varianzas-covarianzas</strong>:
+$<span class="math notranslate nohighlight">\(Var(\boldsymbol{\hat{\beta}}|\mathbf{X}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\)</span>$</p>
+<p>Demostración:
+$<span class="math notranslate nohighlight">\(\begin{align}
+Var(\boldsymbol{\hat{\beta}}|\mathbf{X}) &amp;= Var[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X}]\\
+&amp;= (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T Var(\mathbf{y}|\mathbf{X}) \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\\
+&amp;= (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T (\sigma^2 \mathbf{I}) \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\\
+&amp;= \sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\\
+&amp;= \sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}
+\end{align}\)</span>$</p>
+</li>
+<li><p><strong>Distribución</strong>:
+$<span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}|\mathbf{X} \sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})\)</span>$</p>
+<p>Esto se debe a que <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}\)</span> es una transformación lineal del vector aleatorio <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> que sigue una distribución normal.</p>
+</li>
+</ol>
+</section>
+<section id="propiedades-del-estimador-de-sigma-2">
+<h2>3.2 Propiedades del Estimador de <span class="math notranslate nohighlight">\(\sigma^2\)</span><a class="headerlink" href="#propiedades-del-estimador-de-sigma-2" title="Link to this heading">#</a></h2>
+<p>El estimador de máxima verosimilitud <span class="math notranslate nohighlight">\(\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^n \hat{\varepsilon}_i^2\)</span> tiene las siguientes propiedades:</p>
+<ol class="arabic">
+<li><p><strong>Sesgo</strong>:
+$<span class="math notranslate nohighlight">\(E(\hat{\sigma}^2|\mathbf{X}) = \frac{n-p}{n}\sigma^2\)</span>$</p>
+<p>Por lo tanto, es un estimador sesgado.</p>
+</li>
+<li><p><strong>Estimador insesgado</strong>:
+Un estimador insesgado de <span class="math notranslate nohighlight">\(\sigma^2\)</span> es:
+$<span class="math notranslate nohighlight">\(s^2 = \frac{1}{n-p}\sum_{i=1}^n \hat{\varepsilon}_i^2 = \frac{n}{n-p}\hat{\sigma}^2\)</span>$</p></li>
+<li><p><strong>Distribución</strong>:
+Bajo normalidad, se puede demostrar que:
+$<span class="math notranslate nohighlight">\(\frac{(n-p)s^2}{\sigma^2} \sim \chi^2_{n-p}\)</span>$</p>
+<p>Es decir, <span class="math notranslate nohighlight">\((n-p)s^2/\sigma^2\)</span> sigue una distribución chi-cuadrado con <span class="math notranslate nohighlight">\(n-p\)</span> grados de libertad.</p>
+</li>
+</ol>
+</section>
+<section id="propiedades-blue-best-linear-unbiased-estimator">
+<h2>3.3 Propiedades BLUE (Best Linear Unbiased Estimator)<a class="headerlink" href="#propiedades-blue-best-linear-unbiased-estimator" title="Link to this heading">#</a></h2>
+<p>El teorema de Gauss-Markov establece que, bajo los supuestos 1-4 del modelo lineal clásico (sin necesidad del supuesto de normalidad), el estimador de mínimos cuadrados ordinarios (OLS) <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}\)</span> es el mejor estimador lineal insesgado (BLUE).</p>
+<p>Esto significa que:</p>
+<ul class="simple">
+<li><p>Es lineal en <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>: <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}} = \mathbf{A}\mathbf{y}\)</span> donde <span class="math notranslate nohighlight">\(\mathbf{A} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span></p></li>
+<li><p>Es insesgado: <span class="math notranslate nohighlight">\(E(\boldsymbol{\hat{\beta}}|\mathbf{X}) = \boldsymbol{\beta}\)</span></p></li>
+<li><p>Tiene varianza mínima entre todos los estimadores lineales insesgados</p></li>
+</ul>
+</section>
+<section id="eficiencia-y-consistencia">
+<h2>3.4 Eficiencia y Consistencia<a class="headerlink" href="#eficiencia-y-consistencia" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Eficiencia</strong>:
+Bajo normalidad, los estimadores de máxima verosimilitud son eficientes, es decir, alcanzan la cota inferior de Cramér-Rao, que representa la mínima varianza posible para un estimador insesgado.</p></li>
+<li><p><strong>Consistencia</strong>:
+Los estimadores <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}\)</span> y <span class="math notranslate nohighlight">\(s^2\)</span> son consistentes, lo que significa que convergen en probabilidad a los verdaderos valores de los parámetros a medida que el tamaño de la muestra aumenta:
+$<span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}} \stackrel{p}{\to} \boldsymbol{\beta} \quad \text{y} \quad s^2 \stackrel{p}{\to} \sigma^2 \quad \text{cuando} \quad n \to \infty\)</span>$</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="teorema-de-gauss-markov">
+<h1>3.5 Teorema de Gauss-Markov<a class="headerlink" href="#teorema-de-gauss-markov" title="Link to this heading">#</a></h1>
+<p>El teorema de Gauss-Markov es un resultado fundamental en la teoría de regresión lineal que establece las condiciones bajo las cuales el estimador de Mínimos Cuadrados Ordinarios (OLS) es el Mejor Estimador Lineal Insesgado (BLUE, por sus siglas en inglés).</p>
+<section id="enunciado-del-teorema">
+<h2>3.5.1 Enunciado del Teorema<a class="headerlink" href="#enunciado-del-teorema" title="Link to this heading">#</a></h2>
+<p>El teorema de Gauss-Markov establece que, bajo ciertas condiciones (conocidas como condiciones de Gauss-Markov), el estimador OLS <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span> tiene la mínima varianza entre todos los estimadores lineales insesgados.</p>
+</section>
+<section id="condiciones-de-gauss-markov">
+<h2>3.5.2 Condiciones de Gauss-Markov<a class="headerlink" href="#condiciones-de-gauss-markov" title="Link to this heading">#</a></h2>
+<p>Las condiciones de Gauss-Markov son:</p>
+<ol class="arabic simple">
+<li><p><strong>Linealidad en los parámetros</strong>: El modelo puede expresarse como <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span>, donde los parámetros <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> entran linealmente.</p></li>
+<li><p><strong>Muestreo aleatorio</strong>: Las observaciones son una muestra aleatoria de la población.</p></li>
+<li><p><strong>No colinealidad perfecta</strong>: No existe una relación lineal exacta entre las variables independientes (es decir, <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> tiene rango completo).</p></li>
+<li><p><strong>Exogeneidad media condicional</strong>: El valor esperado del término de error dado <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> es cero, es decir, <span class="math notranslate nohighlight">\(E(\boldsymbol{\varepsilon}|\mathbf{X}) = \mathbf{0}\)</span>. Esto implica que <span class="math notranslate nohighlight">\(E(\mathbf{y}|\mathbf{X}) = \mathbf{X}\boldsymbol{\beta}\)</span>.</p></li>
+<li><p><strong>Homocedasticidad</strong>: La varianza del error es constante y no depende de las variables independientes, es decir, <span class="math notranslate nohighlight">\(Var(\varepsilon_i|\mathbf{X}) = \sigma^2\)</span> para todo <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><strong>No autocorrelación</strong>: Los errores no están correlacionados entre sí, es decir, <span class="math notranslate nohighlight">\(Cov(\varepsilon_i, \varepsilon_j|\mathbf{X}) = 0\)</span> para todo <span class="math notranslate nohighlight">\(i \neq j\)</span>.</p></li>
+</ol>
+</section>
+<section id="implicaciones-del-teorema">
+<h2>3.5.3 Implicaciones del Teorema<a class="headerlink" href="#implicaciones-del-teorema" title="Link to this heading">#</a></h2>
+<p>El teorema de Gauss-Markov tiene varias implicaciones importantes:</p>
+<ol class="arabic simple">
+<li><p><strong>Eficiencia</strong>: Entre todos los estimadores lineales insesgados, OLS tiene la mínima varianza. Esto significa que OLS es el estimador más preciso (eficiente) dentro de la clase de estimadores lineales insesgados.</p></li>
+<li><p><strong>Importancia de las condiciones</strong>: Si alguna de las condiciones de Gauss-Markov no se cumple, OLS puede dejar de ser BLUE. Por ejemplo:</p>
+<ul class="simple">
+<li><p>Si hay heterocedasticidad, OLS sigue siendo insesgado pero no eficiente. En este caso, Mínimos Cuadrados Ponderados (WLS) puede ser más eficiente.</p></li>
+<li><p>Si hay autocorrelación, OLS sigue siendo insesgado pero no eficiente. En este caso, Mínimos Cuadrados Generalizados (GLS) puede ser más eficiente.</p></li>
+</ul>
+</li>
+<li><p><strong>Normalidad no requerida</strong>: El teorema de Gauss-Markov no requiere que los errores sigan una distribución normal. La normalidad solo es necesaria para la inferencia estadística exacta en muestras finitas (pruebas t, F, etc.).</p></li>
+</ol>
+</section>
+<section id="demostracion-del-teorema-esbozo">
+<h2>3.5.4 Demostración del Teorema (Esbozo)<a class="headerlink" href="#demostracion-del-teorema-esbozo" title="Link to this heading">#</a></h2>
+<p>Consideremos cualquier estimador lineal de la forma <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\beta}} = \mathbf{C}\mathbf{y}\)</span>, donde <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> es una matriz <span class="math notranslate nohighlight">\(p \times n\)</span>.</p>
+<p>Para que <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\beta}}\)</span> sea insesgado, debe cumplirse:
+$<span class="math notranslate nohighlight">\(E(\tilde{\boldsymbol{\beta}}|\mathbf{X}) = \boldsymbol{\beta} \implies \mathbf{C}\mathbf{X} = \mathbf{I}_p\)</span>$</p>
+<p>Si definimos <span class="math notranslate nohighlight">\(\mathbf{A} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span>, entonces <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}} = \mathbf{A}\mathbf{y}\)</span> y <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{X} = \mathbf{I}_p\)</span>.</p>
+<p>Se puede demostrar que cualquier estimador lineal insesgado <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\beta}} = \mathbf{C}\mathbf{y}\)</span> puede escribirse como:
+$<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\beta}} = \boldsymbol{\hat{\beta}} + \mathbf{D}\mathbf{y}\)</span><span class="math notranslate nohighlight">\(
+donde \)</span>\mathbf{D}<span class="math notranslate nohighlight">\( es tal que \)</span>\mathbf{D}\mathbf{X} = \mathbf{0}$.</p>
+<p>Bajo las condiciones de Gauss-Markov, se demuestra que:
+$<span class="math notranslate nohighlight">\(Var(\tilde{\boldsymbol{\beta}}|\mathbf{X}) = Var(\boldsymbol{\hat{\beta}}|\mathbf{X}) + \mathbf{D}Var(\mathbf{y}|\mathbf{X})\mathbf{D}^T\)</span>$</p>
+<p>Como <span class="math notranslate nohighlight">\(Var(\mathbf{y}|\mathbf{X}) = \sigma^2\mathbf{I}_n\)</span> (por homocedasticidad y no autocorrelación) y <span class="math notranslate nohighlight">\(\mathbf{D}Var(\mathbf{y}|\mathbf{X})\mathbf{D}^T\)</span> es una matriz semidefinida positiva, se concluye que <span class="math notranslate nohighlight">\(Var(\tilde{\boldsymbol{\beta}}|\mathbf{X}) \geq Var(\boldsymbol{\hat{\beta}}|\mathbf{X})\)</span> en el sentido de que la diferencia es una matriz semidefinida positiva.</p>
+<p>Por lo tanto, <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}\)</span> es BLUE.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="coeficiente-de-determinacion">
+<h1>4. Coeficiente de Determinación<a class="headerlink" href="#coeficiente-de-determinacion" title="Link to this heading">#</a></h1>
+<section id="definicion-y-calculo">
+<h2>4.1 Definición y Cálculo<a class="headerlink" href="#definicion-y-calculo" title="Link to this heading">#</a></h2>
+<p>El coeficiente de determinación, denotado como <span class="math notranslate nohighlight">\(R^2\)</span>, mide la proporción de la varianza total de la variable dependiente que es explicada por el modelo. Se calcula como:</p>
+<div class="math notranslate nohighlight">
+\[R^2 = 1 - \frac{SSR}{SST} = \frac{SSE}{SST}\]</div>
+<p>Donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(SSR = \sum_{i=1}^n \hat{\varepsilon}_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\)</span> es la suma de cuadrados de los residuos</p></li>
+<li><p><span class="math notranslate nohighlight">\(SST = \sum_{i=1}^n (y_i - \bar{y})^2\)</span> es la suma total de cuadrados</p></li>
+<li><p><span class="math notranslate nohighlight">\(SSE = SST - SSR = \sum_{i=1}^n (\hat{y}_i - \bar{y})^2\)</span> es la suma de cuadrados explicada</p></li>
+</ul>
+</section>
+<section id="interpretacion">
+<h2>4.2 Interpretación<a class="headerlink" href="#interpretacion" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R^2 = 1\)</span>: El modelo explica perfectamente la variabilidad de la variable dependiente.</p></li>
+<li><p><span class="math notranslate nohighlight">\(R^2 = 0\)</span>: El modelo no explica nada de la variabilidad de la variable dependiente.</p></li>
+<li><p>En general, <span class="math notranslate nohighlight">\(0 \leq R^2 \leq 1\)</span>, y un valor más alto indica un mejor ajuste del modelo.</p></li>
+</ul>
+</section>
+<section id="limitaciones-del-r-2">
+<h2>4.3 Limitaciones del <span class="math notranslate nohighlight">\(R^2\)</span><a class="headerlink" href="#limitaciones-del-r-2" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p><strong>Aumento con variables adicionales</strong>:
+El <span class="math notranslate nohighlight">\(R^2\)</span> siempre aumenta (o al menos no disminuye) cuando se añaden variables al modelo, incluso si estas no son realmente útiles.</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(R^2\)</span> ajustado</strong>:
+Para corregir el problema anterior, se utiliza el <span class="math notranslate nohighlight">\(R^2\)</span> ajustado:
+$<span class="math notranslate nohighlight">\(R^2_{adj} = 1 - \frac{n-1}{n-p} \left(1 - R^2\right)\)</span>$</p>
+<p>El <span class="math notranslate nohighlight">\(R^2\)</span> ajustado penaliza la adición de variables que no mejoran sustancialmente el modelo.</p>
+</li>
+<li><p><strong>No mide la calidad predictiva</strong>:
+Un <span class="math notranslate nohighlight">\(R^2\)</span> alto no garantiza un buen poder predictivo fuera de la muestra.</p></li>
+<li><p><strong>No indica causalidad</strong>:
+Un <span class="math notranslate nohighlight">\(R^2\)</span> alto no implica relaciones causales entre las variables.</p></li>
+</ol>
+</section>
+<section id="relacion-con-el-coeficiente-de-correlacion">
+<h2>4.4 Relación con el Coeficiente de Correlación<a class="headerlink" href="#relacion-con-el-coeficiente-de-correlacion" title="Link to this heading">#</a></h2>
+<p>En el caso de regresión lineal simple (una sola variable independiente), el coeficiente de determinación <span class="math notranslate nohighlight">\(R^2\)</span> es igual al cuadrado del coeficiente de correlación de Pearson <span class="math notranslate nohighlight">\(r\)</span> entre las variables dependiente e independiente:</p>
+<div class="math notranslate nohighlight">
+\[R^2 = r^2\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(r\)</span> es el coeficiente de correlación entre <span class="math notranslate nohighlight">\(y\)</span> y <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[r = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n (x_i - \bar{x})^2 \sum_{i=1}^n (y_i - \bar{y})^2}}\]</div>
+</section>
+<section id="interpretacion-geometrica">
+<h2>4.5 Interpretación Geométrica<a class="headerlink" href="#interpretacion-geometrica" title="Link to this heading">#</a></h2>
+<p>Desde un punto de vista geométrico, el <span class="math notranslate nohighlight">\(R^2\)</span> puede interpretarse como el coseno cuadrado del ángulo entre el vector de observaciones centrado <span class="math notranslate nohighlight">\(\mathbf{y} - \bar{y}\mathbf{1}\)</span> y su proyección en el espacio columna de la matriz <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> (también centrada si incluye una constante).</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="minimos-cuadrados-generalizados-gls">
+<h1>5. Mínimos Cuadrados Generalizados (GLS)<a class="headerlink" href="#minimos-cuadrados-generalizados-gls" title="Link to this heading">#</a></h1>
+<section id="motivacion">
+<h2>5.1 Motivación<a class="headerlink" href="#motivacion" title="Link to this heading">#</a></h2>
+<p>Cuando se viola el supuesto de homocedasticidad y no autocorrelación, es decir, cuando:</p>
+<div class="math notranslate nohighlight">
+\[Var(\boldsymbol{\varepsilon}|\mathbf{X}) = \boldsymbol{\Omega} \neq \sigma^2 \mathbf{I}_n\]</div>
+<p>el estimador de mínimos cuadrados ordinarios (OLS) sigue siendo insesgado pero ya no es el más eficiente. En este caso, se utiliza el método de Mínimos Cuadrados Generalizados (GLS).</p>
+</section>
+<section id="formulacion-del-modelo-gls">
+<h2>5.2 Formulación del Modelo GLS<a class="headerlink" href="#formulacion-del-modelo-gls" title="Link to this heading">#</a></h2>
+<p>El modelo GLS asume:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\]</div>
+<p>Con:
+$<span class="math notranslate nohighlight">\(E(\boldsymbol{\varepsilon}|\mathbf{X}) = \mathbf{0}\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(Var(\boldsymbol{\varepsilon}|\mathbf{X}) = \boldsymbol{\Omega}\)</span>$</p>
+<p>Donde <span class="math notranslate nohighlight">\(\boldsymbol{\Omega}\)</span> es una matriz simétrica definida positiva conocida (o estimada).</p>
+</section>
+<section id="estimador-gls">
+<h2>5.3 Estimador GLS<a class="headerlink" href="#estimador-gls" title="Link to this heading">#</a></h2>
+<p>El estimador de mínimos cuadrados generalizados se obtiene minimizando la forma cuadrática:</p>
+<div class="math notranslate nohighlight">
+\[Q(\boldsymbol{\beta}) = (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T \boldsymbol{\Omega}^{-1} (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\]</div>
+<p>La solución es:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\hat{\beta}}_{GLS} = (\mathbf{X}^T \boldsymbol{\Omega}^{-1} \mathbf{X})^{-1} \mathbf{X}^T \boldsymbol{\Omega}^{-1} \mathbf{y}\]</div>
+</section>
+<section id="propiedades-del-estimador-gls">
+<h2>5.4 Propiedades del Estimador GLS<a class="headerlink" href="#propiedades-del-estimador-gls" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Insesgadez</strong>:
+$<span class="math notranslate nohighlight">\(E(\boldsymbol{\hat{\beta}}_{GLS}|\mathbf{X}) = \boldsymbol{\beta}\)</span>$</p></li>
+<li><p><strong>Matriz de varianzas-covarianzas</strong>:
+$<span class="math notranslate nohighlight">\(Var(\boldsymbol{\hat{\beta}}_{GLS}|\mathbf{X}) = (\mathbf{X}^T \boldsymbol{\Omega}^{-1} \mathbf{X})^{-1}\)</span>$</p></li>
+<li><p><strong>Eficiencia</strong>:
+El estimador GLS es el mejor estimador lineal insesgado (BLUE) cuando la matriz <span class="math notranslate nohighlight">\(\boldsymbol{\Omega}\)</span> es conocida.</p></li>
+</ol>
+</section>
+<section id="transformacion-del-modelo">
+<h2>5.5 Transformación del Modelo<a class="headerlink" href="#transformacion-del-modelo" title="Link to this heading">#</a></h2>
+<p>El método GLS puede verse como una transformación del modelo original para restaurar las condiciones de Gauss-Markov.</p>
+<p>Como <span class="math notranslate nohighlight">\(\boldsymbol{\Omega}\)</span> es simétrica definida positiva, existe una matriz <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> tal que <span class="math notranslate nohighlight">\(\boldsymbol{\Omega} = \mathbf{P}\mathbf{P}^T\)</span>. Definiendo:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y}^* = \mathbf{P}^{-1}\mathbf{y}\]</div>
+<div class="math notranslate nohighlight">
+\[\mathbf{X}^* = \mathbf{P}^{-1}\mathbf{X}\]</div>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\varepsilon}^* = \mathbf{P}^{-1}\boldsymbol{\varepsilon}\]</div>
+<p>El modelo transformado es:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y}^* = \mathbf{X}^*\boldsymbol{\beta} + \boldsymbol{\varepsilon}^*\]</div>
+<p>Con:
+$<span class="math notranslate nohighlight">\(E(\boldsymbol{\varepsilon}^*|\mathbf{X}^*) = \mathbf{0}\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(Var(\boldsymbol{\varepsilon}^*|\mathbf{X}^*) = \sigma^2 \mathbf{I}_n\)</span>$</p>
+<p>Aplicando OLS a este modelo transformado, se obtiene el estimador GLS.</p>
+</section>
+<section id="minimos-cuadrados-ponderados-wls">
+<h2>5.6 Mínimos Cuadrados Ponderados (WLS)<a class="headerlink" href="#minimos-cuadrados-ponderados-wls" title="Link to this heading">#</a></h2>
+<p>Un caso particular de GLS es cuando <span class="math notranslate nohighlight">\(\boldsymbol{\Omega}\)</span> es diagonal, es decir, cuando hay heterocedasticidad pero no autocorrelación:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\Omega} = \text{diag}(\sigma_1^2, \sigma_2^2, \ldots, \sigma_n^2)\]</div>
+<p>En este caso, el método se llama Mínimos Cuadrados Ponderados (WLS, por sus siglas en inglés) y el estimador es:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\hat{\beta}}_{WLS} = \left(\sum_{i=1}^n \frac{1}{\sigma_i^2}\mathbf{x}_i\mathbf{x}_i^T\right)^{-1} \left(\sum_{i=1}^n \frac{1}{\sigma_i^2}y_i\mathbf{x}_i\right)\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> es la i-ésima fila de <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p>
+</section>
+<section id="estimacion-factible-de-gls-fgls">
+<h2>5.7 Estimación Factible de GLS (FGLS)<a class="headerlink" href="#estimacion-factible-de-gls-fgls" title="Link to this heading">#</a></h2>
+<p>En la práctica, la matriz <span class="math notranslate nohighlight">\(\boldsymbol{\Omega}\)</span> suele ser desconocida y debe estimarse. El procedimiento es:</p>
+<ol class="arabic simple">
+<li><p>Estimar <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> mediante OLS: <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}_{OLS}\)</span></p></li>
+<li><p>Calcular los residuos: <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\varepsilon}} = \mathbf{y} - \mathbf{X}\boldsymbol{\hat{\beta}}_{OLS}\)</span></p></li>
+<li><p>Estimar <span class="math notranslate nohighlight">\(\boldsymbol{\Omega}\)</span> a partir de estos residuos</p></li>
+<li><p>Calcular el estimador GLS usando la matriz <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\Omega}}\)</span> estimada:
+$<span class="math notranslate nohighlight">\(\boldsymbol{\hat{\beta}}_{FGLS} = (\mathbf{X}^T \boldsymbol{\hat{\Omega}}^{-1} \mathbf{X})^{-1} \mathbf{X}^T \boldsymbol{\hat{\Omega}}^{-1} \mathbf{y}\)</span>$</p></li>
+</ol>
+<p>Este procedimiento puede iterarse hasta alcanzar la convergencia.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="implementacion-computacional">
+<h1>6. Implementación Computacional<a class="headerlink" href="#implementacion-computacional" title="Link to this heading">#</a></h1>
+<section id="implementacion-de-minimos-cuadrados-ordinarios-ols">
+<h2>6.1 Implementación de Mínimos Cuadrados Ordinarios (OLS)<a class="headerlink" href="#implementacion-de-minimos-cuadrados-ordinarios-ols" title="Link to this heading">#</a></h2>
+<p>Implementaremos desde cero el estimador OLS, calcularemos sus propiedades y lo compararemos con la implementación de statsmodels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Implementación de estimadores OLS desde cero</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ols_estimator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula el estimador de mínimos cuadrados ordinarios</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: matriz de diseño de dimensión (n, p)</span>
+<span class="sd">        y: vector de observaciones de dimensión (n, 1)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        beta_hat: estimador OLS de los parámetros</span>
+<span class="sd">        sigma2_hat: estimador de la varianza del error</span>
+<span class="sd">        sigma2_unbiased: estimador insesgado de la varianza del error</span>
+<span class="sd">        var_beta_hat: matriz de varianzas-covarianzas del estimador</span>
+<span class="sd">        fitted_values: valores ajustados</span>
+<span class="sd">        residuals: residuos</span>
+<span class="sd">        R2: coeficiente de determinación</span>
+<span class="sd">        R2_adj: coeficiente de determinación ajustado</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Asegurar que X e y sean arrays de numpy</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Obtener dimensiones</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Calcular beta_hat = (X&#39;X)^(-1)X&#39;y</span>
+    <span class="n">XtX</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span>
+    <span class="n">XtX_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XtX</span><span class="p">)</span>
+    <span class="n">Xty</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">XtX_inv</span> <span class="o">@</span> <span class="n">Xty</span>
+
+    <span class="c1"># Calcular valores ajustados y residuos</span>
+    <span class="n">fitted_values</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">beta_hat</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">fitted_values</span>
+
+    <span class="c1"># Calcular sigma^2 (estimador ML)</span>
+    <span class="n">sigma2_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="c1"># Calcular sigma^2 (estimador insesgado)</span>
+    <span class="n">sigma2_unbiased</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="c1"># Calcular matriz de varianzas-covarianzas</span>
+    <span class="n">var_beta_hat</span> <span class="o">=</span> <span class="n">sigma2_unbiased</span> <span class="o">*</span> <span class="n">XtX_inv</span>
+
+    <span class="c1"># Calcular R^2</span>
+    <span class="n">SSR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">SST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">R2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">SSR</span><span class="o">/</span><span class="n">SST</span>
+
+    <span class="c1"># Calcular R^2 ajustado</span>
+    <span class="n">R2_adj</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">R2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;beta_hat&#39;</span><span class="p">:</span> <span class="n">beta_hat</span><span class="p">,</span>
+        <span class="s1">&#39;sigma2_hat&#39;</span><span class="p">:</span> <span class="n">sigma2_hat</span><span class="p">,</span>
+        <span class="s1">&#39;sigma2_unbiased&#39;</span><span class="p">:</span> <span class="n">sigma2_unbiased</span><span class="p">,</span>
+        <span class="s1">&#39;var_beta_hat&#39;</span><span class="p">:</span> <span class="n">var_beta_hat</span><span class="p">,</span>
+        <span class="s1">&#39;fitted_values&#39;</span><span class="p">:</span> <span class="n">fitted_values</span><span class="p">,</span>
+        <span class="s1">&#39;residuals&#39;</span><span class="p">:</span> <span class="n">residuals</span><span class="p">,</span>
+        <span class="s1">&#39;R2&#39;</span><span class="p">:</span> <span class="n">R2</span><span class="p">,</span>
+        <span class="s1">&#39;R2_adj&#39;</span><span class="p">:</span> <span class="n">R2_adj</span>
+    <span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">gls_estimator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Omega</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula el estimador de mínimos cuadrados generalizados</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: matriz de diseño de dimensión (n, p)</span>
+<span class="sd">        y: vector de observaciones de dimensión (n, 1)</span>
+<span class="sd">        Omega: matriz de varianzas-covarianzas de los errores</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        beta_hat: estimador GLS de los parámetros</span>
+<span class="sd">        var_beta_hat: matriz de varianzas-covarianzas del estimador</span>
+<span class="sd">        fitted_values: valores ajustados</span>
+<span class="sd">        residuals: residuos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Asegurar que X, y y Omega sean arrays de numpy</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">Omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Omega</span><span class="p">)</span>
+
+    <span class="c1"># Obtener dimensiones</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Calcular la inversa de Omega</span>
+    <span class="n">Omega_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Omega</span><span class="p">)</span>
+
+    <span class="c1"># Calcular beta_hat_gls = (X&#39;Omega^(-1)X)^(-1)X&#39;Omega^(-1)y</span>
+    <span class="n">XtOmega_invX</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Omega_inv</span> <span class="o">@</span> <span class="n">X</span>
+    <span class="n">XtOmega_invX_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XtOmega_invX</span><span class="p">)</span>
+    <span class="n">XtOmega_invy</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Omega_inv</span> <span class="o">@</span> <span class="n">y</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">XtOmega_invX_inv</span> <span class="o">@</span> <span class="n">XtOmega_invy</span>
+
+    <span class="c1"># Calcular valores ajustados y residuos</span>
+    <span class="n">fitted_values</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">beta_hat</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">fitted_values</span>
+
+    <span class="c1"># Calcular matriz de varianzas-covarianzas</span>
+    <span class="n">var_beta_hat</span> <span class="o">=</span> <span class="n">XtOmega_invX_inv</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;beta_hat&#39;</span><span class="p">:</span> <span class="n">beta_hat</span><span class="p">,</span>
+        <span class="s1">&#39;var_beta_hat&#39;</span><span class="p">:</span> <span class="n">var_beta_hat</span><span class="p">,</span>
+        <span class="s1">&#39;fitted_values&#39;</span><span class="p">:</span> <span class="n">fitted_values</span><span class="p">,</span>
+        <span class="s1">&#39;residuals&#39;</span><span class="p">:</span> <span class="n">residuals</span>
+    <span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">wls_estimator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula el estimador de mínimos cuadrados ponderados</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: matriz de diseño de dimensión (n, p)</span>
+<span class="sd">        y: vector de observaciones de dimensión (n, 1)</span>
+<span class="sd">        weights: vector de pesos (inversos de las varianzas)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        beta_hat: estimador WLS de los parámetros</span>
+<span class="sd">        var_beta_hat: matriz de varianzas-covarianzas del estimador</span>
+<span class="sd">        fitted_values: valores ajustados</span>
+<span class="sd">        residuals: residuos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Asegurar que X, y y weights sean arrays de numpy</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+    <span class="c1"># Obtener dimensiones</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Crear matriz de pesos W (diagonal)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+    <span class="c1"># Calcular beta_hat_wls = (X&#39;WX)^(-1)X&#39;Wy</span>
+    <span class="n">XtWX</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">W</span> <span class="o">@</span> <span class="n">X</span>
+    <span class="n">XtWX_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XtWX</span><span class="p">)</span>
+    <span class="n">XtWy</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">W</span> <span class="o">@</span> <span class="n">y</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">XtWX_inv</span> <span class="o">@</span> <span class="n">XtWy</span>
+
+    <span class="c1"># Calcular valores ajustados y residuos</span>
+    <span class="n">fitted_values</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">beta_hat</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">fitted_values</span>
+
+    <span class="c1"># Calcular matriz de varianzas-covarianzas</span>
+    <span class="n">var_beta_hat</span> <span class="o">=</span> <span class="n">XtWX_inv</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;beta_hat&#39;</span><span class="p">:</span> <span class="n">beta_hat</span><span class="p">,</span>
+        <span class="s1">&#39;var_beta_hat&#39;</span><span class="p">:</span> <span class="n">var_beta_hat</span><span class="p">,</span>
+        <span class="s1">&#39;fitted_values&#39;</span><span class="p">:</span> <span class="n">fitted_values</span><span class="p">,</span>
+        <span class="s1">&#39;residuals&#39;</span><span class="p">:</span> <span class="n">residuals</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="diagnostico-de-residuos">
+<h1>7.2 Diagnóstico de Residuos<a class="headerlink" href="#diagnostico-de-residuos" title="Link to this heading">#</a></h1>
+<p>Una parte crucial del análisis de regresión es verificar si los supuestos del modelo se cumplen a través del diagnóstico de los residuos. Dos herramientas importantes para este propósito son los gráficos Q-Q y la prueba de Breusch-Pagan.</p>
+<section id="graficos-q-q-quantile-quantile">
+<h2>7.2.1 Gráficos Q-Q (Quantile-Quantile)<a class="headerlink" href="#graficos-q-q-quantile-quantile" title="Link to this heading">#</a></h2>
+<p>Los gráficos Q-Q son una herramienta visual para evaluar si un conjunto de datos sigue una distribución teórica específica, en nuestro caso, la distribución normal.</p>
+<section id="por-que-usamos-graficos-q-q">
+<h3>¿Por qué usamos gráficos Q-Q?<a class="headerlink" href="#por-que-usamos-graficos-q-q" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Evaluación del supuesto de normalidad</strong>: En el modelo lineal normal, asumimos que los errores siguen una distribución normal. El gráfico Q-Q nos permite verificar este supuesto visualmente.</p></li>
+<li><p><strong>Detección de valores atípicos</strong>: Los puntos que se desvían significativamente de la línea de referencia pueden indicar la presencia de valores atípicos.</p></li>
+<li><p><strong>Identificación de asimetría y colas pesadas</strong>: Patrones sistemáticos de desviación de la línea de referencia pueden revelar asimetría (skewness) o colas más pesadas o ligeras que la distribución normal.</p></li>
+</ol>
+</section>
+<section id="interpretacion-de-graficos-q-q">
+<h3>Interpretación de gráficos Q-Q:<a class="headerlink" href="#interpretacion-de-graficos-q-q" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Si los puntos se alinean aproximadamente en una línea recta, sugiere que los residuos siguen una distribución normal.</p></li>
+<li><p>Desviaciones en los extremos (colas) pueden indicar colas más pesadas o ligeras que la normal.</p></li>
+<li><p>Patrones en forma de S indican asimetría.</p></li>
+<li><p>Puntos aislados pueden corresponder a valores atípicos.</p></li>
+</ul>
+</section>
+</section>
+<section id="prueba-de-breusch-pagan">
+<h2>7.2.2 Prueba de Breusch-Pagan<a class="headerlink" href="#prueba-de-breusch-pagan" title="Link to this heading">#</a></h2>
+<p>La prueba de Breusch-Pagan es una prueba estadística para detectar heterocedasticidad en los residuos de un modelo de regresión.</p>
+<section id="por-que-usamos-la-prueba-de-breusch-pagan">
+<h3>¿Por qué usamos la prueba de Breusch-Pagan?<a class="headerlink" href="#por-que-usamos-la-prueba-de-breusch-pagan" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Detección de heterocedasticidad</strong>: La heterocedasticidad viola uno de los supuestos clave del modelo lineal clásico (varianza constante del error), lo que afecta la eficiencia de los estimadores OLS y la validez de la inferencia estadística.</p></li>
+<li><p><strong>Test formal</strong>: Mientras que los gráficos de residuos proporcionan una evaluación visual, la prueba de Breusch-Pagan ofrece un criterio estadístico formal para la detección de heterocedasticidad.</p></li>
+<li><p><strong>Diagnóstico para aplicar GLS</strong>: Si se detecta heterocedasticidad, podemos justificar el uso de métodos como WLS o GLS en lugar de OLS.</p></li>
+</ol>
+</section>
+<section id="procedimiento-de-la-prueba-de-breusch-pagan">
+<h3>Procedimiento de la prueba de Breusch-Pagan:<a class="headerlink" href="#procedimiento-de-la-prueba-de-breusch-pagan" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Ajustar el modelo de regresión y obtener los residuos.</p></li>
+<li><p>Calcular los residuos al cuadrado.</p></li>
+<li><p>Realizar una regresión de los residuos al cuadrado sobre las variables independientes.</p></li>
+<li><p>Calcular el estadístico de prueba como n·R², donde n es el número de observaciones y R² es el coeficiente de determinación de esta regresión auxiliar.</p></li>
+<li><p>Este estadístico sigue aproximadamente una distribución chi-cuadrado con p-1 grados de libertad bajo la hipótesis nula de homocedasticidad.</p></li>
+</ol>
+</section>
+<section id="interpretacion-de-la-prueba-de-breusch-pagan">
+<h3>Interpretación de la prueba de Breusch-Pagan:<a class="headerlink" href="#interpretacion-de-la-prueba-de-breusch-pagan" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Hipótesis nula (H₀)</strong>: Homocedasticidad (varianza constante).</p></li>
+<li><p><strong>Hipótesis alternativa (H₁)</strong>: Heterocedasticidad (varianza no constante).</p></li>
+<li><p>Si el p-valor es menor que el nivel de significancia (típicamente 0.05), rechazamos la hipótesis nula y concluimos que hay evidencia de heterocedasticidad.</p></li>
+</ul>
+<p>La presencia de heterocedasticidad no afecta la insesgadez de los estimadores OLS, pero sí su eficiencia y la validez de los intervalos de confianza y pruebas de hipótesis basados en ellos. En estos casos, podemos recurrir a métodos como WLS o GLS, o utilizar errores estándar robustos a la heterocedasticidad.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ejemplos-practicos">
+<h1>7. Ejemplos Prácticos<a class="headerlink" href="#ejemplos-practicos" title="Link to this heading">#</a></h1>
+<section id="datos-simulados-modelo-lineal-normal">
+<h2>7.1 Datos Simulados: Modelo Lineal Normal<a class="headerlink" href="#datos-simulados-modelo-lineal-normal" title="Link to this heading">#</a></h2>
+<p>Vamos a generar datos que cumplan con los supuestos del modelo lineal normal y aplicar los diferentes estimadores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generar datos que cumplan con los supuestos del modelo lineal normal</span>
+
+<span class="c1"># Parámetros de la simulación</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># Número de observaciones</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">3</span>    <span class="c1"># Número de variables (sin incluir intercepto)</span>
+<span class="n">beta_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>  <span class="c1"># Coeficientes verdaderos (incluye intercepto)</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># Desviación estándar del error</span>
+
+<span class="c1"># Generar matriz de diseño</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<span class="n">X_with_intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">X</span><span class="p">))</span>  <span class="c1"># Añadir columna de unos para el intercepto</span>
+
+<span class="c1"># Generar errores normales</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Generar la variable dependiente</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X_with_intercept</span> <span class="o">@</span> <span class="n">beta_true</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Mostrar las primeras filas de los datos</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)),</span> 
+                    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x3&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Primeras filas de los datos generados:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Estadísticas descriptivas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estadísticas descriptivas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<span class="c1"># Visualizar relaciones entre las variables</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x3&#39;</span><span class="p">]):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Relación entre </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> e y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Matriz de correlación</span>
+<span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Correlación&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Primeras filas de los datos generados:
+          y        x1        x2        x3
+0  0.628366  0.496714 -0.138264  0.647689
+1 -1.806688  1.523030 -0.234153 -0.234137
+2  1.125839  1.579213  0.767435 -0.469474
+3  1.860864  0.542560 -0.463418 -0.465730
+4 -1.386533  0.241962 -1.913280 -1.724918
+
+Estadísticas descriptivas:
+                y          x1          x2          x3
+count  100.000000  100.000000  100.000000  100.000000
+mean     2.510024    0.091766   -0.183233    0.074822
+std      2.750368    0.824799    0.979100    1.112910
+min     -3.938665   -1.952088   -3.241267   -2.619745
+25%      0.738463   -0.480439   -0.829801   -0.709340
+50%      2.735519    0.203962   -0.228808    0.115196
+75%      4.329138    0.500982    0.538170    0.765998
+max      9.944611    2.143944    2.314659    3.852731
+</pre></div>
+</div>
+<img alt="_images/a2e3b32ee758523cb183fe51a1f8e6971d4c7272b93f3ce056fed384a085901a.png" src="_images/a2e3b32ee758523cb183fe51a1f8e6971d4c7272b93f3ce056fed384a085901a.png" />
+<img alt="_images/6c9445d40cf60288e3da73cfc8577d026ff8eefab9606b2058026461e92f972a.png" src="_images/6c9445d40cf60288e3da73cfc8577d026ff8eefab9606b2058026461e92f972a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aplicar OLS a los datos simulados</span>
+
+<span class="c1"># Aplicar nuestro estimador OLS</span>
+<span class="n">ols_results</span> <span class="o">=</span> <span class="n">ols_estimator</span><span class="p">(</span><span class="n">X_with_intercept</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Comparar con los valores verdaderos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparación de estimadores OLS con valores verdaderos:&quot;</span><span class="p">)</span>
+<span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Beta verdadero&#39;</span><span class="p">:</span> <span class="n">beta_true</span><span class="p">,</span>
+    <span class="s1">&#39;Beta estimado&#39;</span><span class="p">:</span> <span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;beta_hat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+    <span class="s1">&#39;Error estándar&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;var_beta_hat&#39;</span><span class="p">]))</span>
+<span class="p">})</span>
+<span class="n">comparison</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;X3&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sigma verdadero: </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sigma estimado (ML): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;sigma2_hat&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sigma estimado (insesgado): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;sigma2_unbiased&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">R²: </span><span class="si">{</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² ajustado: </span><span class="si">{</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;R2_adj&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Comparar con statsmodels</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X_with_intercept</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resumen de statsmodels:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+<span class="c1"># Visualización de los residuos</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;fitted_values&#39;</span><span class="p">],</span> <span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Valores ajustados&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuos vs Valores ajustados&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">plot</span><span class="o">=</span><span class="n">plt</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Q-Q Plot de los residuos&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histograma de residuos&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Índice&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuos vs Índice&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Prueba de homocedasticidad (Breusch-Pagan)</span>
+<span class="n">bp_test</span> <span class="o">=</span> <span class="n">het_breuschpagan</span><span class="p">(</span><span class="n">ols_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">X_with_intercept</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LM Estadístico&#39;</span><span class="p">,</span> <span class="s1">&#39;LM p-valor&#39;</span><span class="p">,</span> <span class="s1">&#39;F Estadístico&#39;</span><span class="p">,</span> <span class="s1">&#39;F p-valor&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Prueba de Breusch-Pagan para homocedasticidad:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">bp_test</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación de estimadores OLS con valores verdaderos:
+            Beta verdadero  Beta estimado  Error estándar
+Intercepto             2.5       2.725725        0.181900
+X1                    -1.8      -1.955327        0.218425
+X2                     0.7       0.600073        0.184072
+X3                     1.2       0.984813        0.162940
+
+Sigma verdadero: 2.0
+Sigma estimado (ML): 1.7398
+Sigma estimado (insesgado): 1.7757
+
+R²: 0.5958
+R² ajustado: 0.5832
+
+Resumen de statsmodels:
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.596
+Model:                            OLS   Adj. R-squared:                  0.583
+Method:                 Least Squares   F-statistic:                     47.17
+Date:                Wed, 02 Apr 2025   Prob (F-statistic):           8.02e-19
+Time:                        11:11:14   Log-Likelihood:                -197.27
+No. Observations:                 100   AIC:                             402.5
+Df Residuals:                      96   BIC:                             413.0
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          2.7257      0.182     14.985      0.000       2.365       3.087
+x1            -1.9553      0.218     -8.952      0.000      -2.389      -1.522
+x2             0.6001      0.184      3.260      0.002       0.235       0.965
+x3             0.9848      0.163      6.044      0.000       0.661       1.308
+==============================================================================
+Omnibus:                        0.771   Durbin-Watson:                   1.891
+Prob(Omnibus):                  0.680   Jarque-Bera (JB):                0.847
+Skew:                           0.198   Prob(JB):                        0.655
+Kurtosis:                       2.785   Cond. No.                         1.47
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+<img alt="_images/3080fcf299355a9fd9701f45a5f506674f7385bb01c8e2d9bd65a27dbe4c392b.png" src="_images/3080fcf299355a9fd9701f45a5f506674f7385bb01c8e2d9bd65a27dbe4c392b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prueba de Breusch-Pagan para homocedasticidad:
+{&#39;LM Estadístico&#39;: np.float64(3.4028229720905245), &#39;LM p-valor&#39;: np.float64(0.33358607458429296), &#39;F Estadístico&#39;: np.float64(1.127262084226702), &#39;F p-valor&#39;: np.float64(0.34200843393766456)}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generar datos con heterocedasticidad</span>
+
+<span class="c1"># Parámetros de la simulación</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># Número de observaciones</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">3</span>    <span class="c1"># Número de variables (sin incluir intercepto)</span>
+<span class="n">beta_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>  <span class="c1"># Coeficientes verdaderos (incluye intercepto)</span>
+
+<span class="c1"># Generar matriz de diseño</span>
+<span class="n">X_hetero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<span class="n">X_hetero_with_intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">X_hetero</span><span class="p">))</span>
+
+<span class="c1"># Generar errores heterocedásticos (varianza dependiente de X1)</span>
+<span class="c1"># La varianza aumenta con X1^2</span>
+<span class="n">sigma_i</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">X_hetero</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">epsilon_hetero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma_i</span>
+
+<span class="c1"># Generar la variable dependiente</span>
+<span class="n">y_hetero</span> <span class="o">=</span> <span class="n">X_hetero_with_intercept</span> <span class="o">@</span> <span class="n">beta_true</span> <span class="o">+</span> <span class="n">epsilon_hetero</span>
+
+<span class="c1"># Visualizar la heterocedasticidad</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_hetero</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_hetero</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;y vs X1 (variable que afecta la varianza)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_hetero</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">epsilon_hetero</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Error vs X1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_hetero</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sigma_i</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Desviación estándar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Desviación estándar vs X1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02b99fddcf4e1f20745d2e9c8e5d6b121ab73230e46927414fb801614b777692.png" src="_images/02b99fddcf4e1f20745d2e9c8e5d6b121ab73230e46927414fb801614b777692.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aplicar OLS y WLS a datos con heterocedasticidad</span>
+
+<span class="c1"># Aplicar OLS a los datos heterocedásticos</span>
+<span class="n">ols_hetero_results</span> <span class="o">=</span> <span class="n">ols_estimator</span><span class="p">(</span><span class="n">X_hetero_with_intercept</span><span class="p">,</span> <span class="n">y_hetero</span><span class="p">)</span>
+
+<span class="c1"># Comparar con los valores verdaderos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resultados de OLS con datos heterocedásticos:&quot;</span><span class="p">)</span>
+<span class="n">comparison_hetero</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Beta verdadero&#39;</span><span class="p">:</span> <span class="n">beta_true</span><span class="p">,</span>
+    <span class="s1">&#39;Beta OLS&#39;</span><span class="p">:</span> <span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;beta_hat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+    <span class="s1">&#39;Error estándar OLS&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;var_beta_hat&#39;</span><span class="p">]))</span>
+<span class="p">})</span>
+<span class="n">comparison_hetero</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;X3&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison_hetero</span><span class="p">)</span>
+
+<span class="c1"># Prueba de homocedasticidad (Breusch-Pagan)</span>
+<span class="n">bp_test_hetero</span> <span class="o">=</span> <span class="n">het_breuschpagan</span><span class="p">(</span><span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">X_hetero_with_intercept</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LM Estadístico&#39;</span><span class="p">,</span> <span class="s1">&#39;LM p-valor&#39;</span><span class="p">,</span> <span class="s1">&#39;F Estadístico&#39;</span><span class="p">,</span> <span class="s1">&#39;F p-valor&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Prueba de Breusch-Pagan para homocedasticidad:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">bp_test_hetero</span><span class="p">)))</span>
+
+<span class="c1"># Visualización de los residuos para datos heterocedásticos</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;fitted_values&#39;</span><span class="p">],</span> <span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Valores ajustados&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuos vs Valores ajustados (OLS)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_hetero</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuos vs X1 (OLS)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Aplicar WLS utilizando el inverso de la varianza estimada</span>
+<span class="c1"># Estimamos la varianza a partir de los residuos OLS</span>
+<span class="c1"># Regresando los residuos cuadrados contra X1</span>
+<span class="n">X_var</span> <span class="o">=</span> <span class="n">X_hetero_with_intercept</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># X1</span>
+<span class="n">X_var_with_const</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">X_var</span><span class="p">,</span> <span class="n">X_var</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># Incluimos X1 y X1^2</span>
+
+<span class="c1"># Regresión de residuos cuadrados</span>
+<span class="n">resid_sq</span> <span class="o">=</span> <span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">ols_var_model</span> <span class="o">=</span> <span class="n">ols_estimator</span><span class="p">(</span><span class="n">X_var_with_const</span><span class="p">,</span> <span class="n">resid_sq</span><span class="p">)</span>
+<span class="n">sigma_sq_hat</span> <span class="o">=</span> <span class="n">X_var_with_const</span> <span class="o">@</span> <span class="n">ols_var_model</span><span class="p">[</span><span class="s1">&#39;beta_hat&#39;</span><span class="p">]</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">sigma_sq_hat</span>  <span class="c1"># Pesos para WLS</span>
+
+<span class="c1"># Aplicar WLS</span>
+<span class="n">wls_results</span> <span class="o">=</span> <span class="n">wls_estimator</span><span class="p">(</span><span class="n">X_hetero_with_intercept</span><span class="p">,</span> <span class="n">y_hetero</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+
+<span class="c1"># Añadir resultados WLS a la comparación</span>
+<span class="n">comparison_hetero</span><span class="p">[</span><span class="s1">&#39;Beta WLS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;beta_hat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">comparison_hetero</span><span class="p">[</span><span class="s1">&#39;Error estándar WLS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;var_beta_hat&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resultados incluyendo WLS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comparison_hetero</span><span class="p">)</span>
+
+<span class="c1"># Visualizar residuos WLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;fitted_values&#39;</span><span class="p">],</span> <span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Valores ajustados&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuos vs Valores ajustados (WLS)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_hetero</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;residuals&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuos vs X1 (WLS)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Comparar intervalos de confianza</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_ci</span><span class="p">(</span><span class="n">beta_hat</span><span class="p">,</span> <span class="n">std_err</span><span class="p">):</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">beta_hat</span> <span class="o">-</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">std_err</span>
+    <span class="n">upper</span> <span class="o">=</span> <span class="n">beta_hat</span> <span class="o">+</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">std_err</span>
+    <span class="k">return</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span>
+
+<span class="c1"># Datos para visualización</span>
+<span class="n">param_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intercepto&#39;</span><span class="p">,</span> <span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="s1">&#39;X3&#39;</span><span class="p">]</span>
+<span class="n">true_values</span> <span class="o">=</span> <span class="n">beta_true</span>
+<span class="n">ols_estimates</span> <span class="o">=</span> <span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;beta_hat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">ols_std_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ols_hetero_results</span><span class="p">[</span><span class="s1">&#39;var_beta_hat&#39;</span><span class="p">]))</span>
+<span class="n">wls_estimates</span> <span class="o">=</span> <span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;beta_hat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">wls_std_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">wls_results</span><span class="p">[</span><span class="s1">&#39;var_beta_hat&#39;</span><span class="p">]))</span>
+
+<span class="c1"># Calcular intervalos de confianza</span>
+<span class="n">ols_lower</span><span class="p">,</span> <span class="n">ols_upper</span> <span class="o">=</span> <span class="n">calculate_ci</span><span class="p">(</span><span class="n">ols_estimates</span><span class="p">,</span> <span class="n">ols_std_err</span><span class="p">)</span>
+<span class="n">wls_lower</span><span class="p">,</span> <span class="n">wls_upper</span> <span class="o">=</span> <span class="n">calculate_ci</span><span class="p">(</span><span class="n">wls_estimates</span><span class="p">,</span> <span class="n">wls_std_err</span><span class="p">)</span>
+
+<span class="c1"># Visualizar intervalos de confianza</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">param_names</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Valores verdaderos</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">true_values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Valor verdadero&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Intervalos OLS</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ols_estimates</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="p">[[</span><span class="n">ols_estimates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">ols_lower</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="n">ols_upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">ols_estimates</span><span class="p">[</span><span class="n">i</span><span class="p">]]],</span> 
+                 <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLS&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Intervalos WLS</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">wls_estimates</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="p">[[</span><span class="n">wls_estimates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">wls_lower</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="n">wls_upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">wls_estimates</span><span class="p">[</span><span class="n">i</span><span class="p">]]],</span> 
+                 <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;WLS&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;OLS&#39;</span><span class="p">,</span> <span class="s1">&#39;WLS&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Intervalo de confianza para </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados de OLS con datos heterocedásticos:
+            Beta verdadero  Beta OLS  Error estándar OLS
+Intercepto             2.5  2.390680            0.235209
+X1                    -1.8 -1.442722            0.219298
+X2                     0.7  0.604094            0.226114
+X3                     1.2  1.339019            0.247821
+
+Prueba de Breusch-Pagan para homocedasticidad:
+{&#39;LM Estadístico&#39;: np.float64(4.888801475603621), &#39;LM p-valor&#39;: np.float64(0.18012309748528937), &#39;F Estadístico&#39;: np.float64(1.6448288913023), &#39;F p-valor&#39;: np.float64(0.18415267770159724)}
+</pre></div>
+</div>
+<img alt="_images/8cf5714802be83618ba20f3d7221f228b42c3133195682ab7817b4f1b0e53ec0.png" src="_images/8cf5714802be83618ba20f3d7221f228b42c3133195682ab7817b4f1b0e53ec0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados incluyendo WLS:
+            Beta verdadero  Beta OLS  Error estándar OLS  Beta WLS  \
+Intercepto             2.5  2.390680            0.235209  2.460032   
+X1                    -1.8 -1.442722            0.219298 -1.694393   
+X2                     0.7  0.604094            0.226114  0.587465   
+X3                     1.2  1.339019            0.247821  1.330596   
+
+            Error estándar WLS  
+Intercepto            0.172433  
+X1                    0.247534  
+X2                    0.174987  
+X3                    0.184963  
+</pre></div>
+</div>
+<img alt="_images/3c55dc186465316c1b74116ffe4cc27baf589e3538923b2f792a8e6cc49ba50f.png" src="_images/3c55dc186465316c1b74116ffe4cc27baf589e3538923b2f792a8e6cc49ba50f.png" />
+<img alt="_images/44c2dc5d12980f79a0090719626dc2c8a0502f807c775ae1ed401fc4583543fb.png" src="_images/44c2dc5d12980f79a0090719626dc2c8a0502f807c775ae1ed401fc4583543fb.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ejercicios">
+<h1>8. Ejercicios<a class="headerlink" href="#ejercicios" title="Link to this heading">#</a></h1>
+<section id="ejercicio-1-propiedades-del-estimador-ols">
+<h2>Ejercicio 1: Propiedades del Estimador OLS<a class="headerlink" href="#ejercicio-1-propiedades-del-estimador-ols" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Demuestre matemáticamente que <span class="math notranslate nohighlight">\(E(\boldsymbol{\hat{\beta}}|\mathbf{X}) = \boldsymbol{\beta}\)</span>, es decir, que el estimador OLS es insesgado.</p></li>
+<li><p>Demuestre matemáticamente que <span class="math notranslate nohighlight">\(Var(\boldsymbol{\hat{\beta}}|\mathbf{X}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\)</span>.</p></li>
+<li><p>Implemente una simulación Monte Carlo para verificar numéricamente la insesgadez del estimador OLS. Genere 1000 muestras con los mismos valores de X pero diferentes realizaciones de los errores, y calcule el promedio de los estimadores.</p></li>
+</ol>
+</section>
+<section id="ejercicio-2-estimacion-por-maxima-verosimilitud">
+<h2>Ejercicio 2: Estimación por Máxima Verosimilitud<a class="headerlink" href="#ejercicio-2-estimacion-por-maxima-verosimilitud" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Para un modelo de regresión lineal simple <span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> con <span class="math notranslate nohighlight">\(\varepsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span>, derive paso a paso los estimadores de máxima verosimilitud de <span class="math notranslate nohighlight">\(\beta_0\)</span>, <span class="math notranslate nohighlight">\(\beta_1\)</span> y <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p></li>
+<li><p>Implemente una función que calcule los estimadores de máxima verosimilitud para un modelo de regresión lineal simple utilizando un algoritmo iterativo de optimización (puede usar scipy.optimize). Compare los resultados con la solución analítica.</p></li>
+</ol>
+</section>
+<section id="ejercicio-3-homocedasticidad-y-gls">
+<h2>Ejercicio 3: Homocedasticidad y GLS<a class="headerlink" href="#ejercicio-3-homocedasticidad-y-gls" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Genere un conjunto de datos con heterocedasticidad donde la varianza del error es proporcional a <span class="math notranslate nohighlight">\(x^2\)</span> y ajuste un modelo mediante OLS. Visualice los residuos para detectar la heterocedasticidad.</p></li>
+<li><p>Implementar el estimador WLS para corregir la heterocedasticidad en los datos del punto anterior. Comparar las estimaciones e intervalos de confianza con los obtenidos por OLS.</p></li>
+<li><p>¿Cómo afecta la heterocedasticidad a la eficiencia y a la insesgadez de los estimadores OLS?</p></li>
+</ol>
+</section>
+<section id="ejercicio-4-coeficiente-de-determinacion">
+<h2>Ejercicio 4: Coeficiente de Determinación<a class="headerlink" href="#ejercicio-4-coeficiente-de-determinacion" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Demuestre que en regresión lineal simple, el coeficiente de determinación <span class="math notranslate nohighlight">\(R^2\)</span> es igual al cuadrado del coeficiente de correlación entre <span class="math notranslate nohighlight">\(y\)</span> y <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+<li><p>Para un conjunto de datos, calcule <span class="math notranslate nohighlight">\(R^2\)</span> de tres formas diferentes:</p>
+<ul class="simple">
+<li><p>Como <span class="math notranslate nohighlight">\(1 - SSR/SST\)</span></p></li>
+<li><p>Como <span class="math notranslate nohighlight">\(SSE/SST\)</span></p></li>
+<li><p>A partir del coeficiente de correlación en el caso de regresión simple</p></li>
+</ul>
+</li>
+<li><p>Interprete el valor de <span class="math notranslate nohighlight">\(R^2\)</span> y <span class="math notranslate nohighlight">\(R^2\)</span> ajustado para los datos simulados en este taller.</p></li>
+</ol>
+</section>
+<section id="ejercicio-5-teorema-de-gauss-markov">
+<h2>Ejercicio 5: Teorema de Gauss-Markov<a class="headerlink" href="#ejercicio-5-teorema-de-gauss-markov" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Explique cómo cada una de las condiciones de Gauss-Markov contribuye a que el estimador OLS sea BLUE.</p></li>
+<li><p>Tome los datos con heterocedasticidad generados en el Ejercicio 3 y demuestre empíricamente que el estimador WLS tiene menor varianza que el estimador OLS para estos datos.</p></li>
+<li><p>Para un modelo en el que se viola la condición de no autocorrelación, explique por qué OLS deja de ser BLUE y cómo GLS puede proporcionar un estimador más eficiente.</p></li>
+</ol>
+</section>
+<section id="ejercicio-6-diagnostico-de-residuos">
+<h2>Ejercicio 6: Diagnóstico de Residuos<a class="headerlink" href="#ejercicio-6-diagnostico-de-residuos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Genere un conjunto de datos donde los errores sigan una distribución t de Student con 3 grados de libertad (colas más pesadas que la normal). Realice un diagnóstico completo de los residuos, incluyendo un gráfico Q-Q, y comente los resultados.</p></li>
+<li><p>Implemente su propia versión de la prueba de Breusch-Pagan y aplíquela a los datos con heterocedasticidad generados en el Ejercicio 3. Compare sus resultados con la función het_breuschpagan de statsmodels.</p></li>
+<li><p>¿Qué otras pruebas o métodos gráficos conoce para verificar los supuestos del modelo lineal? Describa brevemente uno adicional e implemente un ejemplo.</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="referencias-bibliograficas">
+<h1>Referencias Bibliográficas<a class="headerlink" href="#referencias-bibliograficas" title="Link to this heading">#</a></h1>
+<section id="libros">
+<h2>Libros<a class="headerlink" href="#libros" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Greene, W. H. (2018). <em>Econometric Analysis</em> (8th ed.). Pearson.</p></li>
+<li><p>Wooldridge, J. M. (2019). <em>Introductory Econometrics: A Modern Approach</em> (7th ed.). Cengage Learning.</p></li>
+<li><p>Davidson, R., &amp; MacKinnon, J. G. (2004). <em>Econometric Theory and Methods</em>. Oxford University Press.</p></li>
+<li><p>Hayashi, F. (2000). <em>Econometrics</em>. Princeton University Press.</p></li>
+<li><p>Gujarati, D. N., &amp; Porter, D. C. (2009). <em>Basic Econometrics</em> (5th ed.). McGraw-Hill.</p></li>
+<li><p>Cameron, A. C., &amp; Trivedi, P. K. (2005). <em>Microeconometrics: Methods and Applications</em>. Cambridge University Press.</p></li>
+<li><p>Fox, J. (2015). <em>Applied Regression Analysis and Generalized Linear Models</em> (3rd ed.). SAGE Publications.</p></li>
+</ol>
+</section>
+<section id="articulos">
+<h2>Artículos<a class="headerlink" href="#articulos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Gauss, C. F. (1823). Theoria combinationis observationum erroribus minimis obnoxiae. <em>Commentationes Societatis Regiae Scientiarum Gottingensis Recentiores</em>, 5, 33-62.</p></li>
+<li><p>Markov, A. A. (1900). Wahrscheinlichkeitsrechnung. Teubner, Leipzig.</p></li>
+<li><p>Breusch, T. S., &amp; Pagan, A. R. (1979). A simple test for heteroscedasticity and random coefficient variation. <em>Econometrica</em>, 47(5), 1287-1294.</p></li>
+<li><p>White, H. (1980). A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity. <em>Econometrica</em>, 48(4), 817-838.</p></li>
+</ol>
+</section>
+<section id="recursos-en-linea">
+<h2>Recursos en línea<a class="headerlink" href="#recursos-en-linea" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>StatLect: Statistical Lectures. “The Gauss-Markov Theorem.”
+<a class="reference external" href="https://www.statlect.com/fundamentals-of-statistics/Gauss-Markov-theorem">https://www.statlect.com/fundamentals-of-statistics/Gauss-Markov-theorem</a></p></li>
+<li><p>Penn State STAT 501: Regression Methods. “The Gauss-Markov Theorem.”
+<a class="reference external" href="https://online.stat.psu.edu/stat501/lesson/4/4.1">https://online.stat.psu.edu/stat501/lesson/4/4.1</a></p></li>
+<li><p>Econometrics Academy. “Generalized Least Squares.”
+<a class="reference external" href="https://sites.google.com/site/econometricsacademy/econometrics-models/generalized-least-squares">https://sites.google.com/site/econometricsacademy/econometrics-models/generalized-least-squares</a></p></li>
+<li><p>Statsmodels Documentation. “Linear Regression.”
+<a class="reference external" href="https://www.statsmodels.org/stable/regression.html">https://www.statsmodels.org/stable/regression.html</a></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="practica.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modelos Lineales: Fundamentos, Estimación y Evaluación</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Taller_2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Taller 1: Modelo Normal - Supuestos e Inferencia</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion">Descripción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-de-aprendizaje">Objetivos de Aprendizaje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">Contenido</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#teoria-del-modelo-lineal-normal">1. Teoría del Modelo Lineal Normal</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-del-modelo-lineal">1.1 Definición del Modelo Lineal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supuestos-del-modelo-lineal-normal">1.2 Supuestos del Modelo Lineal Normal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicaciones-de-los-supuestos">1.3 Implicaciones de los Supuestos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#estimacion-por-maxima-verosimilitud">2. Estimación por Máxima Verosimilitud</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funcion-de-verosimilitud">2.1 Función de Verosimilitud</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivacion-de-los-estimadores-de-maxima-verosimilitud">2.2 Derivación de los Estimadores de Máxima Verosimilitud</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion-simbolica">2.3 Demostración Simbólica</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-de-los-estimadores">3. Propiedades de los Estimadores</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-estimador-de-boldsymbol-beta">3.1 Propiedades del Estimador de <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-estimador-de-sigma-2">3.2 Propiedades del Estimador de <span class="math notranslate nohighlight">\(\sigma^2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-blue-best-linear-unbiased-estimator">3.3 Propiedades BLUE (Best Linear Unbiased Estimator)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eficiencia-y-consistencia">3.4 Eficiencia y Consistencia</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-de-gauss-markov">3.5 Teorema de Gauss-Markov</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enunciado-del-teorema">3.5.1 Enunciado del Teorema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#condiciones-de-gauss-markov">3.5.2 Condiciones de Gauss-Markov</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicaciones-del-teorema">3.5.3 Implicaciones del Teorema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion-del-teorema-esbozo">3.5.4 Demostración del Teorema (Esbozo)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-de-determinacion">4. Coeficiente de Determinación</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-y-calculo">4.1 Definición y Cálculo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion">4.2 Interpretación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitaciones-del-r-2">4.3 Limitaciones del <span class="math notranslate nohighlight">\(R^2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-con-el-coeficiente-de-correlacion">4.4 Relación con el Coeficiente de Correlación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-geometrica">4.5 Interpretación Geométrica</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#minimos-cuadrados-generalizados-gls">5. Mínimos Cuadrados Generalizados (GLS)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivacion">5.1 Motivación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulacion-del-modelo-gls">5.2 Formulación del Modelo GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimador-gls">5.3 Estimador GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-estimador-gls">5.4 Propiedades del Estimador GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacion-del-modelo">5.5 Transformación del Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimos-cuadrados-ponderados-wls">5.6 Mínimos Cuadrados Ponderados (WLS)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimacion-factible-de-gls-fgls">5.7 Estimación Factible de GLS (FGLS)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-computacional">6. Implementación Computacional</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-de-minimos-cuadrados-ordinarios-ols">6.1 Implementación de Mínimos Cuadrados Ordinarios (OLS)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostico-de-residuos">7.2 Diagnóstico de Residuos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-q-q-quantile-quantile">7.2.1 Gráficos Q-Q (Quantile-Quantile)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-usamos-graficos-q-q">¿Por qué usamos gráficos Q-Q?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-graficos-q-q">Interpretación de gráficos Q-Q:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prueba-de-breusch-pagan">7.2.2 Prueba de Breusch-Pagan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-usamos-la-prueba-de-breusch-pagan">¿Por qué usamos la prueba de Breusch-Pagan?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedimiento-de-la-prueba-de-breusch-pagan">Procedimiento de la prueba de Breusch-Pagan:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-la-prueba-de-breusch-pagan">Interpretación de la prueba de Breusch-Pagan:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplos-practicos">7. Ejemplos Prácticos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-simulados-modelo-lineal-normal">7.1 Datos Simulados: Modelo Lineal Normal</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicios">8. Ejercicios</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-propiedades-del-estimador-ols">Ejercicio 1: Propiedades del Estimador OLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-estimacion-por-maxima-verosimilitud">Ejercicio 2: Estimación por Máxima Verosimilitud</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-homocedasticidad-y-gls">Ejercicio 3: Homocedasticidad y GLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4-coeficiente-de-determinacion">Ejercicio 4: Coeficiente de Determinación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5-teorema-de-gauss-markov">Ejercicio 5: Teorema de Gauss-Markov</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-6-diagnostico-de-residuos">Ejercicio 6: Diagnóstico de Residuos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias-bibliograficas">Referencias Bibliográficas</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#libros">Libros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#articulos">Artículos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursos-en-linea">Recursos en línea</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Isaac Zainea [izainea]
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
