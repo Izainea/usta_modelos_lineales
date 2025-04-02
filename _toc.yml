@@ -6,3 +6,12 @@ root: intro
 chapters:
 - file: modelos_lineales_1.md
 - file: practica.ipynb
+- file: Taller_1.ipynb
+- file: Taller_2.ipynb
+- file: Taller_3.ipynb
+- file: Taller_4.ipynb
+- file: Taller_5.ipynb
+- file: Taller_6.ipynb
+- file: Taller_7.ipynb
+
+

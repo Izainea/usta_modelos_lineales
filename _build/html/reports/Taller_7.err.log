@@ -1,0 +1,132 @@
+Traceback (most recent call last):
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Generamos datos con heterocedasticidad
+np.random.seed(123)
+X_heter, y_heter = generar_datos_prueba(n=200, p=3, problema='heterocedasticidad', intensidad=1.5)
+
+# Ajustamos modelo a los datos originales
+X_heter_const = sm.add_constant(X_heter)
+modelo_heter = sm.OLS(y_heter, X_heter_const).fit()
+
+# Diagnóstico completo
+resultados_heter = diagnostico_completo(modelo_heter, X_heter, y_heter)
+
+# Imprimir resultados del diagnóstico
+imprimir_resultados_diagnostico(resultados_heter)
+
+# Visualizaciones diagnósticas
+plot_diagnostico_residuos(resultados_heter['residuos'])
+plot_residuos_vs_predictores(resultados_heter['residuos'], X_heter)
+
+# Aplicar transformaciones y comparar resultados
+comparativa_heter = comparar_modelos_heterocedasticidad(X_heter, y_heter)
+print("\nComparación de modelos para corregir heterocedasticidad:")
+print(comparativa_heter)
+
+# Seleccionamos la mejor transformación (por ejemplo, Box-Cox)
+X_trans, y_trans, lambda_y = transformaciones_heterocedasticidad(X_heter, y_heter, metodo='box-cox')
+
+# Ajustamos nuevo modelo con datos transformados
+X_trans_const = sm.add_constant(X_trans)
+modelo_trans = sm.OLS(y_trans, X_trans_const).fit()
+
+# Diagnóstico del modelo transformado
+resultados_trans = diagnostico_completo(modelo_trans, X_trans, y_trans)
+
+# Visualizaciones comparativas
+print("\nDiagnóstico del modelo transformado:")
+imprimir_resultados_diagnostico(resultados_trans)
+plot_diagnostico_residuos(resultados_trans['residuos'])
+
+# Interpretación de coeficientes con variable transformada
+print("\nCoeficientes del modelo original:")
+print(modelo_heter.summary2().tables[1][['Coef.', 'Std.Err.', 'P>|t|']])
+
+print("\nCoeficientes del modelo transformado:")
+print(modelo_trans.summary2().tables[1][['Coef.', 'Std.Err.', 'P>|t|']])
+
+print("\nNota sobre interpretación de coeficientes transformados:")
+if lambda_y == 0:  # Transformación logarítmica
+    print("- Con transformación logarítmica, los coeficientes representan cambios porcentuales aproximados")
+    print("- Un aumento de 1 unidad en Xj corresponde a un cambio de (100 * βj)% en la variable respuesta")
+elif lambda_y == 0.5:  # Raíz cuadrada
+    print("- Con transformación de raíz cuadrada, la interpretación no es directa")
+    print("- Para interpretar el efecto marginal: dY/dXj = βj / (2 * √Y)")
+else:
+    print(f"- Con transformación Box-Cox (λ = {lambda_y:.4f}), la interpretación requiere cálculos adicionales")
+    print("- El efecto marginal es: dY/dXj = βj * Y^(1-λ)")
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mValueError[0m                                Traceback (most recent call last)
+Cell [1;32mIn[10], line 10[0m
+[0;32m      7[0m modelo_heter [38;5;241m=[39m sm[38;5;241m.[39mOLS(y_heter, X_heter_const)[38;5;241m.[39mfit()
+[0;32m      9[0m [38;5;66;03m# Diagnóstico completo[39;00m
+[1;32m---> 10[0m resultados_heter [38;5;241m=[39m [43mdiagnostico_completo[49m[43m([49m[43mmodelo_heter[49m[43m,[49m[43m [49m[43mX_heter[49m[43m,[49m[43m [49m[43my_heter[49m[43m)[49m
+[0;32m     12[0m [38;5;66;03m# Imprimir resultados del diagnóstico[39;00m
+[0;32m     13[0m imprimir_resultados_diagnostico(resultados_heter)
+
+Cell [1;32mIn[5], line 231[0m, in [0;36mdiagnostico_completo[1;34m(modelo, X, y)[0m
+[0;32m    229[0m [38;5;66;03m# Pruebas de supuestos[39;00m
+[0;32m    230[0m resultados_normalidad [38;5;241m=[39m test_normalidad(resultados_residuos[[38;5;124m'[39m[38;5;124mestudentizados_internos[39m[38;5;124m'[39m])
+[1;32m--> 231[0m resultados_homocedasticidad [38;5;241m=[39m [43mtest_homocedasticidad[49m[43m([49m[43mmodelo[49m[43m,[49m[43m [49m[43mX[49m[43m)[49m
+[0;32m    232[0m resultados_independencia [38;5;241m=[39m test_independencia(resultados_residuos[[38;5;124m'[39m[38;5;124mordinarios[39m[38;5;124m'[39m])
+[0;32m    233[0m resultados_linealidad [38;5;241m=[39m test_linealidad(modelo, X, y)
+
+Cell [1;32mIn[5], line 66[0m, in [0;36mtest_homocedasticidad[1;34m(modelo, X)[0m
+[0;32m     51[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[0;32m     52[0m [38;5;124;03mRealiza pruebas de homocedasticidad sobre los residuos.[39;00m
+[0;32m     53[0m 
+[1;32m   (...)[0m
+[0;32m     63[0m [38;5;124;03mdict : Diccionario con resultados de las pruebas[39;00m
+[0;32m     64[0m [38;5;124;03m"""[39;00m
+[0;32m     65[0m [38;5;66;03m# Test de Breusch-Pagan[39;00m
+[1;32m---> 66[0m bp_test [38;5;241m=[39m [43mhet_breuschpagan[49m[43m([49m[43mmodelo[49m[38;5;241;43m.[39;49m[43mresid[49m[43m,[49m[43m [49m[43mX[49m[43m)[49m
+[0;32m     67[0m labels_bp [38;5;241m=[39m [[38;5;124m'[39m[38;5;124mEstadístico LM[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mp-valor LM[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mEstadístico F[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mp-valor F[39m[38;5;124m'[39m]
+[0;32m     69[0m [38;5;66;03m# Test de White[39;00m
+[0;32m     70[0m [38;5;66;03m# Necesitamos generar términos cuadráticos e interacciones[39;00m
+
+File [1;32m~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\stats\diagnostic.py:801[0m, in [0;36mhet_breuschpagan[1;34m(resid, exog_het, robust)[0m
+[0;32m    733[0m [38;5;250m[39m[38;5;124mr[39m[38;5;124;03m"""[39;00m
+[0;32m    734[0m [38;5;124;03mBreusch-Pagan Lagrange Multiplier test for heteroscedasticity[39;00m
+[0;32m    735[0m 
+[1;32m   (...)[0m
+[0;32m    798[0m [38;5;124;03m   heteroskedasticity". Journal of Econometrics 17 (1): 107–112.[39;00m
+[0;32m    799[0m [38;5;124;03m"""[39;00m
+[0;32m    800[0m x [38;5;241m=[39m array_like(exog_het, [38;5;124m"[39m[38;5;124mexog_het[39m[38;5;124m"[39m, ndim[38;5;241m=[39m[38;5;241m2[39m)
+[1;32m--> 801[0m [43m_check_het_test[49m[43m([49m[43mx[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mThe Breusch-Pagan[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[0;32m    802[0m y [38;5;241m=[39m array_like(resid, [38;5;124m"[39m[38;5;124mresid[39m[38;5;124m"[39m, ndim[38;5;241m=[39m[38;5;241m1[39m) [38;5;241m*[39m[38;5;241m*[39m [38;5;241m2[39m
+[0;32m    803[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m robust:
+
+File [1;32m~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\stats\diagnostic.py:726[0m, in [0;36m_check_het_test[1;34m(x, test_name)[0m
+[0;32m    721[0m x_max [38;5;241m=[39m x[38;5;241m.[39mmax(axis[38;5;241m=[39m[38;5;241m0[39m)
+[0;32m    722[0m [38;5;28;01mif[39;00m (
+[0;32m    723[0m     [38;5;129;01mnot[39;00m np[38;5;241m.[39many(((x_max [38;5;241m-[39m x[38;5;241m.[39mmin(axis[38;5;241m=[39m[38;5;241m0[39m)) [38;5;241m==[39m [38;5;241m0[39m) [38;5;241m&[39m (x_max [38;5;241m!=[39m [38;5;241m0[39m))
+[0;32m    724[0m     [38;5;129;01mor[39;00m x[38;5;241m.[39mshape[[38;5;241m1[39m] [38;5;241m<[39m [38;5;241m2[39m
+[0;32m    725[0m ):
+[1;32m--> 726[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+[0;32m    727[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mtest_name[38;5;132;01m}[39;00m[38;5;124m test requires exog to have at least [39m[38;5;124m"[39m
+[0;32m    728[0m         [38;5;124m"[39m[38;5;124mtwo columns where one is a constant.[39m[38;5;124m"[39m
+[0;32m    729[0m     )
+
+[1;31mValueError[0m: The Breusch-Pagan test requires exog to have at least two columns where one is a constant.
+

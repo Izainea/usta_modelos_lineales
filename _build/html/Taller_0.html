@@ -1,0 +1,1489 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Taller 0: Modelo Centrado - Interpretación y Utilidad &#8212; Modelos Lineales</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Taller_0';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Modelos Lineales - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Modelos Lineales - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    📘 Modelos Lineales: De los Datos a las Decisiones
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html">Regresión Lineal Simple: Teoría y Práctica</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="practica.html">Modelos Lineales: Fundamentos, Estimación y Evaluación</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Taller_1.html">Taller 1: Modelo Normal - Supuestos e Inferencia</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Taller_2.html">Taller 2: Regresión Múltiple - Pruebas de Hipótesis e Intervalos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_3.html">Taller 1: Multicolinealidad en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_4.html">Taller 4: Soluciones a la Multicolinealidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_5.html">Taller 5: Métodos Computacionales en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_6.html">Taller 6: Selección de Variables en Modelos Lineales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Taller_7.html">Taller 7: Análisis de Residuos en Modelos Lineales</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Izainea/usta_modelos_lineales" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Izainea/usta_modelos_lineales/issues/new?title=Issue%20on%20page%20%2FTaller_0.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Taller_0.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Taller 0: Modelo Centrado - Interpretación y Utilidad</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Taller 0: Modelo Centrado - Interpretación y Utilidad</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-de-aprendizaje">Objetivos de Aprendizaje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teoria-modelo-lineal-centrado">📘 Teoría: Modelo Lineal Centrado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motivacion">✨ Motivación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-es-centrar-una-variable">🔍 ¿Qué es centrar una variable?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-modelos">🧮 Comparación de modelos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion">📐 Interpretación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-del-centrado">🛠️ Ventajas del centrado</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nota">📌 Nota</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-del-modelo-centrado">Definición del Modelo Centrado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cambios-en-la-interpretacion-de-los-coeficientes">Cambios en la Interpretación de los Coeficientes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#en-el-modelo-original">En el Modelo Original:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#en-el-modelo-centrado">En el Modelo Centrado:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion-matricial-general-equivalencia-de-coeficientes">Demostración Matricial General: Equivalencia de Coeficientes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notacion-y-definiciones">Notación y Definiciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrices-del-modelo-centrado">Matrices del Modelo Centrado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivacion-de-los-estimadores">Derivación de los Estimadores</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-original">Modelo Original</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-centrado">Modelo Centrado</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particionamiento-de-la-matriz-x">Particionamiento de la Matriz X</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion">Demostración</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-entre-interceptos">Relación Entre Interceptos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-del-modelo-centrado">🧪 Implementación del Modelo Centrado</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generacion-de-datos-para-ejemplos">🔧 Generación de Datos para Ejemplos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#especificaciones">📊 Especificaciones:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplos-practicos-comparacion-de-modelos-original-y-centrado">Ejemplos Prácticos: Comparación de Modelos Original y Centrado</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-coeficientes-en-modelos-centrados-vs-originales">Interpretación de Coeficientes en Modelos Centrados vs. Originales</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intercepto-0">1. Intercepto (β₀)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficientes-de-pendiente-1-2">2. Coeficientes de Pendiente (β₁, β₂)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-matematica">3. Relación Matemática</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-del-centrado-de-variables">Ventajas del Centrado de Variables</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-mas-significativa-del-intercepto">1. Interpretación más Significativa del Intercepto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estabilidad-numerica-mejorada">2. Estabilidad Numérica Mejorada</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#facilita-la-comprension-y-presentacion-de-resultados">3. Facilita la Comprensión y Presentación de Resultados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-para-modelos-mas-complejos">4. Base para Modelos más Complejos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicios">Ejercicios</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1">Ejercicio 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2">Ejercicio 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3">Ejercicio 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="taller-0-modelo-centrado-interpretacion-y-utilidad">
+<h1>Taller 0: Modelo Centrado - Interpretación y Utilidad<a class="headerlink" href="#taller-0-modelo-centrado-interpretacion-y-utilidad" title="Link to this heading">#</a></h1>
+<p>En este taller exploraremos el modelo de regresión con variables centradas. Analizaremos cómo cambia la interpretación de los coeficientes al centrar las variables y las ventajas computacionales y analíticas de esta técnica.</p>
+<section id="objetivos-de-aprendizaje">
+<h2>Objetivos de Aprendizaje<a class="headerlink" href="#objetivos-de-aprendizaje" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Entender el modelo de regresión con variables centradas</p></li>
+<li><p>Analizar cómo cambia la interpretación de los coeficientes al centrar las variables</p></li>
+<li><p>Explorar las ventajas del centrado</p></li>
+<li><p>Implementar y comparar modelos con y sin centrado</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importar librerías necesarias</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+
+<span class="c1"># Configuración para visualizaciones</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="teoria-modelo-lineal-centrado">
+<h2>📘 Teoría: Modelo Lineal Centrado<a class="headerlink" href="#teoria-modelo-lineal-centrado" title="Link to this heading">#</a></h2>
+<section id="motivacion">
+<h3>✨ Motivación<a class="headerlink" href="#motivacion" title="Link to this heading">#</a></h3>
+<p>En modelos de regresión, el intercepto (( \beta_0 )) representa el valor esperado de ( Y ) cuando todas las variables predictoras son cero. Pero muchas veces, este valor no es interpretable o incluso es fuera del rango de los datos. Para solucionar esto, <strong>centramos</strong> las variables.</p>
+</section>
+<section id="que-es-centrar-una-variable">
+<h3>🔍 ¿Qué es centrar una variable?<a class="headerlink" href="#que-es-centrar-una-variable" title="Link to this heading">#</a></h3>
+<p>Centrar una variable significa restarle su media:
+\[
+X^*_i = X_i - \bar{X}
+\]</p>
+<p>Esto traslada el origen del eje ( X ) al valor medio de la muestra. La interpretación del intercepto ahora cambia: en vez de representar el valor de ( Y ) cuando ( X = 0 ), representa el valor esperado de ( Y ) cuando ( X = \bar{X} ).</p>
+</section>
+<section id="comparacion-de-modelos">
+<h3>🧮 Comparación de modelos<a class="headerlink" href="#comparacion-de-modelos" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Modelo original:
+\[
+Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i
+\]</p></li>
+<li><p>Modelo centrado:
+\[
+Y_i = \alpha + \beta (X_i - \bar{X}) + \varepsilon_i
+\]</p></li>
+</ul>
+<p>Relación entre parámetros:
+\[
+\alpha = \beta_0 + \beta_1 \bar{X}
+\quad\text{y}\quad
+\beta = \beta_1
+\]</p>
+</section>
+<section id="interpretacion">
+<h3>📐 Interpretación<a class="headerlink" href="#interpretacion" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>\(\beta\)</strong> sigue representando el cambio promedio en ( Y ) por unidad de cambio en ( X ), <strong>no se ve afectado por el centrado</strong>.</p></li>
+<li><p><strong>\(\alpha\)</strong> representa el valor esperado de ( Y ) cuando ( X = \bar{X} ).</p></li>
+</ul>
+</section>
+<section id="ventajas-del-centrado">
+<h3>🛠️ Ventajas del centrado<a class="headerlink" href="#ventajas-del-centrado" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ Mejora la <strong>interpretación</strong> del intercepto en muchos contextos.</p></li>
+<li><p>✅ Facilita el análisis de <strong>interacciones</strong> y <strong>términos polinómicos</strong>.</p></li>
+<li><p>✅ Ayuda a reducir <strong>multicolinealidad</strong> entre ( X ) y ( X^2 ), por ejemplo.</p></li>
+<li><p>✅ Mejora la <strong>estabilidad numérica</strong> en métodos computacionales iterativos (como descenso de gradiente).</p></li>
+<li><p>✅ Puede mejorar la <strong>convergencia</strong> de algunos algoritmos cuando se trabaja con escalas muy dispares.</p></li>
+</ol>
+</section>
+<section id="nota">
+<h3>📌 Nota<a class="headerlink" href="#nota" title="Link to this heading">#</a></h3>
+<p>El centrado <strong>no cambia</strong> el ajuste del modelo ni las predicciones. Solamente modifica la representación de los parámetros.</p>
+</section>
+</section>
+<section id="definicion-del-modelo-centrado">
+<h2>Definición del Modelo Centrado<a class="headerlink" href="#definicion-del-modelo-centrado" title="Link to this heading">#</a></h2>
+<p>En un modelo de regresión estándar, tenemos:</p>
+<div class="math notranslate nohighlight">
+\[y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_p x_{ip} + \varepsilon_i\]</div>
+<p>Al centrar las variables, trabajamos con:</p>
+<div class="math notranslate nohighlight">
+\[y_i - \bar{y} = \beta_1 (x_{i1} - \bar{x}_1) + \beta_2 (x_{i2} - \bar{x}_2) + ... + \beta_p (x_{ip} - \bar{x}_p) + \varepsilon_i\]</div>
+<p>O de forma equivalente:</p>
+<div class="math notranslate nohighlight">
+\[y_i = \beta_0^* + \beta_1 (x_{i1} - \bar{x}_1) + \beta_2 (x_{i2} - \bar{x}_2) + ... + \beta_p (x_{ip} - \bar{x}_p) + \varepsilon_i\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\beta_0^* = \bar{y} - \sum_{j=1}^{p} \beta_j \bar{x}_j\)</span> y los coeficientes <span class="math notranslate nohighlight">\(\beta_j\)</span> para <span class="math notranslate nohighlight">\(j \geq 1\)</span> son idénticos en ambos modelos.</p>
+</section>
+<section id="cambios-en-la-interpretacion-de-los-coeficientes">
+<h2>Cambios en la Interpretación de los Coeficientes<a class="headerlink" href="#cambios-en-la-interpretacion-de-los-coeficientes" title="Link to this heading">#</a></h2>
+<section id="en-el-modelo-original">
+<h3>En el Modelo Original:<a class="headerlink" href="#en-el-modelo-original" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span>: Valor esperado de <span class="math notranslate nohighlight">\(y\)</span> cuando todas las variables independientes son 0</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_j\)</span>: Cambio esperado en <span class="math notranslate nohighlight">\(y\)</span> cuando <span class="math notranslate nohighlight">\(x_j\)</span> aumenta en una unidad, manteniendo las demás variables constantes</p></li>
+</ul>
+</section>
+<section id="en-el-modelo-centrado">
+<h3>En el Modelo Centrado:<a class="headerlink" href="#en-el-modelo-centrado" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0^*\)</span>: Valor esperado de <span class="math notranslate nohighlight">\(y\)</span> cuando todas las variables independientes están en sus valores medios</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_j\)</span>: Cambio esperado en <span class="math notranslate nohighlight">\(y\)</span> cuando <span class="math notranslate nohighlight">\(x_j\)</span> aumenta en una unidad desde su media, manteniendo las demás variables en sus valores medios</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="demostracion-matricial-general-equivalencia-de-coeficientes">
+<h1>Demostración Matricial General: Equivalencia de Coeficientes<a class="headerlink" href="#demostracion-matricial-general-equivalencia-de-coeficientes" title="Link to this heading">#</a></h1>
+<p>Vamos a demostrar matemáticamente que los coeficientes de pendiente (β₁, β₂, …, βₚ) son idénticos en el modelo original y en el modelo centrado, para el caso general de regresión lineal múltiple.</p>
+<section id="notacion-y-definiciones">
+<h2>Notación y Definiciones<a class="headerlink" href="#notacion-y-definiciones" title="Link to this heading">#</a></h2>
+<p>Para establecer la notación:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X\)</span> es la matriz de diseño original de dimensiones <span class="math notranslate nohighlight">\(n \times (p+1)\)</span>, donde la primera columna es un vector de unos</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span> es el vector de respuestas de dimensión <span class="math notranslate nohighlight">\(n \times 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta = (\beta_0, \beta_1, \ldots, \beta_p)^T\)</span> es el vector de coeficientes del modelo original</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_c = (\beta_{c0}, \beta_{c1}, \ldots, \beta_{cp})^T\)</span> es el vector de coeficientes del modelo centrado</p></li>
+</ul>
+<p>Definamos ahora la matriz de centrado <span class="math notranslate nohighlight">\(C\)</span> de dimensión <span class="math notranslate nohighlight">\(n \times n\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[C = I_n - \frac{1}{n}\mathbf{1}_n\mathbf{1}_n^T\]</div>
+<p>donde <span class="math notranslate nohighlight">\(I_n\)</span> es la matriz identidad de orden <span class="math notranslate nohighlight">\(n\)</span> y <span class="math notranslate nohighlight">\(\mathbf{1}_n\)</span> es un vector de unos de longitud <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>La matriz <span class="math notranslate nohighlight">\(C\)</span> tiene las siguientes propiedades:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(C\)</span> es simétrica: <span class="math notranslate nohighlight">\(C^T = C\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span> es idempotente: <span class="math notranslate nohighlight">\(C^2 = C\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(C\mathbf{1}_n = \mathbf{0}_n\)</span> (anula cualquier vector constante)</p></li>
+<li><p>Para cualquier vector <span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(Cv\)</span> es el vector centrado (con media cero)</p></li>
+</ul>
+</section>
+<section id="matrices-del-modelo-centrado">
+<h2>Matrices del Modelo Centrado<a class="headerlink" href="#matrices-del-modelo-centrado" title="Link to this heading">#</a></h2>
+<p>Podemos representar la matriz de diseño del modelo centrado <span class="math notranslate nohighlight">\(X_c\)</span> como:</p>
+<div class="math notranslate nohighlight">
+\[X_c = \begin{bmatrix} \mathbf{1}_n &amp; CX_{-0} \end{bmatrix}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(X_{-0}\)</span> es la matriz <span class="math notranslate nohighlight">\(X\)</span> sin la primera columna (los predictores sin el intercepto).</p>
+<p>Esto significa que mantenemos la columna de unos para el intercepto, pero centramos todas las otras columnas de predictores.</p>
+</section>
+<section id="derivacion-de-los-estimadores">
+<h2>Derivación de los Estimadores<a class="headerlink" href="#derivacion-de-los-estimadores" title="Link to this heading">#</a></h2>
+<section id="modelo-original">
+<h3>Modelo Original<a class="headerlink" href="#modelo-original" title="Link to this heading">#</a></h3>
+<p>El estimador de mínimos cuadrados ordinarios (OLS) para <span class="math notranslate nohighlight">\(\beta\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta} = (X^TX)^{-1}X^Ty\]</div>
+</section>
+<section id="modelo-centrado">
+<h3>Modelo Centrado<a class="headerlink" href="#modelo-centrado" title="Link to this heading">#</a></h3>
+<p>El estimador OLS para <span class="math notranslate nohighlight">\(\beta_c\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_c = (X_c^TX_c)^{-1}X_c^Ty\]</div>
+</section>
+</section>
+<section id="particionamiento-de-la-matriz-x">
+<h2>Particionamiento de la Matriz X<a class="headerlink" href="#particionamiento-de-la-matriz-x" title="Link to this heading">#</a></h2>
+<p>Para facilitar la demostración, particionemos <span class="math notranslate nohighlight">\(X\)</span> como:</p>
+<div class="math notranslate nohighlight">
+\[X = \begin{bmatrix} \mathbf{1}_n &amp; X_{-0} \end{bmatrix}\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\mathbf{1}_n\)</span> es la columna de unos y <span class="math notranslate nohighlight">\(X_{-0}\)</span> contiene todas las demás columnas.</p>
+<p>Similarmente, particionamos <span class="math notranslate nohighlight">\(\beta\)</span> como:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\beta = \begin{bmatrix} \beta_0 \\ \beta_{-0} \end{bmatrix}\end{split}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(\beta_0\)</span> es el intercepto y <span class="math notranslate nohighlight">\(\beta_{-0}\)</span> es el vector de coeficientes de pendiente.</p>
+</section>
+<section id="demostracion">
+<h2>Demostración<a class="headerlink" href="#demostracion" title="Link to this heading">#</a></h2>
+<p>Primero, notemos que:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X_c^TX_c = \begin{bmatrix} 
+n &amp; \mathbf{0}^T \\
+\mathbf{0} &amp; (CX_{-0})^T(CX_{-0})
+\end{bmatrix}\end{split}\]</div>
+<p>Esto es porque <span class="math notranslate nohighlight">\(\mathbf{1}_n^TCX_{-0} = \mathbf{0}^T\)</span> debido a que <span class="math notranslate nohighlight">\(C\mathbf{1}_n = \mathbf{0}_n\)</span>.</p>
+<p>Además, <span class="math notranslate nohighlight">\((CX_{-0})^T(CX_{-0}) = X_{-0}^TC^TCX_{-0} = X_{-0}^TCX_{-0}\)</span> ya que <span class="math notranslate nohighlight">\(C^T = C\)</span> y <span class="math notranslate nohighlight">\(C^2 = C\)</span>.</p>
+<p>También:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X_c^Ty = \begin{bmatrix} 
+\mathbf{1}_n^Ty \\
+(CX_{-0})^Ty
+\end{bmatrix} = \begin{bmatrix} 
+n\bar{y} \\
+X_{-0}^TCy
+\end{bmatrix}\end{split}\]</div>
+<p>La inversión de <span class="math notranslate nohighlight">\(X_c^TX_c\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+(X_c^TX_c)^{-1} = \begin{bmatrix} 
+\frac{1}{n} &amp; \mathbf{0}^T \\
+\mathbf{0} &amp; (X_{-0}^TCX_{-0})^{-1}
+\end{bmatrix}
+\end{split}\]</div>
+<p>Por lo tanto:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{\beta}_c = \begin{bmatrix} 
+\frac{1}{n} \cdot n\bar{y} \\
+(X_{-0}^TCX_{-0})^{-1}X_{-0}^TCy
+\end{bmatrix} = \begin{bmatrix} 
+\bar{y} \\
+(X_{-0}^TCX_{-0})^{-1}X_{-0}^TCy
+\end{bmatrix}
+\end{split}\]</div>
+<p>Ahora, para el modelo original, si usamos las técnicas de inversión de matrices por bloques en <span class="math notranslate nohighlight">\((X^TX)^{-1}\)</span>, podemos demostrar que los coeficientes de pendiente son:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_{-0} = (X_{-0}^TMX_{-0})^{-1}X_{-0}^TMy\]</div>
+<p>donde <span class="math notranslate nohighlight">\(M = I_n - \frac{1}{n}\mathbf{1}_n\mathbf{1}_n^T = C\)</span> es exactamente nuestra matriz de centrado.</p>
+<p>Por lo tanto:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_{-0} = (X_{-0}^TCX_{-0})^{-1}X_{-0}^TCy = \hat{\beta}_{c,-0}\]</div>
+<p>Esto demuestra que los coeficientes de pendiente del modelo original <span class="math notranslate nohighlight">\(\hat{\beta}_{-0}\)</span> son idénticos a los coeficientes de pendiente del modelo centrado <span class="math notranslate nohighlight">\(\hat{\beta}_{c,-0}\)</span>.</p>
+</section>
+<section id="relacion-entre-interceptos">
+<h2>Relación Entre Interceptos<a class="headerlink" href="#relacion-entre-interceptos" title="Link to this heading">#</a></h2>
+<p>Para completar, la relación entre los interceptos es:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_0 = \hat{\beta}_{c0} - \hat{\beta}_{-0}^T\bar{X}_{-0}\]</div>
+<p>donde <span class="math notranslate nohighlight">\(\bar{X}_{-0}\)</span> es el vector de medias de las columnas de <span class="math notranslate nohighlight">\(X_{-0}\)</span>.</p>
+<p>Esta relación se puede verificar sustituyendo las estimaciones en la ecuación del modelo y evaluando en el punto medio de los datos.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="implementacion-del-modelo-centrado">
+<h1>🧪 Implementación del Modelo Centrado<a class="headerlink" href="#implementacion-del-modelo-centrado" title="Link to this heading">#</a></h1>
+<p>Vamos a comparar dos modelos de regresión lineal:</p>
+<ol class="arabic simple">
+<li><p>El modelo original: donde usamos la variable predictora ( X ) tal como está.</p></li>
+<li><p>El modelo centrado: donde usamos la variable centrada ( X_c = X - \bar{X} ).</p></li>
+</ol>
+<p>Verificaremos que:</p>
+<ul class="simple">
+<li><p>El coeficiente de pendiente ( \beta ) se mantiene igual.</p></li>
+<li><p>El intercepto cambia y adquiere una nueva interpretación.</p></li>
+<li><p>Las predicciones del modelo <strong>no cambian</strong>.</p></li>
+</ul>
+<p>También visualizaremos las diferencias en las rectas ajustadas para mejorar la interpretación.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">centrar_variables</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">return_means</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Centra las variables predictoras restando la media de cada columna.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    X : array-like o DataFrame</span>
+<span class="sd">        Variables predictoras a centrar</span>
+<span class="sd">    return_means : bool, opcional</span>
+<span class="sd">        Si es True, devuelve también las medias utilizadas para centrar</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    X_centrado : array o DataFrame</span>
+<span class="sd">        Variables predictoras centradas</span>
+<span class="sd">    means : Series o array (opcional)</span>
+<span class="sd">        Medias de cada columna</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">means</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">X_centrado</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">means</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">X_centrado</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">means</span>
+
+    <span class="k">if</span> <span class="n">return_means</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X_centrado</span><span class="p">,</span> <span class="n">means</span>
+    <span class="k">return</span> <span class="n">X_centrado</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ajustar_modelo_original</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ajusta un modelo de regresión utilizando las variables originales.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    X : array-like o DataFrame</span>
+<span class="sd">        Variables predictoras</span>
+<span class="sd">    y : array-like o Series</span>
+<span class="sd">        Variable respuesta</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    result : objeto ResultadosRegresion</span>
+<span class="sd">        Resultados de la regresión con statsmodels</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X_sm</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X_sm</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ajustar_modelo_centrado</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ajusta un modelo de regresión utilizando variables centradas.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    X : array-like o DataFrame</span>
+<span class="sd">        Variables predictoras</span>
+<span class="sd">    y : array-like o Series</span>
+<span class="sd">        Variable respuesta</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    result : objeto ResultadosRegresion</span>
+<span class="sd">        Resultados de la regresión con statsmodels</span>
+<span class="sd">    means_X : Series o array</span>
+<span class="sd">        Medias de las variables predictoras</span>
+<span class="sd">    mean_y : float</span>
+<span class="sd">        Media de la variable respuesta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Centrar predictores</span>
+    <span class="n">X_centrado</span><span class="p">,</span> <span class="n">means_X</span> <span class="o">=</span> <span class="n">centrar_variables</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">return_means</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Obtener media de y (aunque no la usamos para centrar en el modelo)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="n">mean_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mean_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Ajustar modelo con X centrado pero y original</span>
+    <span class="n">X_sm</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">X_centrado</span><span class="p">)</span>
+    <span class="n">modelo</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X_sm</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">means_X</span><span class="p">,</span> <span class="n">mean_y</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">convertir_coef_centrados_a_originales</span><span class="p">(</span><span class="n">modelo_centrado</span><span class="p">,</span> <span class="n">means_X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convierte los coeficientes del modelo centrado a la escala original.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    modelo_centrado : objeto ResultadosRegresion</span>
+<span class="sd">        Modelo ajustado con variables centradas</span>
+<span class="sd">    means_X : Series o array</span>
+<span class="sd">        Medias de las variables predictoras</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    coef_originales : array</span>
+<span class="sd">        Coeficientes en la escala original</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Obtener coeficientes del modelo centrado</span>
+    <span class="n">coef_centrados</span> <span class="o">=</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span>
+
+    <span class="c1"># Crear array para los coeficientes originales</span>
+    <span class="n">coef_originales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">coef_centrados</span><span class="p">)</span>
+
+    <span class="c1"># El intercepto original es el centrado menos la suma de (beta_j * mean_X_j)</span>
+    <span class="n">intercepto</span> <span class="o">=</span> <span class="n">coef_centrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coef_centrados</span><span class="p">)):</span>
+        <span class="n">intercepto</span> <span class="o">-=</span> <span class="n">coef_centrados</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">means_X</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">coef_originales</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">intercepto</span>
+    <span class="n">coef_originales</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">coef_centrados</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">return</span> <span class="n">coef_originales</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">comparar_coeficientes</span><span class="p">(</span><span class="n">modelo_original</span><span class="p">,</span> <span class="n">modelo_centrado</span><span class="p">,</span> <span class="n">means_X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compara los coeficientes de los modelos original y centrado.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    modelo_original : objeto ResultadosRegresion</span>
+<span class="sd">        Modelo ajustado con variables originales</span>
+<span class="sd">    modelo_centrado : objeto ResultadosRegresion</span>
+<span class="sd">        Modelo ajustado con variables centradas</span>
+<span class="sd">    means_X : Series o array</span>
+<span class="sd">        Medias de las variables predictoras</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    None</span>
+<span class="sd">        Imprime una comparación de los coeficientes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">coef_originales</span> <span class="o">=</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span>
+    <span class="n">coef_centrados</span> <span class="o">=</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span>
+    <span class="n">coef_convertidos</span> <span class="o">=</span> <span class="n">convertir_coef_centrados_a_originales</span><span class="p">(</span><span class="n">modelo_centrado</span><span class="p">,</span> <span class="n">means_X</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparación de coeficientes:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;β₀ (Intercepto):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Modelo original:     </span><span class="si">{</span><span class="n">coef_originales</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Convertido de centrado: </span><span class="si">{</span><span class="n">coef_convertidos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Diferencia absoluta: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">coef_originales</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">coef_convertidos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coef_originales</span><span class="p">)):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;β</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Modelo original:   </span><span class="si">{</span><span class="n">coef_originales</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Modelo centrado:   </span><span class="si">{</span><span class="n">coef_centrados</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Diferencia absoluta: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">coef_originales</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">coef_centrados</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="generacion-de-datos-para-ejemplos">
+<h1>🔧 Generación de Datos para Ejemplos<a class="headerlink" href="#generacion-de-datos-para-ejemplos" title="Link to this heading">#</a></h1>
+<p>Vamos a simular datos para ilustrar cómo funciona la regresión lineal con y sin centrado.</p>
+<section id="especificaciones">
+<h2>📊 Especificaciones:<a class="headerlink" href="#especificaciones" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Generamos 50 observaciones equiespaciadas de una variable ( X ) entre 0 y 10.</p></li>
+<li><p>El valor de ( Y ) está dado por:
+\[
+Y = 3 + 2X + \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 2^2)
+\]</p></li>
+<li><p>Fijamos la semilla para asegurar reproducibilidad.</p></li>
+</ul>
+<p>Este conjunto nos permitirá comparar de manera controlada los efectos del centrado.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generar_datos_simulados</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">beta_true</span><span class="o">=</span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">escala_x</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera datos sintéticos para regresión lineal múltiple.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    n : int</span>
+<span class="sd">        Número de observaciones</span>
+<span class="sd">    beta_true : list</span>
+<span class="sd">        Coeficientes reales [intercepto, beta_1, beta_2]</span>
+<span class="sd">    seed : int</span>
+<span class="sd">        Semilla para reproducibilidad</span>
+<span class="sd">    escala_x : float</span>
+<span class="sd">        Factor de escala para las variables predictoras</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    --------</span>
+<span class="sd">    X : DataFrame</span>
+<span class="sd">        Variables predictoras</span>
+<span class="sd">    y : Series</span>
+<span class="sd">        Variable respuesta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="c1"># Generar predictores </span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">escala_x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>      <span class="c1"># Media = 10, std = 2</span>
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">escala_x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># Media = 20, std = 3</span>
+
+    <span class="c1"># Convertir a DataFrame para mejor manejo</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X1&#39;</span><span class="p">:</span> <span class="n">X1</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">:</span> <span class="n">X2</span><span class="p">})</span>
+
+    <span class="c1"># Generar variable respuesta</span>
+    <span class="n">intercepto</span> <span class="o">=</span> <span class="n">beta_true</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># Error aleatorio</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">intercepto</span> <span class="o">+</span> <span class="n">beta_true</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta_true</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;X2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">error</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="c1"># Generar datos para nuestro ejemplo</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">generar_datos_simulados</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Mostrar estadísticas descriptivas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estadísticas descriptivas de las variables generadas:&quot;</span><span class="p">)</span>
+<span class="n">descripcion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">descripcion</span><span class="p">)</span>
+
+<span class="c1"># Visualizar la distribución de las variables</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de X1&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;X2&#39;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de X2&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;X2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de Y&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Crear una matriz de dispersión para visualizar relaciones</span>
+<span class="n">scatter_plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadísticas descriptivas de las variables generadas:
+               X1          X2           Y
+count  100.000000  100.000000  100.000000
+mean     9.792307   20.066914    1.199826
+std      1.816337    2.861007    4.104632
+min      4.760510   14.243686  -11.376426
+25%      8.798189   17.583018   -1.260414
+50%      9.746087   20.252322    1.955126
+75%     10.811904   21.614511    3.831840
+max     13.704556   28.160507   10.089841
+</pre></div>
+</div>
+<img alt="_images/b97d8f99b14b19a9980c5d0c73c7f81cc21655cb1b00b9f7e1af9379b5186c9d.png" src="_images/b97d8f99b14b19a9980c5d0c73c7f81cc21655cb1b00b9f7e1af9379b5186c9d.png" />
+<img alt="_images/aa9de8fcef39c98991295d1024e880757bb18f747177adeb8dad42201722876c.png" src="_images/aa9de8fcef39c98991295d1024e880757bb18f747177adeb8dad42201722876c.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ejemplos-practicos-comparacion-de-modelos-original-y-centrado">
+<h1>Ejemplos Prácticos: Comparación de Modelos Original y Centrado<a class="headerlink" href="#ejemplos-practicos-comparacion-de-modelos-original-y-centrado" title="Link to this heading">#</a></h1>
+<p>A continuación, implementaremos y compararemos modelos con y sin centrado usando los datos generados.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ajustar modelo con variables originales</span>
+<span class="n">modelo_original</span> <span class="o">=</span> <span class="n">ajustar_modelo_original</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Ajustar modelo con variables centradas</span>
+<span class="n">modelo_centrado</span><span class="p">,</span> <span class="n">means_X</span><span class="p">,</span> <span class="n">mean_y</span> <span class="o">=</span> <span class="n">ajustar_modelo_centrado</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Mostrar resumen de los modelos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MODELO CON VARIABLES ORIGINALES&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">modelo_original</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MODELO CON VARIABLES CENTRADAS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">modelo_centrado</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+<span class="c1"># Comparar los coeficientes de los modelos</span>
+<span class="n">comparar_coeficientes</span><span class="p">(</span><span class="n">modelo_original</span><span class="p">,</span> <span class="n">modelo_centrado</span><span class="p">,</span> <span class="n">means_X</span><span class="p">)</span>
+
+<span class="c1"># Verificar matemáticamente la relación entre los interceptos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Verificación matemática de la relación entre interceptos:&quot;</span><span class="p">)</span>
+<span class="n">b0_original</span> <span class="o">=</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">b1_original</span> <span class="o">=</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">b2_original</span> <span class="o">=</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">b0_centrado</span> <span class="o">=</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Calcular intercepto original a partir del centrado y las medias</span>
+<span class="n">b0_calculado</span> <span class="o">=</span> <span class="n">b0_centrado</span> <span class="o">-</span> <span class="n">b1_original</span> <span class="o">*</span> <span class="n">means_X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">b2_original</span> <span class="o">*</span> <span class="n">means_X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;β₀ (original): </span><span class="si">{</span><span class="n">b0_original</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;β₀ (calculado como β₀* - β₁·x̄₁ - β₂·x̄₂): </span><span class="si">{</span><span class="n">b0_calculado</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Diferencia: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">b0_original</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b0_calculado</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualizar las diferentes rectas de regresión para X1 (manteniendo X2 constante)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Rango de valores para X1</span>
+<span class="n">x1_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Calcular los valores predichos para el modelo original</span>
+<span class="n">x2_media</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;X2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Valor fijo para X2</span>
+<span class="n">y_pred_original</span> <span class="o">=</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x1_range</span> <span class="o">+</span> <span class="n">modelo_original</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">x2_media</span>
+
+<span class="c1"># Calcular los valores predichos para el modelo centrado</span>
+<span class="n">y_pred_centrado</span> <span class="o">=</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x1_range</span> <span class="o">-</span> <span class="n">means_X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2_media</span> <span class="o">-</span> <span class="n">means_X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Graficar los datos originales (proyectados en el plano X1-Y para X2=media)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Datos&#39;</span><span class="p">)</span>
+
+<span class="c1"># Graficar las líneas de regresión</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1_range</span><span class="p">,</span> <span class="n">y_pred_original</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Modelo Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1_range</span><span class="p">,</span> <span class="n">y_pred_centrado</span><span class="p">,</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Modelo Centrado&#39;</span><span class="p">)</span>
+
+<span class="c1"># Marcar las medias</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">means_X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media de X1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">mean_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media de Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">means_X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">modelo_centrado</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Punto (x̄₁, β₀*)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparación de Modelos Original vs. Centrado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X1 (manteniendo X2 = </span><span class="si">{:.2f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x2_media</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+MODELO CON VARIABLES ORIGINALES
+================================================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      Y   R-squared:                       0.933
+Model:                            OLS   Adj. R-squared:                  0.931
+Method:                 Least Squares   F-statistic:                     672.9
+Date:                Wed, 02 Apr 2025   Prob (F-statistic):           1.37e-57
+Time:                        13:30:31   Log-Likelihood:                -147.62
+No. Observations:                 100   AIC:                             301.2
+Df Residuals:                      97   BIC:                             309.1
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          1.5400      1.032      1.492      0.139      -0.509       3.589
+X1             1.6130      0.060     26.859      0.000       1.494       1.732
+X2            -0.8041      0.038    -21.090      0.000      -0.880      -0.728
+==============================================================================
+Omnibus:                        3.125   Durbin-Watson:                   2.220
+Prob(Omnibus):                  0.210   Jarque-Bera (JB):                3.080
+Skew:                           0.108   Prob(JB):                        0.214
+Kurtosis:                       3.832   Cond. No.                         216.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+================================================================================
+MODELO CON VARIABLES CENTRADAS
+================================================================================
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      Y   R-squared:                       0.933
+Model:                            OLS   Adj. R-squared:                  0.931
+Method:                 Least Squares   F-statistic:                     672.9
+Date:                Wed, 02 Apr 2025   Prob (F-statistic):           1.37e-57
+Time:                        13:30:31   Log-Likelihood:                -147.62
+No. Observations:                 100   AIC:                             301.2
+Df Residuals:                      97   BIC:                             309.1
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          1.1998      0.108     11.159      0.000       0.986       1.413
+X1             1.6130      0.060     26.859      0.000       1.494       1.732
+X2            -0.8041      0.038    -21.090      0.000      -0.880      -0.728
+==============================================================================
+Omnibus:                        3.125   Durbin-Watson:                   2.220
+Prob(Omnibus):                  0.210   Jarque-Bera (JB):                3.080
+Skew:                           0.108   Prob(JB):                        0.214
+Kurtosis:                       3.832   Cond. No.                         2.86
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Comparación de coeficientes:
+--------------------------------------------------
+β₀ (Intercepto):
+  Modelo original:     1.540047
+  Convertido de centrado: 1.540047
+  Diferencia absoluta: 0.000000
+--------------------------------------------------
+β1:
+  Modelo original:   1.613045
+  Modelo centrado:   1.613045
+  Diferencia absoluta: 0.000000
+--------------------------------------------------
+β2:
+  Modelo original:   -0.804092
+  Modelo centrado:   -0.804092
+  Diferencia absoluta: 0.000000
+--------------------------------------------------
+
+Verificación matemática de la relación entre interceptos:
+β₀ (original): 1.540047
+β₀ (calculado como β₀* - β₁·x̄₁ - β₂·x̄₂): 1.540047
+Diferencia: 0.000000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:108: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  intercepto = coef_centrados[0]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:110: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  intercepto -= coef_centrados[j] * means_X[j-1]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:142: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  print(f&quot;  Modelo original:     {coef_originales[0]:.6f}&quot;)
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:144: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  print(f&quot;  Diferencia absoluta: {abs(coef_originales[0] - coef_convertidos[0]):.6f}&quot;)
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:149: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  print(f&quot;  Modelo original:   {coef_originales[i]:.6f}&quot;)
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:150: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  print(f&quot;  Modelo centrado:   {coef_centrados[i]:.6f}&quot;)
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\3604493489.py:151: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  print(f&quot;  Diferencia absoluta: {abs(coef_originales[i] - coef_centrados[i]):.6f}&quot;)
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:24: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  b0_original = modelo_original.params[0]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:25: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  b1_original = modelo_original.params[1]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:26: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  b2_original = modelo_original.params[2]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:28: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  b0_centrado = modelo_centrado.params[0]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:31: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  b0_calculado = b0_centrado - b1_original * means_X[0] - b2_original * means_X[1]
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:45: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  y_pred_original = modelo_original.params[0] + modelo_original.params[1] * x1_range + modelo_original.params[2] * x2_media
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:48: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  y_pred_centrado = modelo_centrado.params[0] + modelo_centrado.params[1] * (x1_range - means_X[0]) + modelo_centrado.params[2] * (x2_media - means_X[1])
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:58: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  plt.axvline(x=means_X[0], color=&#39;k&#39;, linestyle=&#39;:&#39;, label=&#39;Media de X1&#39;)
+C:\Users\cizai\AppData\Local\Temp\ipykernel_9944\1488268108.py:60: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  plt.plot(means_X[0], modelo_centrado.params[0], &#39;ro&#39;, markersize=8, label=&#39;Punto (x̄₁, β₀*)&#39;)
+C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\IPython\core\pylabtools.py:170: UserWarning: Glyph 8321 (\N{SUBSCRIPT ONE}) missing from font(s) Arial.
+  fig.canvas.print_figure(bytes_io, **kw)
+C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\IPython\core\pylabtools.py:170: UserWarning: Glyph 8320 (\N{SUBSCRIPT ZERO}) missing from font(s) Arial.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="_images/ec9943c1272d7f1c61fc57577ea134c1472b34c13b41eff84af9ad75b8b5d200.png" src="_images/ec9943c1272d7f1c61fc57577ea134c1472b34c13b41eff84af9ad75b8b5d200.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="interpretacion-de-coeficientes-en-modelos-centrados-vs-originales">
+<h1>Interpretación de Coeficientes en Modelos Centrados vs. Originales<a class="headerlink" href="#interpretacion-de-coeficientes-en-modelos-centrados-vs-originales" title="Link to this heading">#</a></h1>
+<p>Comparemos la interpretación de los coeficientes en cada modelo:</p>
+<section id="intercepto-0">
+<h2>1. Intercepto (β₀)<a class="headerlink" href="#intercepto-0" title="Link to this heading">#</a></h2>
+<p><strong>Modelo Original:</strong></p>
+<ul class="simple">
+<li><p>El intercepto (β₀) representa el valor esperado de Y cuando X1 = 0 y X2 = 0</p></li>
+<li><p>A menudo, X1 = 0 y X2 = 0 puede estar fuera del rango de datos observados</p></li>
+<li><p>La interpretación puede no ser prácticamente significativa</p></li>
+</ul>
+<p><strong>Modelo Centrado:</strong></p>
+<ul class="simple">
+<li><p>El intercepto (β₀*) representa el valor esperado de Y cuando X1 = X̄₁ y X2 = X̄₂</p></li>
+<li><p>Es el valor esperado de Y en el punto “promedio” de los datos</p></li>
+<li><p>La interpretación tiene mayor relevancia práctica</p></li>
+</ul>
+</section>
+<section id="coeficientes-de-pendiente-1-2">
+<h2>2. Coeficientes de Pendiente (β₁, β₂)<a class="headerlink" href="#coeficientes-de-pendiente-1-2" title="Link to this heading">#</a></h2>
+<p><strong>Modelo Original y Centrado:</strong></p>
+<ul class="simple">
+<li><p>Los coeficientes de pendiente (β₁, β₂) son idénticos en ambos modelos</p></li>
+<li><p>Representan el cambio esperado en Y cuando la variable correspondiente aumenta en una unidad, manteniendo las demás constantes</p></li>
+</ul>
+</section>
+<section id="relacion-matematica">
+<h2>3. Relación Matemática<a class="headerlink" href="#relacion-matematica" title="Link to this heading">#</a></h2>
+<p>La relación matemática entre los interceptos es:</p>
+<div class="math notranslate nohighlight">
+\[\beta_0 = \beta_0^* - \beta_1 \bar{X}_1 - \beta_2 \bar{X}_2\]</div>
+<p>Como pudimos verificar con nuestros datos, esta relación se cumple exactamente.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ventajas-del-centrado-de-variables">
+<h1>Ventajas del Centrado de Variables<a class="headerlink" href="#ventajas-del-centrado-de-variables" title="Link to this heading">#</a></h1>
+<p>El centrado de variables ofrece varias ventajas en la modelación:</p>
+<section id="interpretacion-mas-significativa-del-intercepto">
+<h2>1. Interpretación más Significativa del Intercepto<a class="headerlink" href="#interpretacion-mas-significativa-del-intercepto" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>El intercepto en un modelo centrado representa el valor esperado de la variable respuesta cuando todas las variables predictoras están en sus valores medios.</p></li>
+<li><p>Esta interpretación suele ser más útil que la del modelo original, especialmente cuando el valor de cero para las variables predictoras está fuera del rango de los datos o no tiene sentido práctico.</p></li>
+</ul>
+</section>
+<section id="estabilidad-numerica-mejorada">
+<h2>2. Estabilidad Numérica Mejorada<a class="headerlink" href="#estabilidad-numerica-mejorada" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>El centrado puede mejorar la estabilidad numérica del proceso de estimación, especialmente cuando las variables tienen medias muy alejadas de cero.</p></li>
+<li><p>Esto es particularmente relevante en cálculos computacionales que involucran inversión de matrices.</p></li>
+</ul>
+</section>
+<section id="facilita-la-comprension-y-presentacion-de-resultados">
+<h2>3. Facilita la Comprensión y Presentación de Resultados<a class="headerlink" href="#facilita-la-comprension-y-presentacion-de-resultados" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Los efectos centrados son más fáciles de comunicar y entender en presentaciones y reportes.</p></li>
+<li><p>El intercepto del modelo centrado proporciona un “punto de referencia” natural en el centro de los datos.</p></li>
+</ul>
+</section>
+<section id="base-para-modelos-mas-complejos">
+<h2>4. Base para Modelos más Complejos<a class="headerlink" href="#base-para-modelos-mas-complejos" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>El centrado es un primer paso importante antes de introducir términos de interacción o polinómicos en modelos más avanzados.</p></li>
+<li><p>Facilita la extensión del modelo lineal simple a modelos más complejos.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ejercicios">
+<h1>Ejercicios<a class="headerlink" href="#ejercicios" title="Link to this heading">#</a></h1>
+<p>A continuación se presentan varios ejercicios para practicar los conceptos aprendidos sobre el modelo centrado.</p>
+<section id="ejercicio-1">
+<h2>Ejercicio 1<a class="headerlink" href="#ejercicio-1" title="Link to this heading">#</a></h2>
+<p>Utiliza el siguiente código para generar un conjunto de datos donde las variables X1 y X2 tienen medias muy alejadas de cero:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># Media = 100</span>
+<span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># Media = 200</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X1&#39;</span><span class="p">:</span> <span class="n">X1</span><span class="p">,</span> <span class="s1">&#39;X2&#39;</span><span class="p">:</span> <span class="n">X2</span><span class="p">})</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X1</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Ajusta un modelo de regresión usando las variables originales.</p></li>
+<li><p>Ajusta un modelo usando variables centradas.</p></li>
+<li><p>Verifica que los coeficientes de pendiente son iguales en ambos modelos.</p></li>
+<li><p>Calcula manualmente el intercepto del modelo original a partir del intercepto del modelo centrado y comprueba que coincide.</p></li>
+</ol>
+</section>
+<section id="ejercicio-2">
+<h2>Ejercicio 2<a class="headerlink" href="#ejercicio-2" title="Link to this heading">#</a></h2>
+<p>Usando los mismos datos del Ejercicio 1:</p>
+<ol class="arabic simple">
+<li><p>Calcula las predicciones para 3 observaciones utilizando ambos modelos (original y centrado).</p></li>
+<li><p>Verifica que ambos modelos producen exactamente las mismas predicciones.</p></li>
+<li><p>Visualiza las rectas de regresión para ambos modelos en un gráfico 2D (fijando X2 en su valor medio).</p></li>
+</ol>
+</section>
+<section id="ejercicio-3">
+<h2>Ejercicio 3<a class="headerlink" href="#ejercicio-3" title="Link to this heading">#</a></h2>
+<p>Crea un conjunto de datos donde el valor X = 0 esté muy alejado del rango de los datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">456</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>  <span class="c1"># Valores entre 50 y 60</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Ajusta un modelo de regresión simple usando X original.</p></li>
+<li><p>Ajusta un modelo usando X centrado.</p></li>
+<li><p>Compara la interpretación del intercepto en ambos modelos.</p></li>
+<li><p>¿Cuál de los dos interceptos tiene una interpretación más útil para estos datos? ¿Por qué?</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="conclusiones">
+<h1>Conclusiones<a class="headerlink" href="#conclusiones" title="Link to this heading">#</a></h1>
+<p>En este taller hemos explorado el modelo de regresión con variables centradas y sus propiedades:</p>
+<ol class="arabic simple">
+<li><p><strong>Equivalencia matemática</strong>:</p>
+<ul class="simple">
+<li><p>Hemos demostrado que el modelo centrado y el modelo original son matemáticamente equivalentes y producen las mismas predicciones.</p></li>
+<li><p>Los coeficientes de pendiente (β₁, β₂, …, βₚ) son idénticos en ambos modelos.</p></li>
+<li><p>El intercepto del modelo original se puede calcular a partir del intercepto del modelo centrado usando la fórmula β₀ = β₀* - β₁·x̄₁ - β₂·x̄₂ - … - βₚ·x̄ₚ.</p></li>
+</ul>
+</li>
+<li><p><strong>Interpretación mejorada</strong>:</p>
+<ul class="simple">
+<li><p>El intercepto en un modelo centrado tiene una interpretación más natural y útil, representando el valor esperado de Y cuando todas las variables están en sus valores medios.</p></li>
+<li><p>Esta interpretación es especialmente útil cuando el valor 0 para las variables predictoras está fuera del rango de los datos o no tiene sentido práctico.</p></li>
+</ul>
+</li>
+<li><p><strong>Beneficios prácticos</strong>:</p>
+<ul class="simple">
+<li><p>El centrado de variables facilita la comprensión y comunicación de los resultados del modelo.</p></li>
+<li><p>Proporciona un punto de referencia natural (el centro de los datos) para interpretar el intercepto.</p></li>
+<li><p>Mejora la estabilidad numérica en algunos casos, especialmente cuando las variables tienen medias muy alejadas de cero.</p></li>
+</ul>
+</li>
+</ol>
+<p>Es importante destacar que el centrado de variables es una transformación simple pero útil que no afecta la capacidad predictiva del modelo ni cambia la interpretación de los coeficientes de pendiente. Sin embargo, proporciona una interpretación más significativa del intercepto y sienta las bases para extensiones más complejas del modelo lineal.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="referencias">
+<h1>Referencias<a class="headerlink" href="#referencias" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Afshartous, D., &amp; Preston, R. A. (2011). Key results of interaction models with centering. <em>Journal of Statistics Education, 19</em>(3).</p></li>
+<li><p>Aiken, L. S., &amp; West, S. G. (1991). <em>Multiple regression: Testing and interpreting interactions</em>. Sage Publications.</p></li>
+<li><p>Kutner, M. H., Nachtsheim, C. J., Neter, J., &amp; Li, W. (2005). <em>Applied linear statistical models</em> (5th ed.). McGraw-Hill/Irwin.</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Taller 0: Modelo Centrado - Interpretación y Utilidad</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-de-aprendizaje">Objetivos de Aprendizaje</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teoria-modelo-lineal-centrado">📘 Teoría: Modelo Lineal Centrado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motivacion">✨ Motivación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-es-centrar-una-variable">🔍 ¿Qué es centrar una variable?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-modelos">🧮 Comparación de modelos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion">📐 Interpretación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-del-centrado">🛠️ Ventajas del centrado</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nota">📌 Nota</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definicion-del-modelo-centrado">Definición del Modelo Centrado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cambios-en-la-interpretacion-de-los-coeficientes">Cambios en la Interpretación de los Coeficientes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#en-el-modelo-original">En el Modelo Original:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#en-el-modelo-centrado">En el Modelo Centrado:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion-matricial-general-equivalencia-de-coeficientes">Demostración Matricial General: Equivalencia de Coeficientes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notacion-y-definiciones">Notación y Definiciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrices-del-modelo-centrado">Matrices del Modelo Centrado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivacion-de-los-estimadores">Derivación de los Estimadores</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-original">Modelo Original</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-centrado">Modelo Centrado</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particionamiento-de-la-matriz-x">Particionamiento de la Matriz X</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demostracion">Demostración</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-entre-interceptos">Relación Entre Interceptos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion-del-modelo-centrado">🧪 Implementación del Modelo Centrado</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#generacion-de-datos-para-ejemplos">🔧 Generación de Datos para Ejemplos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#especificaciones">📊 Especificaciones:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplos-practicos-comparacion-de-modelos-original-y-centrado">Ejemplos Prácticos: Comparación de Modelos Original y Centrado</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-coeficientes-en-modelos-centrados-vs-originales">Interpretación de Coeficientes en Modelos Centrados vs. Originales</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intercepto-0">1. Intercepto (β₀)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficientes-de-pendiente-1-2">2. Coeficientes de Pendiente (β₁, β₂)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relacion-matematica">3. Relación Matemática</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-del-centrado-de-variables">Ventajas del Centrado de Variables</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-mas-significativa-del-intercepto">1. Interpretación más Significativa del Intercepto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estabilidad-numerica-mejorada">2. Estabilidad Numérica Mejorada</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#facilita-la-comprension-y-presentacion-de-resultados">3. Facilita la Comprensión y Presentación de Resultados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#base-para-modelos-mas-complejos">4. Base para Modelos más Complejos</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicios">Ejercicios</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1">Ejercicio 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2">Ejercicio 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3">Ejercicio 3</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Isaac Zainea [izainea]
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
