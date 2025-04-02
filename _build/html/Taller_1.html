@@ -551,20 +551,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.diagnostic</span><span class="w"> </span><span class="kn">import</span> <span class="n">het_breuschpagan</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2</span>
-<span class="ne">---&gt; </span><span class="mi">11</span> <span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">det</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">simplify</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">Eq</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;sympy&#39;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
@@ -1340,15 +1326,16 @@ Sigma estimado (insesgado): 1.7757
 
 R²: 0.5958
 R² ajustado: 0.5832
-
-Resumen de statsmodels:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resumen de statsmodels:
                             OLS Regression Results                            
 ==============================================================================
 Dep. Variable:                      y   R-squared:                       0.596
 Model:                            OLS   Adj. R-squared:                  0.583
 Method:                 Least Squares   F-statistic:                     47.17
 Date:                Wed, 02 Apr 2025   Prob (F-statistic):           8.02e-19
-Time:                        11:11:14   Log-Likelihood:                -197.27
+Time:                        13:49:31   Log-Likelihood:                -197.27
 No. Observations:                 100   AIC:                             402.5
 Df Residuals:                      96   BIC:                             413.0
 Df Model:                           3                                         

@@ -2297,7 +2297,8 @@ Edad                    0.6250      0.075      8.371      0.000       0.478     
 <span class="c1"># Intentar ajustar modelo de regresión (debe fallar debido a multicolinealidad perfecta)</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># Intentar ajustar el modelo con todas las dummies</span>
-    <span class="n">modelo_dummy</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y_dummy</span><span class="p">,</span> <span class="n">X_dummy</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">modelo_dummy</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y_dummy</span><span class="p">,</span> <span class="n">X_dummy</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resumen del modelo con todas las dummies (no debería funcionar):&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">modelo_dummy</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
@@ -2341,81 +2342,17 @@ Factores de Inflación de Varianza (VIF):
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pares de variables con alta correlación:
 Cat_C - Cat_A: -0.529
 Cat_C - Cat_B: -0.513
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">199</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="c1"># Intentar ajustar modelo de regresión (debe fallar debido a multicolinealidad perfecta)</span>
-<span class="g g-Whitespace">    </span><span class="mi">197</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span>     <span class="c1"># Intentar ajustar el modelo con todas las dummies</span>
-<span class="ne">--&gt; </span><span class="mi">199</span>     <span class="n">modelo_dummy</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y_dummy</span><span class="p">,</span> <span class="n">X_dummy</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">200</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resumen del modelo con todas las dummies (no debería funcionar):&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">201</span>     <span class="nb">print</span><span class="p">(</span><span class="n">modelo_dummy</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\regression\linear_model.py:921,</span> in <span class="ni">OLS.__init__</span><span class="nt">(self, endog, exog, missing, hasconst, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">918</span>     <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Weights are not supported in OLS and will be ignored&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">919</span>            <span class="s2">&quot;An exception will be raised in the next version.&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">920</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ValueWarning</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">921</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">missing</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">922</span>                           <span class="n">hasconst</span><span class="o">=</span><span class="n">hasconst</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">923</span> <span class="k">if</span> <span class="s2">&quot;weights&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_keys</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">924</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_init_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;weights&quot;</span><span class="p">)</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\regression\linear_model.py:746,</span> in <span class="ni">WLS.__init__</span><span class="nt">(self, endog, exog, weights, missing, hasconst, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">744</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">745</span>     <span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">746</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">missing</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">747</span>                           <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">hasconst</span><span class="o">=</span><span class="n">hasconst</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">748</span> <span class="n">nobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exog</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">749</span> <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\regression\linear_model.py:200,</span> in <span class="ni">RegressionModel.__init__</span><span class="nt">(self, endog, exog, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span> <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">200</span>     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">201</span>     <span class="bp">self</span><span class="o">.</span><span class="n">pinv_wexog</span><span class="p">:</span> <span class="n">Float64Array</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_data_attr</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;pinv_wexog&#39;</span><span class="p">,</span> <span class="s1">&#39;wendog&#39;</span><span class="p">,</span> <span class="s1">&#39;wexog&#39;</span><span class="p">,</span> <span class="s1">&#39;weights&#39;</span><span class="p">])</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\base\model.py:270,</span> in <span class="ni">LikelihoodModel.__init__</span><span class="nt">(self, endog, exog, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">269</span> <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">270</span>     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">271</span>     <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\base\model.py:95,</span> in <span class="ni">Model.__init__</span><span class="nt">(self, endog, exog, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span> <span class="n">missing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;missing&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">94</span> <span class="n">hasconst</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;hasconst&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">95</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_data</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">missing</span><span class="p">,</span> <span class="n">hasconst</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span>                               <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_constant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">k_constant</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="bp">self</span><span class="o">.</span><span class="n">exog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">exog</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\base\model.py:135,</span> in <span class="ni">Model._handle_data</span><span class="nt">(self, endog, exog, missing, hasconst, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">134</span> <span class="k">def</span><span class="w"> </span><span class="nf">_handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">missing</span><span class="p">,</span> <span class="n">hasconst</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">135</span>     <span class="n">data</span> <span class="o">=</span> <span class="n">handle_data</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">missing</span><span class="p">,</span> <span class="n">hasconst</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">136</span>     <span class="c1"># kwargs arrays could have changed, easier to just attach here</span>
-<span class="g g-Whitespace">    </span><span class="mi">137</span>     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\base\data.py:675,</span> in <span class="ni">handle_data</span><span class="nt">(endog, exog, missing, hasconst, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">672</span>     <span class="n">exog</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">exog</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">674</span> <span class="n">klass</span> <span class="o">=</span> <span class="n">handle_data_class_factory</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">675</span> <span class="k">return</span> <span class="n">klass</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="n">exog</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">missing</span><span class="p">,</span> <span class="n">hasconst</span><span class="o">=</span><span class="n">hasconst</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">676</span>              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\base\data.py:84,</span> in <span class="ni">ModelData.__init__</span><span class="nt">(self, endog, exog, missing, hasconst, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="bp">self</span><span class="o">.</span><span class="n">orig_endog</span> <span class="o">=</span> <span class="n">endog</span>
-<span class="g g-Whitespace">     </span><span class="mi">83</span>     <span class="bp">self</span><span class="o">.</span><span class="n">orig_exog</span> <span class="o">=</span> <span class="n">exog</span>
-<span class="ne">---&gt; </span><span class="mi">84</span>     <span class="bp">self</span><span class="o">.</span><span class="n">endog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_endog_exog</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">86</span> <span class="bp">self</span><span class="o">.</span><span class="n">const_idx</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_constant</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="nn">File ~\miniconda3\envs\USTA\Lib\site-packages\statsmodels\base\data.py:509,</span> in <span class="ni">PandasData._convert_endog_exog</span><span class="nt">(self, endog, exog)</span>
-<span class="g g-Whitespace">    </span><span class="mi">507</span> <span class="n">exog</span> <span class="o">=</span> <span class="n">exog</span> <span class="k">if</span> <span class="n">exog</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">exog</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">508</span> <span class="k">if</span> <span class="n">endog</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span> <span class="ow">or</span> <span class="n">exog</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exog</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">509</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Pandas data cast to numpy dtype of object. &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">510</span>                      <span class="s2">&quot;Check input data with np.asarray(data).&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">511</span> <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_convert_endog_exog</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">)</span>
-
-<span class="ne">ValueError</span>: Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+Resumen del modelo con todas las dummies (no debería funcionar):
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+X1             1.2183      0.089     13.688      0.000       1.042       1.394
+X2             0.7764      0.077     10.147      0.000       0.625       0.928
+Cat_A          0.0489      0.116      0.421      0.674      -0.181       0.278
+Cat_B          0.6377      0.118      5.394      0.000       0.404       0.871
+Cat_C          1.2024      0.111     10.811      0.000       0.983       1.422
+Intercepto     1.8890      0.061     31.167      0.000       1.769       2.009
+==============================================================================
 </pre></div>
 </div>
 </div>
@@ -2581,11 +2518,15 @@ Cat_C - Cat_B: -0.513
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span> 
-                    <span class="n">yerr</span><span class="o">=</span><span class="p">[(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Intervalo Inferior&#39;</span><span class="p">]),</span>
-                          <span class="p">(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Intervalo Superior&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">])],</span>
-                    <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="p">[[</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Intervalo Inferior&#39;</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Intervalo Superior&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">]]],</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
 
     <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Variable&#39;</span><span class="p">)</span>
@@ -2604,8 +2545,9 @@ Cat_C - Cat_B: -0.513
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
             <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">coef_bootstrap_df</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
-            <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimado&#39;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimado&#39;</span><span class="p">)</span>
+
             <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distribución Bootstrap: </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
@@ -2617,9 +2559,9 @@ Cat_C - Cat_B: -0.513
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
         <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef_bootstrap_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">coef_bootstrap_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">],</span>
                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> 
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> 
                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span>
                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimado&#39;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">variables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">variables</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
@@ -2745,7 +2687,9 @@ Patrimonio                             0.047482           1.108548
 Edad                                   0.045353           0.992386  
 3. ANÁLISIS DE ESTABILIDAD (BOOTSTRAP)
 ------------------------------------
-                                Variable  Media Bootstrap  \
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                Variable  Media Bootstrap  \
 Intercepto                    Intercepto         3.013394   
 Ingreso                          Ingreso         3.038183   
 Educación                      Educación         2.057703   
@@ -2773,80 +2717,16 @@ Edad                       0.891700
 </pre></div>
 </div>
 <img alt="_images/a3a8ce0591457fc77b764dc408e21511d08f711f8b2ba63e5144a78be6c8f8f4.png" src="_images/a3a8ce0591457fc77b764dc408e21511d08f711f8b2ba63e5144a78be6c8f8f4.png" />
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">File c:\Users\cizai\miniconda3\Lib\site-packages\pandas\core\indexes\base.py:3805,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3804</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">3805</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3806</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-
-<span class="nn">File index.pyx:167,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
-
-<span class="nn">File index.pyx:196,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
-
-<span class="nn">File pandas\\_libs\\hashtable_class_helper.pxi:7081,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
-
-<span class="nn">File pandas\\_libs\\hashtable_class_helper.pxi:7089,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
-
-<span class="ne">KeyError</span>: 0
-
-<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
-
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">69</span><span class="p">],</span> <span class="n">line</span> <span class="mi">236</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="c1"># Analizar caso de multicolinealidad baja</span>
-<span class="g g-Whitespace">    </span><span class="mi">235</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">236</span> <span class="n">resultados_baja</span> <span class="o">=</span> <span class="n">analizar_caso_completo</span><span class="p">(</span><span class="n">tipo_multicolinealidad</span><span class="o">=</span><span class="s1">&#39;baja&#39;</span><span class="p">,</span> 
-<span class="g g-Whitespace">    </span><span class="mi">237</span>                                         <span class="n">n_observaciones</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> 
-<span class="g g-Whitespace">    </span><span class="mi">238</span>                                         <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">239</span>                                         <span class="n">n_bootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="nn">Cell In[69], line 149,</span> in <span class="ni">analizar_caso_completo</span><span class="nt">(tipo_multicolinealidad, n_observaciones, seed, n_bootstraps, n_perturbaciones)</span>
-<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">149</span>     <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">],</span> 
-<span class="g g-Whitespace">    </span><span class="mi">150</span>                 <span class="n">yerr</span><span class="o">=</span><span class="p">[(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Intervalo Inferior&#39;</span><span class="p">]),</span>
-<span class="g g-Whitespace">    </span><span class="mi">151</span>                       <span class="p">(</span><span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Intervalo Superior&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Estimado&#39;</span><span class="p">])],</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span>                 <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">coef_compare</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Coeficiente Real&#39;</span><span class="p">],</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">155</span> <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\cizai\miniconda3\Lib\site-packages\pandas\core\indexing.py:1183,</span> in <span class="ni">_LocationIndexer.__getitem__</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1181</span>     <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">com</span><span class="o">.</span><span class="n">apply_if_callable</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1182</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_scalar_access</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1183</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">_get_value</span><span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="n">takeable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_takeable</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1184</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_tuple</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1185</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1186</span>     <span class="c1"># we by definition only have the 0th axis</span>
-
-<span class="nn">File c:\Users\cizai\miniconda3\Lib\site-packages\pandas\core\frame.py:4221,</span> in <span class="ni">DataFrame._get_value</span><span class="nt">(self, index, col, takeable)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4215</span> <span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">_engine</span>
-<span class="g g-Whitespace">   </span><span class="mi">4217</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">MultiIndex</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">4218</span>     <span class="c1"># CategoricalIndex: Trying to use the engine fastpath may give incorrect</span>
-<span class="g g-Whitespace">   </span><span class="mi">4219</span>     <span class="c1">#  results if our categories are integers that dont match our codes</span>
-<span class="g g-Whitespace">   </span><span class="mi">4220</span>     <span class="c1"># IntervalIndex: IntervalTree has no get_loc</span>
-<span class="ne">-&gt; </span><span class="mi">4221</span>     <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4222</span>     <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">4224</span> <span class="c1"># For MultiIndex going through engine effectively restricts us to</span>
-<span class="g g-Whitespace">   </span><span class="mi">4225</span> <span class="c1">#  same-length tuples; see test_get_set_value_no_partial_indexing</span>
-
-<span class="nn">File c:\Users\cizai\miniconda3\Lib\site-packages\pandas\core\indexes\base.py:3812,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3807</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">3808</span>         <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3809</span>         <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">casted_key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3810</span>     <span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">3811</span>         <span class="k">raise</span> <span class="n">InvalidIndexError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">3812</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
-<span class="g g-Whitespace">   </span><span class="mi">3813</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">3814</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
-<span class="g g-Whitespace">   </span><span class="mi">3815</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
-<span class="g g-Whitespace">   </span><span class="mi">3816</span>     <span class="c1">#  the TypeError.</span>
-<span class="g g-Whitespace">   </span><span class="mi">3817</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-
-<span class="ne">KeyError</span>: 0
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1200x800 with 0 Axes&gt;
+<img alt="_images/64bdcac0bbbd988a70c518d817f544596614da5a8428d53e7cf98fecd99eadb8.png" src="_images/64bdcac0bbbd988a70c518d817f544596614da5a8428d53e7cf98fecd99eadb8.png" />
+<img alt="_images/478c81ac07ebce5c34342e03c343ce12cbe2dc6de4b11f448f7ae8b29a719adf.png" src="_images/478c81ac07ebce5c34342e03c343ce12cbe2dc6de4b11f448f7ae8b29a719adf.png" />
+<img alt="_images/868289b0e43d6fe0b099bc50cb896fcea0f86df5aa288f7a0781ef34a74affca.png" src="_images/868289b0e43d6fe0b099bc50cb896fcea0f86df5aa288f7a0781ef34a74affca.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5. RESUMEN DEL IMPACTO DE LA MULTICOLINEALIDAD
+-------------------------------------------
+Error promedio en estimación: 1.63%
+Máxima inflación de varianza: 1.16x
+Máxima inestabilidad (CV): 5.17%
+Coeficientes reales fuera del IC 95%: 0 de 6
+Evaluación general del impacto: Bajo: La multicolinealidad no afecta significativamente la estimación.
 </pre></div>
 </div>
 </div>
@@ -2861,9 +2741,7 @@ Edad                       0.891700
                                         <span class="n">n_bootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
 <span class="c1"># Comparación directa entre casos</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span>
-
-<span class="o">==================================================================</span><span class="s2">&quot;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================================================&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPARACIÓN DIRECTA: MULTICOLINEALIDAD BAJA VS ALTA&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================================================&quot;</span><span class="p">)</span>
 
@@ -2928,18 +2806,14 @@ Edad                       0.891700
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="c1"># Realizar análisis SVD para ambos casos</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span>
-<span class="n">Análisis</span> <span class="n">SVD</span> <span class="o">-</span> <span class="n">Multicolinealidad</span> <span class="n">Baja</span><span class="p">:</span><span class="s2">&quot;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Análisis SVD - Multicolinealidad Baja:&quot;</span><span class="p">)</span>
 <span class="n">s_baja</span><span class="p">,</span> <span class="n">U_baja</span><span class="p">,</span> <span class="n">V_baja</span><span class="p">,</span> <span class="n">df_valores_baja</span><span class="p">,</span> <span class="n">df_vectores_baja</span> <span class="o">=</span> <span class="n">analizar_svd</span><span class="p">(</span><span class="n">resultados_baja</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span>
-<span class="n">Análisis</span> <span class="n">SVD</span> <span class="o">-</span> <span class="n">Multicolinealidad</span> <span class="n">Alta</span><span class="p">:</span><span class="s2">&quot;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Análisis SVD - Multicolinealidad Alta:&quot;</span><span class="p">)</span>
 <span class="n">s_alta</span><span class="p">,</span> <span class="n">U_alta</span><span class="p">,</span> <span class="n">V_alta</span><span class="p">,</span> <span class="n">df_valores_alta</span><span class="p">,</span> <span class="n">df_vectores_alta</span> <span class="o">=</span> <span class="n">analizar_svd</span><span class="p">(</span><span class="n">resultados_alta</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">])</span>
 
 <span class="c1"># Conclusiones</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span>
-
-<span class="n">CONCLUSIONES</span><span class="s2">&quot;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCLUSIONES&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">1. Impacto en Estimación:</span>
@@ -2961,6 +2835,201 @@ Edad                       0.891700
 <span class="s2">La multicolinealidad no necesariamente afecta la capacidad predictiva del modelo como un todo,</span>
 <span class="s2">pero compromete seriamente la inferencia sobre coeficientes individuales y la estabilidad del modelo.</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
+ANÁLISIS COMPLETO: MULTICOLINEALIDAD ALTA
+================================================================================
+Conjunto de datos generado con multicolinealidad alta
+Número de observaciones: 500
+Número de condición: 45.78
+Factores de Inflación de Varianza (VIF):
+              Variable         VIF
+0              Ingreso  442.663063
+1  Estatus_Ocupacional  366.914225
+2           Patrimonio   96.680225
+3            Educación   52.848574
+4                 Edad    1.011173
+</pre></div>
+</div>
+<img alt="_images/013e1e3d9dc52a1b10aebacb4a360b54d420a94d03e6fb7835a8d3f89f8d0527.png" src="_images/013e1e3d9dc52a1b10aebacb4a360b54d420a94d03e6fb7835a8d3f89f8d0527.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pares de variables con alta correlación:
+Estatus_Ocupacional - Ingreso: 0.999
+Patrimonio - Ingreso: 0.676
+Patrimonio - Educación: 0.677
+Patrimonio - Estatus_Ocupacional: 0.674
+1. ESTIMACIÓN DEL MODELO
+-----------------------
+                                Variable  Coeficiente Real  \
+const                         Intercepto               3.0   
+Ingreso                          Ingreso               2.0   
+Educación                      Educación               1.5   
+Estatus_Ocupacional  Estatus_Ocupacional               1.0   
+Patrimonio                    Patrimonio              -0.5   
+Edad                                Edad               0.7   
+
+                     Coeficiente Estimado  Error Estándar        Valor p  \
+const                            3.019325        0.045480  2.629547e-248   
+Ingreso                          1.828215        0.969526   5.992466e-02   
+Educación                        1.713783        0.336111   4.877194e-07   
+Estatus_Ocupacional              1.385412        0.924732   1.347262e-01   
+Patrimonio                      -0.726376        0.473726   1.258360e-01   
+Edad                             0.708786        0.045008   1.418873e-45   
+
+                     Intervalo Inferior  Intervalo Superior  Error (%)  \
+const                          2.929967            3.108683   0.644180   
+Ingreso                       -0.076688            3.733118   8.589239   
+Educación                      1.053399            2.374166  14.252180   
+Estatus_Ocupacional           -0.431482            3.202306  38.541190   
+Patrimonio                    -1.657143            0.204391  45.275204   
+Edad                           0.620355            0.797216   1.255092   
+
+                     Amplitud IC Normalizada  
+const                               0.059572  
+Ingreso                             1.904903  
+Educación                           0.880512  
+Estatus_Ocupacional                 3.633787  
+Patrimonio                          3.723066  
+Edad                                0.252659  
+2. ANÁLISIS DE VARIANZA INFLADA
+-----------------------------
+                                Variable  Error Estándar (Multicolinealidad)  \
+const                         Intercepto                            0.045480   
+Ingreso                          Ingreso                            0.969526   
+Educación                      Educación                            0.336111   
+Estatus_Ocupacional  Estatus_Ocupacional                            0.924732   
+Patrimonio                    Patrimonio                            0.473726   
+Edad                                Edad                            0.045008   
+
+                     Error Estándar (Ortogonal)  Razón de Varianza  
+const                                  0.045444           1.000798  
+Ingreso                                0.046782          20.724237  
+Educación                              0.043648           7.700540  
+Estatus_Ocupacional                    0.047715          19.380206  
+Patrimonio                             0.047482           9.976930  
+Edad                                   0.045353           0.992386  
+3. ANÁLISIS DE ESTABILIDAD (BOOTSTRAP)
+------------------------------------
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                Variable  Media Bootstrap  \
+Intercepto                    Intercepto         3.013394   
+Ingreso                          Ingreso         1.876227   
+Educación                      Educación         1.709684   
+Estatus_Ocupacional  Estatus_Ocupacional         1.335021   
+Patrimonio                    Patrimonio        -0.722388   
+Edad                                Edad         0.707187   
+
+                     Desv. Estándar Bootstrap     CV (%)  Percentil 2.5  \
+Intercepto                           0.050586   1.678695       2.926757   
+Ingreso                              0.891756  47.529238       0.001369   
+Educación                            0.335006  19.594628       1.097596   
+Estatus_Ocupacional                  0.856595  64.163439      -0.328297   
+Patrimonio                           0.469611  65.008123      -1.621704   
+Edad                                 0.041710   5.897963       0.633919   
+
+                     Percentil 97.5  
+Intercepto                 3.111527  
+Ingreso                    3.502533  
+Educación                  2.386454  
+Estatus_Ocupacional        3.059946  
+Patrimonio                 0.137598  
+Edad                       0.791700  
+4. VISUALIZACIONES
+----------------
+</pre></div>
+</div>
+<img alt="_images/1b54120b4364e089209fef0f1f8dead0c3927038a475f7311145018826145972.png" src="_images/1b54120b4364e089209fef0f1f8dead0c3927038a475f7311145018826145972.png" />
+<img alt="_images/bec99d6c6968d4d36fe78c4a93e9bae70a0928cc7791d2efbdf780a7907e0aa1.png" src="_images/bec99d6c6968d4d36fe78c4a93e9bae70a0928cc7791d2efbdf780a7907e0aa1.png" />
+<img alt="_images/d70c0053dd1b2c0a219af58fe9f2a2ad619557f2a5cb6ddfb39f8f32b98dcaab.png" src="_images/d70c0053dd1b2c0a219af58fe9f2a2ad619557f2a5cb6ddfb39f8f32b98dcaab.png" />
+<img alt="_images/d4dbb1e627d07882ec51b678505d18c02d03a7496b2598e1f86b22a7c332e12e.png" src="_images/d4dbb1e627d07882ec51b678505d18c02d03a7496b2598e1f86b22a7c332e12e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5. RESUMEN DEL IMPACTO DE LA MULTICOLINEALIDAD
+-------------------------------------------
+Error promedio en estimación: 18.09%
+Máxima inflación de varianza: 20.72x
+Máxima inestabilidad (CV): 65.01%
+Coeficientes reales fuera del IC 95%: 0 de 6
+Evaluación general del impacto: Alto: La multicolinealidad compromete seriamente la estimación e inferencia.
+==================================================================
+COMPARACIÓN DIRECTA: MULTICOLINEALIDAD BAJA VS ALTA
+==================================================================
+                                Variable  Error Baja (%)  Error Alta (%)  \
+Edad                                Edad        1.098206        1.255092   
+Educación                      Educación        2.929150       14.252180   
+Estatus_Ocupacional  Estatus_Ocupacional        1.427451       38.541190   
+Ingreso                          Ingreso        1.150012        8.589239   
+Intercepto                           NaN             NaN             NaN   
+Patrimonio                    Patrimonio        2.515289       45.275204   
+const                         Intercepto        0.644180        0.644180   
+
+                     Razón Varianza Baja  Razón Varianza Alta  CV Baja (%)  \
+Edad                            0.992386             0.992386     5.167281   
+Educación                       1.162459             7.700540     2.394024   
+Estatus_Ocupacional             1.076678            19.380206     3.133692   
+Ingreso                         1.092231            20.724237     1.855766   
+Intercepto                           NaN                  NaN     1.678695   
+Patrimonio                      1.108548             9.976930     5.092078   
+const                           1.000798             1.000798          NaN   
+
+                     CV Alta (%)  
+Edad                    5.897963  
+Educación              19.594628  
+Estatus_Ocupacional    64.163439  
+Ingreso                47.529238  
+Intercepto              1.678695  
+Patrimonio             65.008123  
+const                        NaN  
+</pre></div>
+</div>
+<img alt="_images/f9d62971045808d52a2a5d443387d2fe902f2a9c71bf167655339b60e0756cc1.png" src="_images/f9d62971045808d52a2a5d443387d2fe902f2a9c71bf167655339b60e0756cc1.png" />
+<img alt="_images/f4f4188fad2071d452a3cc99ceadb30ab997ea3883987201421d60ca77009b7d.png" src="_images/f4f4188fad2071d452a3cc99ceadb30ab997ea3883987201421d60ca77009b7d.png" />
+<img alt="_images/ec875571c791ae00dfc15d2da9b3fb08f21f1f8d1792036c61122f0a34be9c79.png" src="_images/ec875571c791ae00dfc15d2da9b3fb08f21f1f8d1792036c61122f0a34be9c79.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Análisis SVD - Multicolinealidad Baja:
+</pre></div>
+</div>
+<img alt="_images/4fdd816d7d62fab39c7044a951836c8df149d502f3d0bdca8546271de58cc314.png" src="_images/4fdd816d7d62fab39c7044a951836c8df149d502f3d0bdca8546271de58cc314.png" />
+<img alt="_images/854de544bb9ab486888519ebb5f991e5fcb539021e25d9b6dd3d65667a540580.png" src="_images/854de544bb9ab486888519ebb5f991e5fcb539021e25d9b6dd3d65667a540580.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Número de condición: 1.77
+No se detectaron componentes que indiquen multicolinealidad severa.
+Análisis SVD - Multicolinealidad Alta:
+</pre></div>
+</div>
+<img alt="_images/136076a57b1ac622d1f31de83de19337029bd823d7b43bc3b3340fadb70fb470.png" src="_images/136076a57b1ac622d1f31de83de19337029bd823d7b43bc3b3340fadb70fb470.png" />
+<img alt="_images/a80e5f62ec6a282007c52bb182be4a5e876cab86940ec4ff95e87c7859fabe8f.png" src="_images/a80e5f62ec6a282007c52bb182be4a5e876cab86940ec4ff95e87c7859fabe8f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Número de condición: 45.78
+Componentes que indican multicolinealidad:
+Componente 4 (Valor singular: 1.7720, 0.0489 del máximo):
+  Patrimonio: 0.734
+  Educación: -0.541
+  Estatus_Ocupacional: -0.379
+  Relación lineal aproximada: -0.541 × Educación + -0.379 × Estatus_Ocupacional + 0.734 × Patrimonio ≈ 0
+Componente 5 (Valor singular: 0.7912, 0.0218 del máximo):
+  Ingreso: -0.741
+  Estatus_Ocupacional: 0.656
+  Relación lineal aproximada: -0.741 × Ingreso + 0.656 × Estatus_Ocupacional ≈ 0
+CONCLUSIONES
+-----------
+
+1. Impacto en Estimación:
+   - Con multicolinealidad baja, las estimaciones son cercanas a los valores reales.
+   - Con multicolinealidad alta, algunos coeficientes muestran errores sustanciales.
+
+2. Impacto en Varianza:
+   - La multicolinealidad alta aumenta significativamente los errores estándar.
+   - Esto se traduce en intervalos de confianza más amplios y menor poder estadístico.
+
+3. Impacto en Estabilidad:
+   - Los coeficientes son mucho más inestables con multicolinealidad alta.
+   - Pequeñas perturbaciones en los datos pueden causar grandes cambios en las estimaciones.
+
+4. Estructura de la Multicolinealidad:
+   - El análisis SVD revela claramente las direcciones de multicolinealidad.
+   - En el caso de alta multicolinealidad, los últimos componentes tienen valores singulares muy pequeños.
+
+La multicolinealidad no necesariamente afecta la capacidad predictiva del modelo como un todo,
+pero compromete seriamente la inferencia sobre coeficientes individuales y la estabilidad del modelo.
 </pre></div>
 </div>
 </div>
@@ -3032,6 +3101,45 @@ Edad                       0.891700
 <span class="n">df_viviendas</span> <span class="o">=</span> <span class="n">datos_viviendas</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datos de viviendas simulados:
+          Precio  Area_Terreno  Area_Construccion  Antiguedad  Habitaciones  \
+0  291126.805003   1090.233401         675.393288   27.589160           5.0   
+1  202804.595442    536.288102         357.971296    4.271948           4.0   
+2   77438.702440    456.249462         309.743874   33.014879           4.0   
+3  166246.245361    894.274938         648.449237   49.808230           6.0   
+4  309898.858478   1121.283109         777.629999   38.700470           5.0   
+
+   Distancia_Centro  Calidad_Escuelas  
+0         18.295715          3.919779  
+1         12.746646          4.284199  
+2         19.835528          4.889449  
+3         26.268463          2.728916  
+4         20.544143          5.339748  
+Estadísticas descriptivas:
+              Precio  Area_Terreno  Area_Construccion  Antiguedad  \
+count     200.000000    200.000000         200.000000  200.000000   
+mean   278002.391226    829.415601         577.784941   25.027043   
+std    159983.985532    359.632911         257.602637   14.472329   
+min    -96528.816959    153.628887          26.592194    1.173078   
+25%    166249.906466    561.218441         357.340395   12.625672   
+50%    268538.588288    853.041668         596.329329   23.750396   
+75%    408676.778408   1119.550309         791.820354   38.163910   
+max    701258.878232   1493.733951        1046.135923   49.808230   
+
+       Habitaciones  Distancia_Centro  Calidad_Escuelas  
+count    200.000000        200.000000        200.000000  
+mean       4.940000         14.171289          5.064093  
+std        1.478965          8.019054          1.932170  
+min        2.000000          1.003483          0.140437  
+25%        4.000000          7.913006          3.775555  
+50%        5.000000         14.000292          5.090659  
+75%        6.000000         20.517171          6.505706  
+max        8.000000         29.955315         10.000000  
+</pre></div>
+</div>
+<img alt="_images/4dafc4fee2d35efbdf0233481ae3d9d683c3ea2bf18cbed75d042062d76fe0f2.png" src="_images/4dafc4fee2d35efbdf0233481ae3d9d683c3ea2bf18cbed75d042062d76fe0f2.png" />
 </div>
 </div>
 </section>
