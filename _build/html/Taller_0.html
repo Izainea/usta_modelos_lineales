@@ -65,6 +65,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Taller_0';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Taller 1: Modelo Normal - Supuestos e Inferencia" href="Taller_1.html" />
+    <link rel="prev" title="Modelos Lineales: Fundamentos, Estimación y Evaluación" href="practica.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -115,8 +117,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
@@ -170,11 +170,21 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="modelos_lineales_1.html">Regresión Lineal Simple: Teoría y Práctica</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="practica.html">Modelos Lineales: Fundamentos, Estimación y Evaluación</a></li>
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Taller 0: Modelo Centrado - Interpretación y Utilidad</a></li>
+
+
+
 
 
 
@@ -198,7 +208,6 @@
 <li class="toctree-l1"><a class="reference internal" href="Taller_4.html">Taller 4: Soluciones a la Multicolinealidad</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Taller_5.html">Taller 5: Métodos Computacionales en Modelos Lineales</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Taller_6.html">Taller 6: Selección de Variables en Modelos Lineales</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Taller_7.html">Taller 7: Análisis de Residuos en Modelos Lineales</a></li>
 </ul>
 
     </div>
@@ -1060,8 +1069,8 @@ MODELO CON VARIABLES ORIGINALES
 Dep. Variable:                      Y   R-squared:                       0.933
 Model:                            OLS   Adj. R-squared:                  0.931
 Method:                 Least Squares   F-statistic:                     672.9
-Date:                Wed, 02 Apr 2025   Prob (F-statistic):           1.37e-57
-Time:                        13:49:28   Log-Likelihood:                -147.62
+Date:                Thu, 03 Apr 2025   Prob (F-statistic):           1.37e-57
+Time:                        14:19:16   Log-Likelihood:                -147.62
 No. Observations:                 100   AIC:                             301.2
 Df Residuals:                      97   BIC:                             309.1
 Df Model:                           2                                         
@@ -1091,8 +1100,8 @@ MODELO CON VARIABLES CENTRADAS
 Dep. Variable:                      Y   R-squared:                       0.933
 Model:                            OLS   Adj. R-squared:                  0.931
 Method:                 Least Squares   F-statistic:                     672.9
-Date:                Wed, 02 Apr 2025   Prob (F-statistic):           1.37e-57
-Time:                        13:49:28   Log-Likelihood:                -147.62
+Date:                Thu, 03 Apr 2025   Prob (F-statistic):           1.37e-57
+Time:                        14:19:16   Log-Likelihood:                -147.62
 No. Observations:                 100   AIC:                             301.2
 Df Residuals:                      97   BIC:                             309.1
 Df Model:                           2                                         
@@ -1136,37 +1145,37 @@ Verificación matemática de la relación entre interceptos:
 Diferencia: 0.000000
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:108: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:108: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   intercepto = coef_centrados[0]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:110: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:110: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   intercepto -= coef_centrados[j] * means_X[j-1]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:142: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:142: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   print(f&quot;  Modelo original:     {coef_originales[0]:.6f}&quot;)
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:144: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:144: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   print(f&quot;  Diferencia absoluta: {abs(coef_originales[0] - coef_convertidos[0]):.6f}&quot;)
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:149: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:149: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   print(f&quot;  Modelo original:   {coef_originales[i]:.6f}&quot;)
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:150: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:150: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   print(f&quot;  Modelo centrado:   {coef_centrados[i]:.6f}&quot;)
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\3604493489.py:151: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\3604493489.py:151: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   print(f&quot;  Diferencia absoluta: {abs(coef_originales[i] - coef_centrados[i]):.6f}&quot;)
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:24: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:24: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   b0_original = modelo_original.params[0]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:25: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:25: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   b1_original = modelo_original.params[1]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:26: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:26: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   b2_original = modelo_original.params[2]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:28: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:28: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   b0_centrado = modelo_centrado.params[0]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:31: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:31: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   b0_calculado = b0_centrado - b1_original * means_X[0] - b2_original * means_X[1]
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:45: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:45: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   y_pred_original = modelo_original.params[0] + modelo_original.params[1] * x1_range + modelo_original.params[2] * x2_media
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:48: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:48: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   y_pred_centrado = modelo_centrado.params[0] + modelo_centrado.params[1] * (x1_range - means_X[0]) + modelo_centrado.params[2] * (x2_media - means_X[1])
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:58: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:58: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   plt.axvline(x=means_X[0], color=&#39;k&#39;, linestyle=&#39;:&#39;, label=&#39;Media de X1&#39;)
-C:\Users\cizai\AppData\Local\Temp\ipykernel_23368\1488268108.py:60: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\cizai\AppData\Local\Temp\ipykernel_34216\1488268108.py:60: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   plt.plot(means_X[0], modelo_centrado.params[0], &#39;ro&#39;, markersize=8, label=&#39;Punto (x̄₁, β₀*)&#39;)
 C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\IPython\core\pylabtools.py:170: UserWarning: Glyph 8321 (\N{SUBSCRIPT ONE}) missing from font(s) Arial.
   fig.canvas.print_figure(bytes_io, **kw)
@@ -1355,6 +1364,24 @@ C:\Users\cizai\miniconda3\envs\USTA\Lib\site-packages\IPython\core\pylabtools.py
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="practica.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modelos Lineales: Fundamentos, Estimación y Evaluación</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Taller_1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Taller 1: Modelo Normal - Supuestos e Inferencia</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
